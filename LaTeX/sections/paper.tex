@@ -1,0 +1,26 @@
+% !TEX root = ../main.tex
+
+\section{Landscape of Designs}
+
+\paragraph{Problem statement.} The way optimistic roll-ups work forces users to wait at least 7 days for their L2/L1 token withdrawal transactions to be executed. 
+\paragraph{Goal.} Our goal is to come up with a design that provides instant finality for L2/L1 token withdrawals.
+
+\subsection{How Alice deposits her L1 tokens into L2}
+
+Alice first approves her TKNs to the bridge. The way it works under the hood is Alice basically approves tokens to the gateway that the router will use (each token is registered at specific gateway). 
+\textit{The Standard Gateway contract will ultimately be making the token transfer call; thus, that's the contract Alice needs to approve (bridge.approveToken handles this approval)}. Next, Alice deposits 100 tokens to L2 using the bridge. This will escrows funds in the Gateway contract on L1, and send a message to mint tokens on L2. If this is a first time deposit to L2, a standard Arb ERC20 contract will automatically be deployed.
+
+\subsection{Solution 01}
+
+
+
+\begin{itemize}
+
+\item 
+
+
+
+
+
+
+\end{itemize}
