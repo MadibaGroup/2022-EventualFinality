@@ -1,26 +1,121 @@
 % !TEX root = ../main.tex
 
-\section{Landscape of Designs}
-
-\paragraph{Problem statement.} The way optimistic roll-ups work forces users to wait at least 7 days for their L2/L1 token withdrawal transactions to be executed. 
-\paragraph{Goal.} Our goal is to come up with a design that provides instant finality for L2/L1 token withdrawals.
-
-\subsection{How Alice deposits her L1 tokens into L2}
-
-Alice first approves her TKNs to the bridge. The way it works under the hood is Alice basically approves tokens to the gateway that the router will use (each token is registered at specific gateway). 
-\textit{The Standard Gateway contract will ultimately be making the token transfer call; thus, that's the contract Alice needs to approve (bridge.approveToken handles this approval)}. Next, Alice deposits 100 tokens to L2 using the bridge. This will escrows funds in the Gateway contract on L1, and send a message to mint tokens on L2. If this is a first time deposit to L2, a standard Arb ERC20 contract will automatically be deployed.
-
-\subsection{Solution 01}
 
 
-
-\begin{itemize}
-
-\item 
+\section{Everything About L1/L2 ETH Bridging}
+%	Describe how would bridging Ether work (~ 1page)
 
 
+\section{Research Problem: 7-day Withdrawals}
+%	Describe the research problem here 
+
+
+\section{Potential Designs and Solutions}
+%	Describe 3 solutions we have the slides for 
+
+\section{Evaluation Framework}
+%	Come up with the evaluation framework to compare the designs provided in he previous section, this will (hopefully) help us to choose one out of 3 to implement
+
+\section{Economics}
+%	How much would you pay for a tradable ticket? Knowing that they are weird assets (+ non-fungible)
+% Carrying costs + fees + ..
+
+
+\section{Implementation}
+
+% We have to find a market to buy/sell these tradable claims; order-book? AMM? 
+% We need liquidity (note that they are non-fungible)
 
 
 
 
-\end{itemize}
+
+
+
+
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%\section{L1/L2 Token Bridging}
+%Here we briefly explain how L1/L2 token transfers work in Arbitrum,
+%
+%\subsection{How Alice deposits her L1 tokens into L2}
+%
+%Alice first approves her TKNs to the bridge. The way it works under the hood is Alice basically approves tokens to the gateway that the router will use (each token is registered at specific gateway). 
+%\textit{The Standard Gateway contract will ultimately be making the token transfer call; thus, that's the contract Alice needs to approve (bridge.approveToken handles this approval)}. Next, Alice deposits 100 tokens to L2 using the bridge. This will escrows funds in the Gateway contract on L1, and send a message to mint tokens on L2. If this is a first time deposit to L2, a standard Arb ERC20 contract will automatically be deployed.
+%
+%\subsection{How Alice withdraws her L2 tokens into L1}
+%
+%Alice initiates a withdraw transaction for 100 TKNs from L2 by calling the L2 token bridge. The L2 Bridge will call the L2 Gateway Router to initiate a withdrawal via the Standard ERC20 gateway. This burns 100 TKNs, and calls ArbSys (ArbSys.sendTxToL1). Alice will have to wait for the dispute period to be over so that the transaction's assertion gets confirmed. Only after that an OutboxEntry (containing Alice's withdrawal tx) gets added in L1 Outbox. At this point the escrowed funds will be transferred out of the bridge via the outbox contract (Outbox.executeTransaction(), which in turn calls the encoded L1ERC20Gateway.finalizeInboundTransfer message, releasing the user's tokens from the L1ERC20Gateway contract's escrow.)
+%
+%
+%\section{Problem Statement and Research Goal}
+%
+%\paragraph{Problem statement.} The way optimistic roll-ups work forces users to wait at least 7 days for their L2/L1 token withdrawal transactions to be executed. 
+%\paragraph{Goal.} Our goal is to come up with a design that provides \textbf{instant finality} for L2/L1 token withdrawals.
+%
+%\section{Landscape of Designs}
+%Here we describe three proposed solutions to the problem described above. See the Table~\ref{tab:proscons} for pros and cons of each solution.
+%
+%\subsection{Solution 01}
+%In this solution, everything happens on L1. 
+%
+%\begin{itemize}
+%
+%\item Alice initiates a withdraw transaction for 100 TKNs from L2 by calling the L2 token bridge. 
+%\item The L2 Bridge will call the L2 Gateway Router to initiate a withdrawal via the Standard ERC20 gateway. This burns 100 TKNs, and calls ArbSys (ArbSys.sendTxToL1)
+%\item ArbSys.sendTxToL1 will trigger a function on L1 Bridge \textblue{(how?)} to issue Alice a promissory note redeemable for 100 TKNs. Note that this PN is still an unvalidated assertion and can only be redeemed after the 7-day period is over.
+%\item Alice sends an Ask order for the PN to our \textbf{L1 market} (we will think if it is an order-driven or batch auction later) where it gets matched with Bob's Bid (100 TKNs for PN). 
+%\item Trade occurs and Alice receives 100 TKNs.  
+%\item Once the dispute period is over, Bob can go to the outbox and redeem his PN for 100 TKNs (releases 100 TKNs to Bob from the L1ERC20Gateway contract's escrow.)
+%
+%\end{itemize}
+%
+%\subsection{Solution 02}
+%
+%Matching: L2 , Settlement : L1
+%\begin{itemize}
+%
+%\item Alice initiates a withdraw transaction for 100 TKNs from L2 by calling the L2 token bridge. 
+%\item The L2 Bridge will call the L2 Gateway Router to initiate a withdrawal via the Standard ERC20 gateway. This burns 100 TKNs, and calls ArbSys (ArbSys.sendTxToL1) 
+%\item ArbSys.sendTxToL1 will trigger a function on L1 Bridge \textblue{(how?)} to issue Alice a promissory note redeemable for 100 TKNs. Note that this PN is still an unvalidated assertion and can only be redeemed after the 7-day period is over.
+%\item Alice sends an Ask order for the PN to our \textbf{L2 market} (we will think if it is an order-driven or batch auction later) where it gets matched with Bob's Bid (100 TKNs for PN). Note that trades are not settled at this time. 
+%\item Alice and Bob will have to meet on L1 and exchange the PN/TKNs to settle their trade. 
+%\item Once the dispute period is over, Bob can go to the outbox and redeem his PN for 100 TKNs (releases 100 TKNs to Bob from the L1ERC20Gateway contract's escrow.)
+%
+%\end{itemize}
+%
+%
+%\subsection{Solution 03}
+%Matching: L2 , Settlement : L2
+%\begin{itemize}
+%
+%\item Alice initiates a withdraw transaction for 100 TKNs from L2 by calling the L2 token bridge. 
+%\item The L2 Bridge will call the L2 Gateway Router to initiate a withdrawal via the Standard ERC20 gateway. This burns 100 TKNs, and issues Alice a promissory note redeemable for 100 TKNs (instead of calling ArbSys.sendTxToL1).
+%\item Alice sends an Ask order for the PN to our \textbf{L2 market} where it gets matched with Bob's Bid (100 TKNs for PN). 
+%\item Trade occurs: Alice sends her PN to Bob instantly on L2 while Bob sends her 100 TKNs on L1 simultaneously.
+%\item Now Alice has 100 TKNs on L1. Once the dispute period is over, Bob withdraw his PN from L2 and redeem it for 100 TKNs.
+%
+%\end{itemize}
+%
+%
+%\input{tables/proscons.tex}
+%
+%
+%
+%
+%
+%
