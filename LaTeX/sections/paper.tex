@@ -2,8 +2,58 @@
 
 
 
-\section{Everything About L1/L2 ETH Bridging}
-	Describe how would bridging Ether work (~ 1page)
+\section{Everything About L1/L2 ETH Bridging}\label{sec:bridge}
+	%Describe how would bridging Ether work (~ 1page)
+Standard bridges are Ethereum-based smart contracts that facilitate the process of transferring Ether (and other assets) between Ethereum and an off-chain system (\texttt{a.k.a} Layer 2). In Arbitrum, a bridge contains a group of Ethereum smart contracts that each acts as a record-keeper and allows users to \textit{deposit} and \textit{withdraw} Ether to/from the off-chain system without taking custody of their funds. Here we briefly describe how Ether deposits and withdrawals work on Arbitrum.
+
+
+\subsection{Transferring ETH from Ethereum to Arbitrum (\texttt{a.k.a} Deposits)}
+
+To execute \textit{any} transaction on the Arbitrum chain, users need to put that transaction into the \textit{inbox} contract on Ethereum. This contract is part of the Arbitrum bridge and has the responsibility of recording the calldata of transactions it receives on the Ethereum blockchain, note that this data can be used for verification of correct execution of transactions. Just like any smart contract, Inbox has a set of functions, among which \texttt{depositEth} allows users to transfer ETH to Arbitrum chain. To transfer ETH into Arbitrum via \texttt{depositEth} function, users must specify (1) the amount of  ETH they are willing to bridge and (2) the amount of ETH to pay for the storage costs of storing their transaction calldata on Arbitrum (\texttt{a.k.a} base submission fee). Once called with this parameters, the bridge generates a “pre-packaged” transaction to be executed on the off-chain system. This transaction includes the caller address on Ethereum, the caller address on Arbitrum, 0 callvalue, and an empty calldata. The transaction will be stored on the Arbitrum storage, hence the base submission fee is deducted from the amount deposited and the remaining ETH value will be credited to the sender’s account .
+
+
+%Arbitrum Team : A special message type Taylor-made for ETH deposits that handles them more cleanly will be exposed soon.
+
+
+
+\subsection{Transferring ETH from Arbitrum to Ethereum (\texttt{a.k.a} Withdrawals)}
+
+As mention in Section~\ref{sec:bridge}, Arbitrum bridge allows users to transfer ETH from Ethereum without holding those ETH in escrow. Once bridged, these ETH can be transferred back to Ethereum by sending an Arbitrum transaction to the \textit{ArbSys}; Arbitrum pre-compiled contract that lives at the same address on every Arbitrum chain (address(100)) and provides system-level functionalities. Users can withdraw ETH back to Ethereum by calling a payable \texttt{withdrawEth} method and providing (1) their Arbitrum address from which ETH is being transferred and (2) the amount of ETH they are willing to transfer to Ethereum. Once called, \texttt{withdrawEth} publishes an Arbitrum transaction which will be \textbf{only} executed after the dispute window is over. Unlike Ethereum, Arbitrum cannot finalize transactions right away and must be able to dispute wrong assertions coming from malicious validators, if any. Once the dispute period is over, the withdrawal transaction (together with all other outgoing messages) will be Merklized and entered in the \textit{Outbox} contract on Ethereum; a member of the bridge that manages the messages originating from Arbitrum chain (\eg withdrawals). Only if the dispute period is expired, users can execute their withdrawal transactions by calling a certain \textit{Outbox} method and providing their transaction ID.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Research Problem: 7-day Withdrawals}
