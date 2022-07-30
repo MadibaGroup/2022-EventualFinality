@@ -24,59 +24,6 @@ The challenge period allows Arbitrum to provide better security guarantees again
 As mentioned in Section~\ref{sec:withdraw}, because Arbitrum execution happens optimistically, transactions can be considered final only after the dispute period (7 days) is over. This imposes a significant delay for any message originating from Arbitrum to Ethereum, especially withdrawal transactions. Funds will be only released from the off-chain system after the withdrawal transaction is valid on Ethereum. In this paper, we propose three solutions that allow users to sidestep the confirmation delay entirely when withdrawing assets from Arbitrum t o Ethereum. 
 
 
-
-\section{Potential Designs and Solutions}
-	Describe 3 solutions we have the slides for 
-
-\section{Evaluation Framework}
-	Come up with the evaluation framework to compare the designs provided in he previous section, this will (hopefully) help us to choose one out of 3 to implement
-
-\section{Economics}
-	How much would you pay for a tradable ticket? Knowing that they are weird assets (+ non-fungible)\par
- Carrying costs + fees + ..
-
-
-\section{Implementation}
-
- We have to find a market to buy/sell these tradable claims; order-book? AMM? \par
- We need liquidity (note that they are non-fungible)
-
-
-
-11:40
-Dec 20
-
-
-
-
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%\section{L1/L2 Token Bridging}
-%Here we briefly explain how L1/L2 token transfers work in Arbitrum,
-%
-%\subsection{How Alice deposits her L1 tokens into L2}
-%
-%Alice first approves her TKNs to the bridge. The way it works under the hood is Alice basically approves tokens to the gateway that the router will use (each token is registered at specific gateway). 
-%\textit{The Standard Gateway contract will ultimately be making the token transfer call; thus, that's the contract Alice needs to approve (bridge.approveToken handles this approval)}. Next, Alice deposits 100 tokens to L2 using the bridge. This will escrows funds in the Gateway contract on L1, and send a message to mint tokens on L2. If this is a first time deposit to L2, a standard Arb ERC20 contract will automatically be deployed.
-%
-%\subsection{How Alice withdraws her L2 tokens into L1}
-%
-%Alice initiates a withdraw transaction for 100 TKNs from L2 by calling the L2 token bridge. The L2 Bridge will call the L2 Gateway Router to initiate a withdrawal via the Standard ERC20 gateway. This burns 100 TKNs, and calls ArbSys (ArbSys.sendTxToL1). Alice will have to wait for the dispute period to be over so that the transaction's assertion gets confirmed. Only after that an OutboxEntry (containing Alice's withdrawal tx) gets added in L1 Outbox. At this point the escrowed funds will be transferred out of the bridge via the outbox contract (Outbox.executeTransaction(), which in turn calls the encoded L1ERC20Gateway.finalizeInboundTransfer message, releasing the user's tokens from the L1ERC20Gateway contract's escrow.)
-%
 %
 %\section{Problem Statement and Research Goal}
 %
