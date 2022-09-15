@@ -1,36 +1,36 @@
 {
-    "name": "2022-EventualFinality",
-    "version": "1.0.0",
-    "description": "ETH fast withdrawals from Arbitrum Rollup",
-    "author": "Mahsa Moosavi",
-    "license": "Apache-2.0",
-    "private": "true",
-    "engines": {
-      "node": ">= 8.0.0 < 17.0.0",
-      "npm": "^6.0.0",
-      "yarn": "^1.0.0"
-    },
-    "scripts": {
-      "lint": "eslint .",
-      "format": "prettier './**/*.{js,json,md,yml,sol}' --write && yarn run lint --fix",
-      "build": "hardhat compile",
-      "depositETH": "hardhat run exec.js",
-      "withdrawETH": "hardhat run exec.js"
-    },
-    "devDependencies": {
-      "eslint": "^8.15.0",
-      "eslint-config-prettier": "^8.3.0",
-      "eslint-plugin-mocha": "^9.0.0",
-      "eslint-plugin-prettier": "^4.0.0",
-      "prettier": "^2.3.2",
-      "prettier-plugin-solidity": "^1.0.0-beta.17",
-      "@nomiclabs/hardhat-ethers": "^2.0.2",
-      "ethers": "^5.4.1",
-      "hardhat": "^2.2.0"
-    },
-
-    "dependencies": {
-        "@arbitrum/sdk": "^2.0.17",
-        "dotenv": "^8.2.0"
-    }
+  "name": "2022-EventualFinality",
+  "version": "1.0.0",
+  "description": "ETH fast withdrawals from Arbitrum Rollup",
+  "author": "Mahsa Moosavi",
+  "license": "Apache-2.0",
+  "private": "true",
+  "engines": {
+    "node": ">= 8.0.0 < 17.0.0",
+    "npm": "^6.0.0",
+    "yarn": "^1.0.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier './**/*.{js,json,md,yml,sol}' --write && yarn run lint --fix",
+    "build": "hardhat compile",
+    "depositETH": "hardhat run 1-depositETH.js",
+    "withdrawETH": "hardhat run 2-withdrawETH.js",
+    "exec-Withdraw": "hardhat run 3-executeWithdraw.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.17",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "ethers": "^5.4.1",
+    "hardhat": "^2.2.0"
+  },
+  "dependencies": {
+    "@arbitrum/sdk": "^2.0.17",
+    "dotenv": "^8.2.0"
   }
+}
