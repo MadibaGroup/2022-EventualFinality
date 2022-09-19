@@ -11,6 +11,7 @@ const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
 const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
+const RecieverL1Wallet = new Wallet(process.env.DEVNET_PRIVKEY, l1Provider);
 
 const main = async () => {
   const LocalTokenBridge = {
@@ -66,7 +67,7 @@ const main = async () => {
   });
 
   const receipt = await l2Provider.getTransactionReceipt(
-    "0x7b37b07c4e549caaecc5f143657a53910e772f03d0afad38e9394cd8ef1f4913"
+    "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
   );
   const l2Receipt = new L2TransactionReceipt(receipt);
 
@@ -96,12 +97,23 @@ const main = async () => {
   await l2ToL1Msg.waitUntilReadyToExecute(l2Provider, timeToWaitMs);
   console.log("Outbox entry exists! Trying to execute now");
 
+  
+   /**
+   * First, let's check our L1 wallet's ETH balance before executing the withdraw
+   */
+  const l1WalletInitialEthBalance = await RecieverL1Wallet.getBalance()
+  
   /**
    * Now that its confirmed and not executed, we can execute our message in its outbox entry.
    */
   const res = await l2ToL1Msg.execute(l2Provider);
   const rec = await res.wait();
   console.log("Done! Your transaction is executed", rec);
+
+  const l1WalleUpdatedEthBalance = await RecieverL1Wallet.getBalance()
+  console.log(
+    `your L1 ETH balance is updated from ${l1WalletInitialEthBalance.toString()} to ${l1WalleUpdatedEthBalance.toString()}`
+  )
 };
 main()
   .then(() => process.exit(0))
