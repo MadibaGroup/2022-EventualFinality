@@ -33,11 +33,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0x2ce2c9a91390cd456189a30861d8d96e8d1823dc",
-    inbox: "0xcaa7817bfdcfc5ba0945eeac19d466a357506f69",
-    sequencerInbox: "0xaa76734360025bdf0db51a5d28bb9587128b2e40",
-    outbox: "0x9f65607c59db4b2bef19b160ea21bdde34ff1028",
-    rollup: "0x3713b9016ff516af09d4c98838c618b8dcd611eb",
+    bridge: "0xacb786ae71f5735b71009eddac303dfdce6610da",
+    inbox: "0x77f693f573e28aec10ffdb3843545538867baece",
+    sequencerInbox: "0x5da4a54e5c71c23e0b4af9feb3419d7ea61f8658",
+    outbox: "0x45d3135b3455f5d25c7149f1164f2327aeb479fd",
+    rollup: "0xc541a6ea1f4349d9fb7e1f9bfd31c9766bb8f95a",
   };
 
   const l1localTestNetwork = {

@@ -16,7 +16,8 @@
     "build": "hardhat compile",
     "depositETH": "hardhat run 1-depositETH.js",
     "withdrawETH": "hardhat run 2-withdrawETH.js",
-    "exec-Withdraw": "hardhat run 3-executeWithdraw.js"
+    "exec-Withdraw": "hardhat run 3-executeWithdraw.js",
+    "transfer-Withdraw": "hardhat run 4-transferWithdraw.js"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
@@ -30,7 +31,7 @@
     "hardhat": "^2.2.0"
   },
   "dependencies": {
-    "@arbitrum/sdk": "^2.0.17",
+    "@arbitrum/sdk": "3.0.0-rc.0",
     "dotenv": "^8.2.0"
   }
 }
