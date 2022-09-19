@@ -1,26 +1,99 @@
 % !TEX root = ../main.tex
 \section{Introductory Remarks}
 
-Blah blah blah.
+\begin{itemize}
+\item Optimistic rollups are being used
+\item Problem: multi-day (\eg seven) window for withdrawal
+\item Why is this a problem? Others are solving this problem (alternative bridges with a TTP). Some examples include: Speculators want to move fast, voting in a DAO (red tape), sell them on L1 or another L2, DApp access on L1 (trading if efficient on L2 but you need to do something on L1). 
+\item Disadvantage relative to zk-rollups
+\item Solution: scope to liquid tokens (ETH and ERC20), open problem: NFTs or other non-substitutable tokens. 
+\item Solution: (1) tradeable exits; (2) market to trade; (3) guaranteed exit (buyer runs ArbOS validator); (4) prediction market solution to guarantee exits to non-validating entities (importantly includes smart contracts)
+\item Testing: we implemented (1) and (3); for (2) and (4), use your favourite DeFi project.
+\end{itemize}
 
  
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-\paragraph{Scope.} 
-Blah blah blah.
+\section{Background} 
+
+\begin{itemize}
+\item L1 and its scalability issues
+\item Rollups as a solution
+\item ZK-Rollups vs Optimistic (positive not normative)
+\item Bridge works: inbox (few sentences: every L2 tx is on L1, in calldata, sequenced FIFO, sequencer) -> deterministic output, outbox (assertion), eventual finality
+\item Withdrawal problem: origins
+\end{itemize}
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-\paragraph{Contributions.} 
-Our primary contributions are as follows.
+\section{Proposed Solution} 
 
-\begin{enumerate}
+\subsection{Design Landscape}
 
-\item Blah blah blah.
+\begin{itemize}
+\item Landscape: atomic swaps
+\item Landscape: Change the bridge instead of using a third party contract (reason: too late once you withdrawal)
+\end{itemize}
 
-\item Blah blah blah. 
+\subsection{Fast Bridge} 
 
-\item Blah blah blah. 
+\begin{itemize}
+\item Allow trading of exits (atomic unit) -> track most recent owner (constant time) in outbox. Authorization (only current owner can transfer) -> on execute, check for current owner. 
+\item Self-insurance (staking a fidelity bond) (you need liquidity) 
+\item Prediction market: someone else will insure it
+\end{itemize}
 
-\end{enumerate}
+\subsection{Implementation} 
+
+\begin{itemize}
+\item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
+\item Modify outbox to allow tradeable exits
+\item L1 gas costs: new function (transfer)
+\item L1 gas costs: execute: before and after (1 trade, 2 trades, 3 trades) (functions that run that got modified) (difference of two mappings)
+\item Unit tests: say something
+\item Challenges: SDK, where to change, unit test failed assertions (good assertion, bad assertion where withdrawal is ok, bad assertion where the withdrawal is problematic)
+\item Expose assertion failures/successes to external contract (submit ID for assertion, get back status: pending, finalized, or discarded) 
+\end{itemize}
+
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{Discussion}
+
+\subsection{Where to Solve Problem? }
+\begin{itemize}
+\item Exit to a third party collateral contract, implements trading
+\end{itemize}
+
+\subsection{Withdrawal Format }
+\begin{itemize}
+\item Divisible exits
+\item ERC20 / ERC721? -> allowances or not? 
+\end{itemize}
+
+\subsection{Non-Substitutable Withdrawals}
+
+\begin{itemize}
+\item Illiquid tokens 
+\item NFTs (substitute for ETH -> support)
+\item Messages (oracle updates, read calls, any L2-to-L1 message...) (still offer insurance)
+\end{itemize}
+
+\subsection{Assertion Failures}
+
+\begin{itemize}
+\item does exit go away with the assertion or not? Pros/cons
+\end{itemize}
+
+\subsection{Markets}
+
+\begin{itemize}
+\item Can't use an AMM 
+\item Can't run out
+\item Simple auction
+\item Divisible exits
+\item Exit pools
+\end{itemize}
+
+
 
