@@ -31,11 +31,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0xacb786ae71f5735b71009eddac303dfdce6610da",
-    inbox: "0x77f693f573e28aec10ffdb3843545538867baece",
-    sequencerInbox: "0x5da4a54e5c71c23e0b4af9feb3419d7ea61f8658",
-    outbox: "0x45d3135b3455f5d25c7149f1164f2327aeb479fd",
-    rollup: "0xc541a6ea1f4349d9fb7e1f9bfd31c9766bb8f95a",
+    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
+    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
+    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
+    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
+    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
   };
 
   const l1localTestNetwork = {
@@ -67,7 +67,7 @@ const main = async () => {
   });
 
   const receipt = await l2Provider.getTransactionReceipt(
-    "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
+    "0x9362d1c88ae37a25a34726e75bd28baaffc587e99e2ed87ddf8cf38e5aaeb9be"
   );
   const l2Receipt = new L2TransactionReceipt(receipt);
 

@@ -14,7 +14,13 @@ const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
 const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
 const l2Wallet = new Wallet(walletPrivateKey, l2Provider);
-
+var wait = (ms) => {
+  const start = Date.now();
+  let now = start;
+  while (now - start < ms) {
+    now = Date.now();
+  }
+}
 const main = async () => {
   const LocalTokenBridge = {
     l1GatewayRouter: "0x4c7708168395aEa569453Fc36862D2ffcDaC588c",
@@ -33,11 +39,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0xacb786ae71f5735b71009eddac303dfdce6610da",
-    inbox: "0x77f693f573e28aec10ffdb3843545538867baece",
-    sequencerInbox: "0x5da4a54e5c71c23e0b4af9feb3419d7ea61f8658",
-    outbox: "0x45d3135b3455f5d25c7149f1164f2327aeb479fd",
-    rollup: "0xc541a6ea1f4349d9fb7e1f9bfd31c9766bb8f95a",
+    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
+    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
+    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
+    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
+    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
   };
 
   const l1localTestNetwork = {
@@ -92,7 +98,7 @@ const main = async () => {
     l2Provider: l2Provider,
   });
 
-  const depositRec = await depositTx.wait();
+  const depositRec = await depositTx.wait()
   console.warn("deposit L1 receipt is:", depositRec.transactionHash);
 
   /**
@@ -100,19 +106,24 @@ const main = async () => {
    * Here we're waiting for the Sequencer to include the L2 message in its off-chain queue. The Sequencer should include it in under 10 minutes.
    */
   console.warn("Now we wait for L2 side of the transaction to be executed ⏳");
+  wait(50000);
   const l2Result = await depositRec.waitForL2(l2Provider);
+ 
 
   /**
    * The `complete` boolean tells us if the l1 to l2 message was successul
    */
-  l2Result.complete
-    ? console.log(
-        `L2 message successful: status: ${L1ToL2MessageStatus[l2Result.status]}`
-      )
-    : console.log(
-        `L2 message failed: status ${L1ToL2MessageStatus[l2Result.status]}`
-      );
-
+   l2Result.complete
+   ? console.log(
+       `L2 message successful: status: ${
+         L1ToL2MessageStatus[await l2Result.message.status()]
+       }`
+     )
+   : console.log(
+       `L2 message failed: status ${
+         L1ToL2MessageStatus[await l2Result.message.status()]
+       }`
+     )
   /**
    * Our l2Wallet ETH balance should be updated now
    */

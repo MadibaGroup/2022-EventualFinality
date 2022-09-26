@@ -48,8 +48,12 @@
 \begin{itemize}
 \item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
 \item Modify outbox to allow tradeable exits
-\item L1 gas costs: new function (transfer)
-\item L1 gas costs: execute: before and after (1 trade, 2 trades, 3 trades) (functions that run that got modified) (difference of two mappings)
+\item L1 gas costs: new function (transferSpender) : 
+First Transfer: gasUsed: 85,945
+\item L1 gas costs: execute:
+
+execute after the change: first trade: gasUsed: 133,518
+ before and after (1 trade, 2 trades, 3 trades) (functions that run that got modified) (difference of two mappings)
 \item Unit tests: say something
 \item What happens when an assertion fails? (pro: ticket fails with assertion, better for prediction markets (betting on assertion which is a batch of exits); ticket passes even if assertion fails, sounds better (caveat: probably won't happen)
 \item Challenges: SDK, where to change, unit test failed assertions (good assertion, bad assertion where withdrawal is ok, bad assertion where the withdrawal is problematic)

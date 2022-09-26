@@ -1,4 +1,4 @@
-const { providers, Wallet } = require("ethers");
+const { providers, Wallet, ethers } = require("ethers");
 const {
   addCustomNetwork,
   L2TransactionReceipt,
@@ -11,7 +11,7 @@ const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
 const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
-const RecieverL1Wallet = new Wallet(process.env.DEVNET_PRIVKEY, l1Provider);
+const RecieverL1Wallet = new Wallet(process.env.USER_1_PRIVKEY, l1Provider);
 
 
 const main = async () => {
@@ -32,11 +32,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0xacb786ae71f5735b71009eddac303dfdce6610da",
-    inbox: "0x77f693f573e28aec10ffdb3843545538867baece",
-    sequencerInbox: "0x5da4a54e5c71c23e0b4af9feb3419d7ea61f8658",
-    outbox: "0x45d3135b3455f5d25c7149f1164f2327aeb479fd",
-    rollup: "0xc541a6ea1f4349d9fb7e1f9bfd31c9766bb8f95a",
+    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
+    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
+    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
+    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
+    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
   };
 
   const l1localTestNetwork = {
@@ -67,10 +67,11 @@ const main = async () => {
     customL2Network: l2localTestNetwork,
   });
   
-    
-  
+  // const l1WalleEthBalance = await l1Wallet.getBalance()
+  // console.log(l1WalleEthBalance.toString())
+
   const receipt = await l2Provider.getTransactionReceipt(
-    "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
+    "0xad0b5c0e7a7626879a02767877ed3dd75bf0a0888864546b88296b60c3c11316"
   ); 
   const l2Receipt = new L2TransactionReceipt(receipt);
 
@@ -84,14 +85,15 @@ const main = async () => {
    const proofInfo = await l2ToL1Msg.getOutboxProof(l2Provider)
    
    
-  const outboxxAbi = [
+  const outboxAbi = [
     'function transferSpender(bytes32[],uint256,address,address,uint256,uint256,uint256,uint256,bytes,address) external',
   ]
   
-    const outboxAddress = '0x45d3135b3455f5d25c7149f1164f2327aeb479fd' //Change this after each Nitro run
-    const outboxContract = new ethers.Contract(outboxAddress, outboxxAbi, l1Wallet)
-    await outboxContract.transferSpender(
-        proofInfo,eventsData[0].position,
+    const outboxAddress = '0xe8c7c45e4be078ea3c345672070322798ae71d03' //Change this after each Nitro run
+    const outboxContract = new ethers.Contract(outboxAddress, outboxAbi, l1Wallet)
+    const transferWithdrawTx = await outboxContract.transferSpender(
+        proofInfo,
+        eventsData[0].position,
         eventsData[0].caller, 
         eventsData[0].destination, 
         eventsData[0].arbBlockNum,
@@ -101,6 +103,10 @@ const main = async () => {
         eventsData[0].data,
         RecieverL1Wallet.address
     )
+    const transferWithdrawRec = await transferWithdrawTx.wait()
+    console.log(transferWithdrawRec)
+    const value = outboxContract.isTransferred[eventsData[0].position].call
+    console.log(value)
 
 };
 main()
