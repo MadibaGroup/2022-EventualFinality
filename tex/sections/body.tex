@@ -48,6 +48,11 @@
 \begin{itemize}
 \item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
 \item Modify outbox to allow tradeable exits
+\item Modify the Nitro codebase (arbnode and validator) to shrink the fraud proof window from 7 days to 1 minute: (1) Modify the confirmPeriod variable in the arbnode/node.go file, (2) modify the MakeAssertionInterval variable validator/staker.go
+\item To make the bridge prediction market friendly: 
+Modify the outbox: (1) added a Mapping that maps the proposed arbitrum block number (also known as assertion and node) to the pending state. (2) added a function which accepts a proposed block number and adds it to the pending assertions mapping.
+Modify the rollupcore: The validator acts through the RollupCore.sol contract when making an assertion by calling a createNewNode() function. We modifies this function so that every time a node is created by the validator it's also added to the outbox's pending assertions mapping (outbox.addToPendingAssertions(latestNodeCreated()))
+
 \item L1 gas costs: new function (transferSpender) : 
 First Transfer: 
 1) Alice withdraws ETH from L2
