@@ -1,17 +1,17 @@
 const { providers, Wallet, ethers } = require("ethers");
 const {
   addCustomNetwork,
-  L2TransactionReceipt,
-  L2ToL1MessageStatus
+  L2TransactionReceipt
 } = require("@arbitrum/sdk");
-
-const walletPrivateKey = process.env.PRIVKEY;
 
 const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
-const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
-const RecieverL1Wallet = new Wallet(process.env.USER_1_PRIVKEY, l1Provider);
+const Alicel1Wallet = new Wallet(process.env.Alice_PRIVKEY, l1Provider);
+const Bobl1Wallet = new Wallet(process.env.Bob_PRIVKEY, l1Provider);
+const Caroll11Wallet = new Wallet(process.env.Carol_PRIVKEY, l1Provider);
+const Nancyl11Wallet = new Wallet(process.env.Nancy_PRIVKEY, l1Provider);
+
 
 
 const main = async () => {
@@ -32,11 +32,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
-    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
-    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
-    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
-    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
+    bridge: "0x2d8f508c9fb4f935d0bf2ea564668301b33672b0",
+    inbox: "0xf8e40b2737d8d2bbc9613c607327166d27cec4db",
+    sequencerInbox: "0x6cd6e23364159988080db3b719be13c95244855f",
+    outbox: "0xf2e4f13b9278356d5f0a85122e63600a93ed6507",
+    rollup: "0xb292907c55d4a11ee6c9fb15586f4d3e3125b588",
   };
 
   const l1localTestNetwork = {
@@ -67,11 +67,30 @@ const main = async () => {
     customL2Network: l2localTestNetwork,
   });
   
-  // const l1WalleEthBalance = await l1Wallet.getBalance()
+  // const transfer1tx = await Alicel1Wallet.sendTransaction({
+  //   to: Bobl1Wallet.address,
+  //   value: ethers.utils.parseEther("10")
+  // });
+  // transfer1tx.wait()
+
+  // const transfer2tx = await Alicel1Wallet.sendTransaction({
+  //   to: Caroll11Wallet.address,
+  //   value: ethers.utils.parseEther("10")
+  // });
+  // transfer2tx.wait()
+
+  const transfer3tx = await Alicel1Wallet.sendTransaction({
+    to: Nancyl11Wallet.address,
+    value: ethers.utils.parseEther("10")
+  });
+  transfer3tx.wait()
+
+  // const l1WalleEthBalance = await SecondL1Wallet.getBalance()
   // console.log(l1WalleEthBalance.toString())
+  // console.log(SecondL1Wallet.address)
 
   const receipt = await l2Provider.getTransactionReceipt(
-    "0xad0b5c0e7a7626879a02767877ed3dd75bf0a0888864546b88296b60c3c11316"
+    "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
   ); 
   const l2Receipt = new L2TransactionReceipt(receipt);
 
@@ -87,10 +106,15 @@ const main = async () => {
    
   const outboxAbi = [
     'function transferSpender(bytes32[],uint256,address,address,uint256,uint256,uint256,uint256,bytes,address) external',
+    'function TransferredToAddress(uint256) public view returns(address)',
   ]
   
-    const outboxAddress = '0xe8c7c45e4be078ea3c345672070322798ae71d03' //Change this after each Nitro run
-    const outboxContract = new ethers.Contract(outboxAddress, outboxAbi, l1Wallet)
+    const outboxAddress = '0xf2e4f13b9278356d5f0a85122e63600a93ed6507' //Change this after each Nitro run
+    const outboxContract = new ethers.Contract(outboxAddress, outboxAbi, Caroll11Wallet)
+
+    //console.log(await outboxContract.TransferredToAddress(eventsData[0].position))
+
+
     const transferWithdrawTx = await outboxContract.transferSpender(
         proofInfo,
         eventsData[0].position,
@@ -101,12 +125,10 @@ const main = async () => {
         eventsData[0].timestamp,
         eventsData[0].callvalue,
         eventsData[0].data,
-        RecieverL1Wallet.address
+        Nancyl11Wallet.address
     )
     const transferWithdrawRec = await transferWithdrawTx.wait()
     console.log(transferWithdrawRec)
-    const value = outboxContract.isTransferred[eventsData[0].position].call
-    console.log(value)
 
 };
 main()

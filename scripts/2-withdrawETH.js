@@ -2,12 +2,11 @@ const { utils, providers, Wallet } = require("ethers");
 const { EthBridger, getL2Network, addCustomNetwork } = require("@arbitrum/sdk");
 const { parseEther } = utils;
 
-const walletPrivateKey = process.env.PRIVKEY;
 const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
-const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
-const l2Wallet = new Wallet(walletPrivateKey, l2Provider);
+const Alicel1Wallet = new Wallet(process.env.Alice_PRIVKEY, l1Provider);
+const Alicel2Wallet = new Wallet(process.env.Alice_PRIVKEY, l2Provider);
 
 const main = async () => {
   const LocalTokenBridge = {
@@ -27,11 +26,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
-    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
-    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
-    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
-    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
+    bridge: "0x2d8f508c9fb4f935d0bf2ea564668301b33672b0",
+    inbox: "0xf8e40b2737d8d2bbc9613c607327166d27cec4db",
+    sequencerInbox: "0x6cd6e23364159988080db3b719be13c95244855f",
+    outbox: "0xf2e4f13b9278356d5f0a85122e63600a93ed6507",
+    rollup: "0xb292907c55d4a11ee6c9fb15586f4d3e3125b588",
   };
 
   const l1localTestNetwork = {
@@ -57,7 +56,7 @@ const main = async () => {
     isCustom: true,
     retryableLifetimeSeconds: 604800,
   };
-  //console.log(l2goerliNitroTest.ethBridge)
+ 
   const newNetwork = addCustomNetwork({
     customL1Network: l1localTestNetwork,
     customL2Network: l2localTestNetwork,
@@ -76,11 +75,11 @@ const main = async () => {
   /**
    * First, let's check our L2 wallet's initial ETH balance and ensure there's some ETH to withdraw
    */
-  const l2WalletInitialEthBalance = await l2Wallet.getBalance();
+  const l2WalletInitialEthBalance = await Alicel2Wallet.getBalance();
 
   if (l2WalletInitialEthBalance.lt(ethFromL2WithdrawAmount)) {
     console.log(
-      `Oops - not enough ether; fund your account L2 wallet currently ${l2Wallet.address} with at least 0.000001 ether`
+      `Oops - not enough ether; fund your account L2 wallet currently ${Alicel2Wallet.address} with at least 0.000001 ether`
     );
     process.exit(1);
   }
@@ -92,8 +91,8 @@ const main = async () => {
    */
 
   const withdrawTx = await ethBridger.withdraw({
-    l2Signer: l2Wallet,
-    destinationAddress: l1Wallet.address,
+    l2Signer: Alicel2Wallet,
+    destinationAddress: Alicel1Wallet.address,
     amount: ethFromL2WithdrawAmount
     
   })
@@ -107,11 +106,8 @@ const main = async () => {
    */
   console.log(`Ether withdrawal initiated! 🥳 ${withdrawRec.transactionHash}`);
 
-  const withdrawEventsData = await withdrawRec.getL2ToL1Events();
-  console.log("Withdrawal data:", withdrawEventsData);
-  console.log(
-    `To to claim funds (after dispute period), see outbox-execute repo ✌️`
-  );
+  //const withdrawEventsData = await withdrawRec.getL2ToL1Events();
+  //console.log("Withdrawal data:", withdrawEventsData);
 };
 main()
   .then(() => process.exit(0))

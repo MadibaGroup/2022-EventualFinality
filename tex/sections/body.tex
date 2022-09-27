@@ -49,11 +49,21 @@
 \item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
 \item Modify outbox to allow tradeable exits
 \item L1 gas costs: new function (transferSpender) : 
-First Transfer: gasUsed: 85,945
-\item L1 gas costs: execute:
+First Transfer: 
+1) Alice withdraws ETH from L2
+2) She transfers her exit to Bob
+transferSpender in this case costs : gasUsed : 85,945
+Second Transfer: 
+2) Now Bob transfer his exit to Carol
+transferSpender in this case costs : gasUsed : 48,810
+Third Transfer:
+2) Now Carol transfer his exit to Nancy
+transferSpender in this case costs : gasUsed : 48,798
 
-execute after the change: first trade: gasUsed: 133,518
- before and after (1 trade, 2 trades, 3 trades) (functions that run that got modified) (difference of two mappings)
+ (difference of two mappings)
+
+\item L1 gas costs: execute the exit: 91,418
+
 \item Unit tests: say something
 \item What happens when an assertion fails? (pro: ticket fails with assertion, better for prediction markets (betting on assertion which is a batch of exits); ticket passes even if assertion fails, sounds better (caveat: probably won't happen)
 \item Challenges: SDK, where to change, unit test failed assertions (good assertion, bad assertion where withdrawal is ok, bad assertion where the withdrawal is problematic)

@@ -5,13 +5,11 @@ const {
   L2ToL1MessageStatus,
 } = require("@arbitrum/sdk");
 
-const walletPrivateKey = process.env.PRIVKEY;
-
 const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
 
-const l1Wallet = new Wallet(walletPrivateKey, l1Provider);
-const RecieverL1Wallet = new Wallet(process.env.DEVNET_PRIVKEY, l1Provider);
+const Alicel1Wallet = new Wallet(process.env.Alice_PRIVKEY, l1Provider);
+const Recieverl1Wallet = new Wallet(process.env.Nancy_PRIVKEY, l1Provider);
 
 const main = async () => {
   const LocalTokenBridge = {
@@ -31,11 +29,11 @@ const main = async () => {
     l2Multicall: "0x5D6e06d3E154C5DBEC91317f0d04AE03AB49A273",
   };
   const LocalETHBridge = {
-    bridge: "0x65f21d35a27b51693be079e9d2451fbfbe795f92",
-    inbox: "0xa222b5ca883aefb000da7f878e955a858a352dae",
-    sequencerInbox: "0xce032fea581d352478400defcd91b716daefd307",
-    outbox: "0xe8c7c45e4be078ea3c345672070322798ae71d03",
-    rollup: "0x4c7637f82a71f0c3cd44e3913345423d1bd51548",
+    bridge: "0x2d8f508c9fb4f935d0bf2ea564668301b33672b0",
+    inbox: "0xf8e40b2737d8d2bbc9613c607327166d27cec4db",
+    sequencerInbox: "0x6cd6e23364159988080db3b719be13c95244855f",
+    outbox: "0xf2e4f13b9278356d5f0a85122e63600a93ed6507",
+    rollup: "0xb292907c55d4a11ee6c9fb15586f4d3e3125b588",
   };
 
   const l1localTestNetwork = {
@@ -67,7 +65,7 @@ const main = async () => {
   });
 
   const receipt = await l2Provider.getTransactionReceipt(
-    "0x9362d1c88ae37a25a34726e75bd28baaffc587e99e2ed87ddf8cf38e5aaeb9be"
+    "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
   );
   const l2Receipt = new L2TransactionReceipt(receipt);
 
@@ -75,7 +73,7 @@ const main = async () => {
    * Note that in principle, a single transaction could trigger any number of outgoing messages; the common case will be there's only one.
    * For the sake of this script, we assume there's only one / just grad the first one.
    */
-  const messages = await l2Receipt.getL2ToL1Messages(l1Wallet, l2Provider);
+  const messages = await l2Receipt.getL2ToL1Messages(Alicel1Wallet, l2Provider);
   const l2ToL1Msg = messages[0];
 
   /**
@@ -101,19 +99,20 @@ const main = async () => {
    /**
    * First, let's check our L1 wallet's ETH balance before executing the withdraw
    */
-  const l1WalletInitialEthBalance = await RecieverL1Wallet.getBalance()
+  const l1WalletInitialEthBalance = await Recieverl1Wallet.getBalance()
   
   /**
    * Now that its confirmed and not executed, we can execute our message in its outbox entry.
    */
-  const res = await l2ToL1Msg.execute(l2Provider);
-  const rec = await res.wait();
-  console.log("Done! Your transaction is executed", rec);
+  const executeWithdrawTx = await l2ToL1Msg.execute(l2Provider);
+  const executeWithdrawRec = await executeWithdrawTx.wait();
+  console.log("Done! Your transaction is executed", executeWithdrawRec);
 
-  const l1WalleUpdatedEthBalance = await RecieverL1Wallet.getBalance()
+  const l1WalleUpdatedEthBalance = await Recieverl1Wallet.getBalance()
   console.log(
-    `your L1 ETH balance is updated from ${l1WalletInitialEthBalance.toString()} to ${l1WalleUpdatedEthBalance.toString()}`
+    `Reciever's L1 ETH balance is updated from ${l1WalletInitialEthBalance.toString()} to ${l1WalleUpdatedEthBalance.toString()}`
   )
+
 };
 main()
   .then(() => process.exit(0))
