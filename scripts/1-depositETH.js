@@ -20,7 +20,7 @@ var wait = (ms) => {
   while (now - start < ms) {
     now = Date.now();
   }
-}
+};
 const main = async () => {
   const LocalTokenBridge = {
     l1GatewayRouter: "0x4c7708168395aEa569453Fc36862D2ffcDaC588c",
@@ -98,7 +98,7 @@ const main = async () => {
     l2Provider: l2Provider,
   });
 
-  const depositRec = await depositTx.wait()
+  const depositRec = await depositTx.wait();
   console.warn("deposit L1 receipt is:", depositRec.transactionHash);
 
   /**
@@ -108,22 +108,21 @@ const main = async () => {
   console.warn("Now we wait for L2 side of the transaction to be executed ⏳");
   wait(50000);
   const l2Result = await depositRec.waitForL2(l2Provider);
- 
 
   /**
    * The `complete` boolean tells us if the l1 to l2 message was successul
    */
-   l2Result.complete
-   ? console.log(
-       `L2 message successful: status: ${
-         L1ToL2MessageStatus[await l2Result.message.status()]
-       }`
-     )
-   : console.log(
-       `L2 message failed: status ${
-         L1ToL2MessageStatus[await l2Result.message.status()]
-       }`
-     )
+  l2Result.complete
+    ? console.log(
+        `L2 message successful: status: ${
+          L1ToL2MessageStatus[await l2Result.message.status()]
+        }`
+      )
+    : console.log(
+        `L2 message failed: status ${
+          L1ToL2MessageStatus[await l2Result.message.status()]
+        }`
+      );
   /**
    * Our l2Wallet ETH balance should be updated now
    */

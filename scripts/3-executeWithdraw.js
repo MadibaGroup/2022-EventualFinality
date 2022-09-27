@@ -95,12 +95,11 @@ const main = async () => {
   await l2ToL1Msg.waitUntilReadyToExecute(l2Provider, timeToWaitMs);
   console.log("Outbox entry exists! Trying to execute now");
 
-  
-   /**
+  /**
    * First, let's check our L1 wallet's ETH balance before executing the withdraw
    */
-  const l1WalletInitialEthBalance = await Recieverl1Wallet.getBalance()
-  
+  const l1WalletInitialEthBalance = await Recieverl1Wallet.getBalance();
+
   /**
    * Now that its confirmed and not executed, we can execute our message in its outbox entry.
    */
@@ -108,11 +107,10 @@ const main = async () => {
   const executeWithdrawRec = await executeWithdrawTx.wait();
   console.log("Done! Your transaction is executed", executeWithdrawRec);
 
-  const l1WalleUpdatedEthBalance = await Recieverl1Wallet.getBalance()
+  const l1WalleUpdatedEthBalance = await Recieverl1Wallet.getBalance();
   console.log(
     `Reciever's L1 ETH balance is updated from ${l1WalletInitialEthBalance.toString()} to ${l1WalleUpdatedEthBalance.toString()}`
-  )
-
+  );
 };
 main()
   .then(() => process.exit(0))

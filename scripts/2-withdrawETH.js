@@ -56,7 +56,7 @@ const main = async () => {
     isCustom: true,
     retryableLifetimeSeconds: 604800,
   };
- 
+
   const newNetwork = addCustomNetwork({
     customL1Network: l1localTestNetwork,
     customL2Network: l2localTestNetwork,
@@ -93,9 +93,8 @@ const main = async () => {
   const withdrawTx = await ethBridger.withdraw({
     l2Signer: Alicel2Wallet,
     destinationAddress: Alicel1Wallet.address,
-    amount: ethFromL2WithdrawAmount
-    
-  })
+    amount: ethFromL2WithdrawAmount,
+  });
 
   const withdrawRec = await withdrawTx.wait();
 

@@ -1,8 +1,5 @@
 const { providers, Wallet, ethers } = require("ethers");
-const {
-  addCustomNetwork,
-  L2TransactionReceipt
-} = require("@arbitrum/sdk");
+const { addCustomNetwork, L2TransactionReceipt } = require("@arbitrum/sdk");
 
 const l1Provider = new providers.JsonRpcProvider(process.env.L1RPC);
 const l2Provider = new providers.JsonRpcProvider(process.env.L2RPC);
@@ -11,8 +8,6 @@ const Alicel1Wallet = new Wallet(process.env.Alice_PRIVKEY, l1Provider);
 const Bobl1Wallet = new Wallet(process.env.Bob_PRIVKEY, l1Provider);
 const Caroll11Wallet = new Wallet(process.env.Carol_PRIVKEY, l1Provider);
 const Nancyl11Wallet = new Wallet(process.env.Nancy_PRIVKEY, l1Provider);
-
-
 
 const main = async () => {
   const LocalTokenBridge = {
@@ -66,7 +61,7 @@ const main = async () => {
     customL1Network: l1localTestNetwork,
     customL2Network: l2localTestNetwork,
   });
-  
+
   // const transfer1tx = await Alicel1Wallet.sendTransaction({
   //   to: Bobl1Wallet.address,
   //   value: ethers.utils.parseEther("10")
@@ -81,9 +76,9 @@ const main = async () => {
 
   const transfer3tx = await Alicel1Wallet.sendTransaction({
     to: Nancyl11Wallet.address,
-    value: ethers.utils.parseEther("10")
+    value: ethers.utils.parseEther("10"),
   });
-  transfer3tx.wait()
+  transfer3tx.wait();
 
   // const l1WalleEthBalance = await SecondL1Wallet.getBalance()
   // console.log(l1WalleEthBalance.toString())
@@ -91,45 +86,46 @@ const main = async () => {
 
   const receipt = await l2Provider.getTransactionReceipt(
     "0x9c152655a215b8d4a2e8fa73301ed4b5691b7869ba6066e59310c6ed0ea6654e"
-  ); 
+  );
   const l2Receipt = new L2TransactionReceipt(receipt);
 
   /**
    * Note that in principle, a single transaction could trigger any number of outgoing messages; the common case will be there's only one.
    * For the sake of this script, we assume there's only one / just grad the first one.
    */
-   const messages = await l2Receipt.getL2ToL1Messages(l1Provider)
-   const eventsData = await l2Receipt.getL2ToL1Events()
-   const l2ToL1Msg = messages[0];
-   const proofInfo = await l2ToL1Msg.getOutboxProof(l2Provider)
-   
-   
+  const messages = await l2Receipt.getL2ToL1Messages(l1Provider);
+  const eventsData = await l2Receipt.getL2ToL1Events();
+  const l2ToL1Msg = messages[0];
+  const proofInfo = await l2ToL1Msg.getOutboxProof(l2Provider);
+
   const outboxAbi = [
-    'function transferSpender(bytes32[],uint256,address,address,uint256,uint256,uint256,uint256,bytes,address) external',
-    'function TransferredToAddress(uint256) public view returns(address)',
-  ]
-  
-    const outboxAddress = '0xf2e4f13b9278356d5f0a85122e63600a93ed6507' //Change this after each Nitro run
-    const outboxContract = new ethers.Contract(outboxAddress, outboxAbi, Caroll11Wallet)
+    "function transferSpender(bytes32[],uint256,address,address,uint256,uint256,uint256,uint256,bytes,address) external",
+    "function TransferredToAddress(uint256) public view returns(address)",
+  ];
 
-    //console.log(await outboxContract.TransferredToAddress(eventsData[0].position))
+  const outboxAddress = "0xf2e4f13b9278356d5f0a85122e63600a93ed6507"; //Change this after each Nitro run
+  const outboxContract = new ethers.Contract(
+    outboxAddress,
+    outboxAbi,
+    Caroll11Wallet
+  );
 
+  //console.log(await outboxContract.TransferredToAddress(eventsData[0].position))
 
-    const transferWithdrawTx = await outboxContract.transferSpender(
-        proofInfo,
-        eventsData[0].position,
-        eventsData[0].caller, 
-        eventsData[0].destination, 
-        eventsData[0].arbBlockNum,
-        eventsData[0].ethBlockNum,
-        eventsData[0].timestamp,
-        eventsData[0].callvalue,
-        eventsData[0].data,
-        Nancyl11Wallet.address
-    )
-    const transferWithdrawRec = await transferWithdrawTx.wait()
-    console.log(transferWithdrawRec)
-
+  const transferWithdrawTx = await outboxContract.transferSpender(
+    proofInfo,
+    eventsData[0].position,
+    eventsData[0].caller,
+    eventsData[0].destination,
+    eventsData[0].arbBlockNum,
+    eventsData[0].ethBlockNum,
+    eventsData[0].timestamp,
+    eventsData[0].callvalue,
+    eventsData[0].data,
+    Nancyl11Wallet.address
+  );
+  const transferWithdrawRec = await transferWithdrawTx.wait();
+  console.log(transferWithdrawRec);
 };
 main()
   .then(() => process.exit(0))
