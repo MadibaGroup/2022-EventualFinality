@@ -14,10 +14,11 @@
     "lint": "eslint .",
     "format": "prettier './**/*.{js,json,md,yml,sol}' --write && yarn run lint --fix",
     "build": "hardhat compile",
-    "depositETH": "hardhat run 1-depositETH.js",
-    "withdrawETH": "hardhat run 2-withdrawETH.js",
-    "exec-Withdraw": "hardhat run 3-executeWithdraw.js",
-    "transfer-Withdraw": "hardhat run 4-transferWithdraw.js"
+    "depositETH": "hardhat run scripts/1-depositETH.js",
+    "withdrawETH": "hardhat run scripts/2-withdrawETH.js",
+    "exec-Withdraw": "hardhat run scripts/3-executeWithdraw.js",
+    "transfer-Withdraw": "hardhat run scripts/4-transferWithdraw.js",
+    "do-all": "hardhat run scripts/5-allInOne.js"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
