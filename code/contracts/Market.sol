@@ -32,12 +32,12 @@ contract Market {
         bytes data;
         uint256 askPrice;
     }
-    Listing[] listings;
+    Listing listedExit;
 
     function lockExit(uint256 _exitId) external returns (bool) {
         require(
             outbox.checkExitOwner(_exitId) == address(this),
-            "Exit has not been transferred to the Market yet!"
+            "Exit is not transferred to the Market yet!"
         );
         exitLocked = true;
         return true;
@@ -65,20 +65,19 @@ contract Market {
         uint256 _askPrice
     ) external auctionAtStage(States.Closed) ifExitLocked returns (bool) {
         state = States.Open;
-        Listing memory listing = Listing({
-            seller: payable(msg.sender),
-            proof: _proof,
-            index: _index,
-            l2Sender: _l2Sender,
-            to: _to,
-            l2Block: _l2Block,
-            l1Block: _l1Block,
-            l2Timestamp: _l2Timestamp,
-            value: _value,
-            data: _data,
-            askPrice: _askPrice
-        });
-        listings.push(listing);
+        listedExit = Listing(
+            payable(msg.sender),
+            _proof,
+            _index,
+            _l2Sender,
+            _to,
+            _l2Block,
+            _l1Block,
+            _l2Timestamp,
+            _value,
+            _data,
+            _askPrice
+        );
         return true;
     }
 
@@ -96,20 +95,20 @@ contract Market {
         auctionAtStage(States.Open)
         returns (bool)
     {
-        if (msg.value >= listings[0].askPrice) {
+        if (msg.value >= listedExit.askPrice) {
             outbox.transferSpender(
-                listings[0].proof,
-                listings[0].index,
-                listings[0].l2Sender,
-                listings[0].to,
-                listings[0].l2Block,
-                listings[0].l1Block,
-                listings[0].l2Timestamp,
-                listings[0].value,
-                listings[0].data,
+                listedExit.proof,
+                listedExit.index,
+                listedExit.l2Sender,
+                listedExit.to,
+                listedExit.l2Block,
+                listedExit.l1Block,
+                listedExit.l2Timestamp,
+                listedExit.value,
+                listedExit.data,
                 msg.sender
             );
-            listings[0].seller.transfer(msg.value);
+            listedExit.seller.transfer(msg.value);
             state = States.Closed;
         }
         return true;
