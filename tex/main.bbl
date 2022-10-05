@@ -1,0 +1,45 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{clark2014decentralizing}
+Clark, J., Bonneau, J., Felten, E.W., Kroll, J.A., Miller, A., Narayanan, A.:
+  On decentralizing prediction markets and order books. In: Workshop on the
+  Economics of Information Security, State College, Pennsylvania. vol.~188
+  (2014)
+
+\bibitem{demirag2021absentia}
+Demirag, D., Clark, J.: Absentia: Secure multiparty computation on ethereum.
+  In: International Conference on Financial Cryptography and Data Security. pp.
+  381--396. Springer (2021)
+
+\bibitem{gudgeon2019sok}
+Gudgeon, L., Moreno-Sanchez, P., Roos, S., McCorry, P., Gervais, A.: Sok: Off
+  the chain transactions. IACR Cryptol. ePrint Arch.  \textbf{2019}, ~360
+  (2019)
+
+\bibitem{kalodner2018arbitrum}
+Kalodner, H., Goldfeder, S., Chen, X., Weinberg, S.M., Felten, E.W.: Arbitrum:
+  Scalable, private smart contracts. In: USENIX Security Symposium. pp.
+  1353--1370 (2018)
+
+\bibitem{mccorry2021sok}
+McCorry, P., Buckland, C., Yee, B., Song, D.: Sok: Validating bridges as a
+  scaling solution for blockchains. Cryptology ePrint Archive  (2021)
+
+\bibitem{moosavi2021lissy}
+Moosavi, M., Clark, J.: Lissy: Experimenting with on-chain order books. arXiv
+  preprint arXiv:2101.06291  (2021)
+
+\bibitem{sztorc2015truthcoin}
+Sztorc, P.: Truthcoin. peer-to-peer oracle system and prediction marketplace.
+  (2015)
+
+\bibitem{zamyatin2021sok}
+Zamyatin, A., Al-Bassam, M., Zindros, D., Kokoris-Kogias, E., Moreno-Sanchez,
+  P., Kiayias, A., Knottenbelt, W.J.: Sok: Communication across distributed
+  ledgers. In: International Conference on Financial Cryptography and Data
+  Security. pp. 3--36. Springer (2021)
+
+\end{thebibliography}
