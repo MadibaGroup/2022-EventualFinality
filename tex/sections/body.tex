@@ -54,7 +54,7 @@ Arbitrum is described at \textit{USENIX Security}~\cite{kalodner2018arbitrum}. G
 \begin{itemize}
 \item Allow trading of exits (atomic unit) -> track most recent owner (constant time) in outbox. Authorization (only current owner can transfer) -> on execute, check for current owner. 
 \item Self-insurance (staking a fidelity bond) (you need liquidity) 
-\item Prediction market: someone else will insure it
+\item Prediction market: someone else will insure it (better than insurance because you can exit quickly, change your mind, make money on over-/under- without necessarily agreeing with the position you are buying
 \end{itemize}
 
 \subsection{Implementation} 
