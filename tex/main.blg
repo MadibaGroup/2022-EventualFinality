@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2019)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: splncs04.bst
+Database file #1: bib/L2.bib
+Warning--I didn't find a database entry for ""
+You've used 8 entries,
+            2850 wiz_defined-function locations,
+            636 strings with 5943 characters,
+and the built_in function-call counts, 4624 in all, are:
+= -- 368
+> -- 176
+< -- 6
++ -- 72
+- -- 64
+* -- 287
+:= -- 615
+add.period$ -- 14
+call.type$ -- 8
+change.case$ -- 64
+chr.to.int$ -- 0
+cite$ -- 8
+duplicate$ -- 408
+empty$ -- 403
+format.name$ -- 71
+if$ -- 994
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 87
+newline$ -- 30
+num.names$ -- 16
+pop$ -- 183
+preamble$ -- 1
+purify$ -- 48
+quote$ -- 0
+skip$ -- 112
+stack$ -- 0
+substring$ -- 210
+swap$ -- 205
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 32
+warning$ -- 0
+while$ -- 35
+width$ -- 9
+write$ -- 84
+(There was 1 warning)
