@@ -25,6 +25,8 @@ Owing to how optimistic rollups convince the \layerone bridge contract of who th
 
 Arbitrum is described at \textit{USENIX Security}~\cite{kalodner2018arbitrum}. Gudgeon \etal provide a systemization of knowledge (SoK) of Layer 2 technology (that largely predates rollups)~\cite{gudgeon2019sok}, while McCorry \etal provide an SoK that covers roll-ups and validating bridges~\cite{mccorry2021sok}. Some papers implement research solutions on Arbitrum for improved performance:  decentralized order books~\cite{moosavi2021lissy} and secure multiparty computation~\cite{demirag2021absentia}. Further academic work on optimistic rollups and bridges is largely missing at this time, but we anticipate it will become an important research area.  Other related topics are atomic swaps and prediction markets. Too many papers propose atomic swap protocols to list here but see Zamyatin \etal for an SoK of the area (and a new theoretical result)~\cite{zamyatin2021sok}. Decentralized prediction markets proposals predate Ethereum and include Clark \etal~\cite{clark2014decentralizing} and Truthcoin~\cite{sztorc2015truthcoin}. Early Ethereum projects Augur and Gnosis began as prediction markets. 
 
+The idea of tradable exits predates our work. It is hard to pinpoint a source but it is discussed: \textblue{examples}. In this paper, we do a comparative analysis of tradeable tickets with other approaches (atomic swaps), actually implement it, and suggest parameters. Further, our hedging protocol with prediction markets is, to our knowledge, novel.
+
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 \section{Proposed Solution} 
@@ -32,24 +34,26 @@ Arbitrum is described at \textit{USENIX Security}~\cite{kalodner2018arbitrum}. G
 
 
 \begin{itemize}
-\item Optimistic rollups are being used
-\item Problem: multi-day (\eg seven) window for withdrawal
-\item Why is this a problem? Others are solving this problem (alternative bridges with a TTP). Some examples include: Speculators want to move fast, voting in a DAO (red tape), sell them on L1 or another L2, DApp access on L1 (trading if efficient on L2 but you need to do something on L1). 
-\item Disadvantage relative to zk-rollups
 \item Solution: scope to liquid tokens (ETH and ERC20), open problem: NFTs or other non-substitutable tokens. 
 \item Solution: (1) tradeable exits; (2) market to trade; (3) guaranteed exit (buyer runs ArbOS validator); (4) prediction market solution to guarantee exits to non-validating entities (importantly includes smart contracts)
 \item Testing: we implemented (1) and (3); for (2) and (4), use your favourite DeFi project.
 \end{itemize}
 
 
+\paragraph{Notation.} Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
+
+
 \subsection{Design Landscape}
 
-\paragraph{Notation.} Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
+
 
 \begin{itemize}
 \item Landscape: atomic swaps
 \item Landscape: Change the bridge instead of using a third party contract (reason: too late once you withdrawal)
 \end{itemize}
+
+\subsection{Design Landscape}
+
 
 \subsection{Fast Bridge} 
 
@@ -110,6 +114,54 @@ transferSpender in this case costs : gasUsed : 48,798
 
 \section{Discussion}
 
+\subsection{Pricing} 
+
+\paragraph{Pricing \fail.}
+
+Consider how much you would sell 100 \fail for. As an expected value, it is the product of the payout ($P_0$) and the probability that the \rblock fails to finalize. However the trader is informed because they have run verification software and checked that the \rblock validates. Let $D$ be the ``delivery'' cost of \fail---which in our case is the cost of production and transfer in \layerone gas, which on Ethereum is a fixed cost, invariant to the number of shares. The valuation is:
+
+\[ P_0 \cdot \mathbf{Pr}[ \mathrm{\mathsf{rblock}~fails~to~finalize} |  \mathrm{\mathsf{rblock}~passes~software~verification} ] + D. \]
+
+\paragraph{Working Example.} The promise of an optimistic rollup is that it is very costly to post an \rblock that will not finalize. Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem, the price is $(100 \mathrm{~ETH})\cdot10^{-15}$; a near-zero price for 100 \fail. Thus the cost will be dominated by $D$. Assume it is $0.006$ ETH to generate shares and $0.002$ ETH to transfer shares, for a total of $0.008$ ETH. This is an upperbound for 100 \fail, assuming they are created as a batch. If they are from an even larger batch of shares, the price could be cheaper (\ie economies of scale).
+
+% Final 99%
+%	Valid 99%
+%	Invalid 1%		No one paying attention => 1 in a million
+% Fail 01% 		Pr[fails] => 1 in a billion
+%	Valid 1%		Fuzzing => 1 in a million
+%	Invalid 99% 	
+
+% Fail & Valid: 1 in a billion * 1 in a million		10^-15
+% Final & Valid: (1 - 1 in a billion) (1 - 1 in a milion)	0.999998999000001
+% Fail | Valid: 
+
+\paragraph{Pricing \ethxx.}
+
+Next consider how much you would pay for 100 \ethxx (finalized in 7 days = 168 hours) in \ethone today. Since \ethxx is less flexible than \ethone, it is likely that you do not prefer it to \ethone, so our intuition is that it should be priced less (\eg 100 \ethxx = 99 \ethone). However our solution works for any pricing and we can even contrive corner cases where \ethxx might be worth more than \ethone by understanding the factors underlying the price. 
+
+In traditional finance~\cite{Hull}, forward contracts (and futures, which are standardized, exchange traded forwards) are very similar to \ethxx in that they price today the delivery of an asset or commodity at some future date. One key difference is that with a forward contract, the price is decided today but the actual money is exchanged for the asset at delivery time. When \ethxx is sold for \ethone, both price determination and the exchange happen today, while the delivery of \ethone for \ethxx happens in the future. The consequence is that we can adapt pricing equations for forwards/futures  however the signs (positive/negative) of certain terms need to be inverted. 
+
+From finance~\cite{Hull}, we review the factors that determine the price of a forward contract ($F_0$) and translate what they mean for \ethxx:
+
+\begin{itemize}
+\item \textit{Spot price of \ethone ($S_0$):} the price today of what will be delivered in the future. \ethxx is the future delivery of \ethone, which is by definition worth 100 \ethone today. 
+\item \textit{Settlement time ($\Delta t$):} the time until the exit can be traded for \ethone. In \arb, the time depends on whether disputes happen. We simplify by assuming $\Delta t$ is always 7 days (168 hours) from the assertion time. A known fact about forwards is that $F_0$ and $S_0$ converge as $\Delta t$ approaches 0. 
+\item \textit{Storage cost ($U$):} most relevant for commodities, receiving delivery of a commodity at a future date relieves the buyer of paying to store it in the short-term. Securing \ethxx and securing \ethone is identical in normal circumstances, so not having to take possession of \ethone for $\Delta t$ time does not reduce costs for a \ethxx holder. 
+\item \textit{Delivery cost ($D$):} the cost of delivery of the asset, which in our case will encompass gas costs. Exchanging \ethone for \ethxx requires a transaction fee and also creates a future transaction fee to process the exit (comparable in cost to purchasing a token from an automated market maker). An \ethone seller should be compensated for these costs in the price of \ethxx.
+\item \textit{Exchange rate risk:} a relevant factor when the asset being delivered is different than the asset paying for the forward. In our case, we are determining the price in \ethone for future delivery of \ethone; thus there is no exchange risk at this level of the transaction. However the price of gas (in the term $D$) is subject to ETH/gas exchange rates. For simplicity, we assume this is built into $D$.
+\item \textit{Interest / Cashflow / Yield ($-r+y$):} both \ethone and \ethxx have the potential to earn interest or yield (compounding over $\Delta t$), while for other tokens, there might be an opportunity to earn new tokens simply by holding the token. Let $r$ be the (risk free) interest (yield) rate for \ethone that cannot be earned by \ethxx, while $y$ is the opposite: yield earned from \ethxx and not \ethone. Initially $y>1$ and $r=0$ however with \ethxx becoming mainstream, it is possible $r=y$ (especially hedged \ethxx). 
+\item \textit{Settlement risk:} the risk that \ethone will fail to be delivered for \ethxx discounts the price of \ethxx, but we treat this as zero when \ethxx is hedged wth prediction market shares. 
+
+\end{itemize}
+
+Put together, the price of \ethxx ($F_0$) is: \[ F_0 = (S_0 + U - D)\cdot e^{(-r+y)\cdot\Delta t} \]
+
+\paragraph{Working Example.} Alice starts with 100 \ethxx. She purchases 100 \fail for $0.008$ ETH to hedge the \ethxx. She deposits 100 \ethxx and 100 \fail into a smart contract. How much should her account be credited for (in \ethone)? Smart contracts can hold deposits with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$) (and if the \rblock fails, the cost of redeeming \fail is the same). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
+
+Next, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominate. $F_0=0.04186$ ETH and \fail still costs $0.008$ ETH. Alice ends up with 0.03386 \ethone which is only 67.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars.
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 \subsection{Where to Solve Problem? }
 \begin{itemize}
 \item Exit to a third party collateral contract, implements trading
@@ -145,24 +197,28 @@ transferSpender in this case costs : gasUsed : 48,798
 \item Exit pools
 \end{itemize}
 
-\subsection{Pricing} 
 
-How much is 100 \ethxx worth in \ethone? Using intuition, we have been treating it as worth slightly less than its delivery value (\eg 99 \ethone). The intuition is that no one prefers \ethxx to \ethone, and it is not cheaper to hold \ethxx instead \ethone, so buying \ethxx requires compensation (in finance, this is called normal backwardation). 
 
- but we now describe the factors that impact the price ($F_0$). We observe that \ethxx is like a futures contract: it is the delivery of ETH in a certain number of days. Here is a standard set of terms used to price a futures contract, and the translation into our setting:
 
-\begin{itemize}
-\item \textit{Spot price ($S_0$).} 100 \ethxx is equivalent to the delivery of 100 \ethone at some future settlement date. The value of 100 \ethone today is 100 \ethone. 
-\item \textit{Exchange risk.} We assume that the currency or token used to purchase an exit is the same as the currency or token that will be released by the outbox; thus no exchange risk. 
-\item \textit{Settlement time ($\Delta t$).} The time until the \ethone can be withdrawn. In reality, this time is variable, depending on dispute. We simplify and assume it is known (\eg always 7 days from the assertion time). As $\Delta t$ approaches 0, the $F_0$ 
-\item \textit{Storage cost ($U$).} Securing \ethxx and securing \ethone is identical, so not having to take possession of \ethone for $\Delta t$ time does not reduce costs for a \ethxx holder (the way it might for a commodity that has to be stored). 
-\item \textit{Cashflow / Yield ($r$)} It is theoretically possible to use \ethone to earn interest    from underlying
-\item \textit{Delivery cost ($D$).}  The \ethxx holder needs to pay the gas fees for retrieving \ethone. This is inverted from a typical futures contract with physical delivery where the holder of the futures does not pay.  In optimistic rollups, this is comparable to a token exchange on a market (\eg Uniswap), but more expensive than a simple \ethone transfer. Further the initial swap of \ethxx and \ethone has to be paid for. 
-\item \textit{Settlement risk ($k$).} 
+% Pr [finalize | valid]
+% Pr [finalize] high b/c you will get slashed
+% Pr [valid] higher than below (Pr [valid | fin] + Pr [valid | !fin])
+% Pr [valid | finalize] 0.99999999%
 
-\end{itemize}
 
-\[ F_0 = (S_0 + U - D)\cdot e^{(r-q-k)\cdot\Delta t} \]
+% Pr [ valid ] - Pr[valid | finalize] -> bigger -> lower probability (false positive)
+% Pr [valid ] - Pr[finalize] -> bigger -> lower probability (false positive) 
+
+% 1 in a million rblocks fail
+% 1 in a thousand failing blocks will validate 
+
+% Pr[fail] = 0.00001 (low b/c you will get slashed) 
+%Pr[validate | fail] =  0.001   (coding mistake; false negative) 
+%Pr[]
+
+
+%Alice needs oil in 60 days. She can buy oil today but she must store it at some, say fixed, cost $U$. Further she must spend the money today and cannot earn interest ($r$) on the money in the meantime (but she could earn yield $y$ on the oil). By buying today, she avoids the risk $k$ that delivery is delayed or breached.
+
 
 % are the factors that impact this price? 
 
