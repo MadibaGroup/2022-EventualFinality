@@ -31,21 +31,65 @@ The idea of tradable exits predates our work. It is hard to pinpoint a source bu
 
 \section{Proposed Solution} 
 
-
-
-\begin{itemize}
-\item Solution: scope to liquid tokens (ETH and ERC20), open problem: NFTs or other non-substitutable tokens. 
-\item Solution: (1) tradeable exits; (2) market to trade; (3) guaranteed exit (buyer runs ArbOS validator); (4) prediction market solution to guarantee exits to non-validating entities (importantly includes smart contracts)
-\item Testing: we implemented (1) and (3); for (2) and (4), use your favourite DeFi project.
-\end{itemize}
-
-
-\paragraph{Notation.} Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
-
+For simplicity, we will describe a fast exit system for ETH but it is designed for any fungible token native to \layerone, available for exchange on \layerone. Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
 
 \subsection{Design Landscape}
 
+\begin{table}[t]
+    \renewcommand{\arraystretch}{1.3}
+    \centering
+    
+    \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}} llccccccccccccc}
+    
+    \textit{Type} &
+    \textit{Example} & 
+    \headrow{No trusted third party} & 
+    \headrow{Within a \layerone transaction} &
+    \headrow{Within a \layertwo rollup} &  
+    \headrow{No griefing} &
+    \headrow{No free option} & 
+    \headrow{No super dealers} & 
+    \headrow{	} & 
+    \headrow{	} \\ \hline 
+    
+    Normal Exit (baseline)   	& Arbitrum		&\full	&	&	&	&	&	&	&	\\ \hline
+    Centralized   			& Coinbase	&	&\full	&\full	&\full	&\full	&\full	&	&	\\
+    HTCL Swap 			& Cellar		&\full	&\prt	&\full	&	&	&	&	&	\\
+    Conditional Transfers	& StarkEx		&\full	&\full	&\full	&	&	&	&	&	\\ % data quality
+    Bridge Token 			& Hop 		&\prt	&\prt	&\full	&\full	&\full	&	&	&	\\ 
+    Tradeable Exits  		& This Work	&\full	& 	&\full	&\full	&\full	&	&	&	\\ 
+    Hedged Tradeable Exits  	& This Work	&\full	& 	&\full	&\full	&\full	&\full	&	&	\\ \hline
+                                                                                        
+    \end{tabular*}
+    
+\caption{Comparing alternatives for faster withdrawals where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied.\label{tab:landscape}}
 
+\end{table}
+
+
+\paragraph{Centralized.} Consider Alice who has 100 \ethtwo and wants 99.95 \ethone for it (or an amount close to that). We describe a set of solutions for Alice. If we admit a centralized trusted party, such as an exchange (\eg \textit{Coinbase}, \textit{Binance}), then a market for \ethtwo/\ethone can be established with liquidity on both sides. Liquidity might come from a decentralized set of providers, but relaying the outcome of a \layertwo action to \layerone requires a trusted entity. This entity can be distributed to an established set of trustees (called proof of authority) but is not decentralized (\ie not a large, \textit{open} set of participants).  
+
+\paragraph{Atomic Swap.} Assume Bob has 99.95 \ethone and is willing to swap with Alice. An atomic swap binds together (i) an \layertwo transaction moving 100 \ethtwo from Alice to Bob and (ii) a \layerone transaction moving 99.95 \ethone from Bob to Alice. By binding, we mean either both execute or both fail. A hash-timelocked-contract (HTLC) is a standard way of achieving this that works between Ethereum and an EVM-based \layertwo. Its main drawback is that it also has a time window where Alice (assuming she is the first mover in the protocol) must wait on Bob, who might abort causing Alice's \ethtwo to be locked up while waiting (called griefing). Bob also needs to monitor both chains so he cannot be a smart contract. 
+% Example CELR cBridge
+
+\paragraph{Conditional Transfers.} Alice uses a \layerone contract to register a request for payment of 99.95 \ethone (from anyone) with ID number 1337. On \layertwo,  she provides Bob with a signed conditional transaction that withdraws 100 \ethtwo to Bob (in 7 days) \textit{if and only if} a payment has been made on \layerone in the registry (otherwise it becomes invalid after one hour). A more powerful rollup can check the \layerone contract state before deciding to include the \layertwo transaction or not. As in atomic swaps, Bob needs to monitor \layertwo for the conditional transaction before deciding to act on \layerone and submit payment. Also like atomic swaps, Bob can grief Alice.
+% Race conditions if Alice can cancel (and if she can't, infinite grief???)
+
+% https://medium.com/starkware/conditional-transfers-the-key-to-interoperability-2e1de044fb65		X
+% https://medium.com/starkware/starkexchange-fast-withdrawals-using-cookie-jars-88eefea6a11a	X
+% https://docs.starkware.co/starkex/conditional-transfer.html								X
+
+
+\paragraph{Bridge Token.} Hop
+% https://medium.com/onther-tech/cross-rollup-transfer-hop-protocol-2c10ea041e23
+% https://hop.exchange/whitepaper.pdf
+
+\paragraph{Tradeable Exits.} If Alice and Bob withdraws 100 \ethtwo on \layertwo, which (like all \layertwo transactions) is recorded in the \layerone inbox. Bob can agree  results is eventually included in an \rblock 
+
+
+\paragraph{Hedged Tradeable Exits.} Our solution ...
+
+ 
 
 \begin{itemize}
 \item Landscape: atomic swaps
@@ -73,6 +117,9 @@ What is the risk if Carol just accepts \ethxx as if it were \ethone? Carol can c
 
 
 \subsection{Implementation} 
+
+The solution is made up of four components: (1) tradeable exits, (2) a prediction market to hedge the exit, and (3) a market to trade hedged (or unhedged) \ethxx. We implement (1) in \arb \nitro. For (2), one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}) however we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed, slashed). For (3), one can again use an existing market \textblue{but we make \ethxx friendly to external markets by realizing an ERC20 interface}. That said, \ethxx does not compose will with automated market makers (\eg \textit{Uniswap}), the predominate DeFi exchange (see Section~\ref{sec:uniswap}), so we also implement a basic offer contract for selling \ethxx.
+
 
 \begin{itemize}
 \item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
@@ -139,9 +186,9 @@ Consider how much you would sell 100 \fail for. As an expected value, it is the 
 
 Next consider how much you would pay for 100 \ethxx (finalized in 7 days = 168 hours) in \ethone today. Since \ethxx is less flexible than \ethone, it is likely that you do not prefer it to \ethone, so our intuition is that it should be priced less (\eg 100 \ethxx = 99 \ethone). However our solution works for any pricing and we can even contrive corner cases where \ethxx might be worth more than \ethone by understanding the factors underlying the price. 
 
-In traditional finance~\cite{Hull}, forward contracts (and futures, which are standardized, exchange traded forwards) are very similar to \ethxx in that they price today the delivery of an asset or commodity at some future date. One key difference is that with a forward contract, the price is decided today but the actual money is exchanged for the asset at delivery time. When \ethxx is sold for \ethone, both price determination and the exchange happen today, while the delivery of \ethone for \ethxx happens in the future. The consequence is that we can adapt pricing equations for forwards/futures  however the signs (positive/negative) of certain terms need to be inverted. 
+In traditional finance~\cite{Hull}, forward contracts (and futures, which are standardized, exchange traded forwards) are very similar to \ethxx in that they price today the delivery of an asset or commodity at some future date. One key difference is that with a forward contract, the price is decided today but the actual money is exchanged for the asset at delivery time. When \ethxx is sold for \ethone, both price determination and the exchange happen today, while the delivery of \ethone for \ethxx happens in the future. The consequence is that we can adapt pricing equations for forwards/futures however the signs (positive/negative) of certain terms need to be inverted. 
 
-From finance~\cite{Hull}, we review the factors that determine the price of a forward contract ($F_0$) and translate what they mean for \ethxx:
+We review the factors~\cite{Hull} that determine the price of a forward contract ($F_0$) and translate what they mean for \ethxx:
 
 \begin{itemize}
 \item \textit{Spot price of \ethone ($S_0$):} the price today of what will be delivered in the future. \ethxx is the future delivery of \ethone, which is by definition worth 100 \ethone today. 
@@ -149,8 +196,8 @@ From finance~\cite{Hull}, we review the factors that determine the price of a fo
 \item \textit{Storage cost ($U$):} most relevant for commodities, receiving delivery of a commodity at a future date relieves the buyer of paying to store it in the short-term. Securing \ethxx and securing \ethone is identical in normal circumstances, so not having to take possession of \ethone for $\Delta t$ time does not reduce costs for a \ethxx holder. 
 \item \textit{Delivery cost ($D$):} the cost of delivery of the asset, which in our case will encompass gas costs. Exchanging \ethone for \ethxx requires a transaction fee and also creates a future transaction fee to process the exit (comparable in cost to purchasing a token from an automated market maker). An \ethone seller should be compensated for these costs in the price of \ethxx.
 \item \textit{Exchange rate risk:} a relevant factor when the asset being delivered is different than the asset paying for the forward. In our case, we are determining the price in \ethone for future delivery of \ethone; thus there is no exchange risk at this level of the transaction. However the price of gas (in the term $D$) is subject to ETH/gas exchange rates. For simplicity, we assume this is built into $D$.
-\item \textit{Interest / Cashflow / Yield ($-r+y$):} both \ethone and \ethxx have the potential to earn interest or yield (compounding over $\Delta t$), while for other tokens, there might be an opportunity to earn new tokens simply by holding the token. Let $r$ be the (risk free) interest (yield) rate for \ethone that cannot be earned by \ethxx, while $y$ is the opposite: yield earned from \ethxx and not \ethone. Initially $y>1$ and $r=0$ however with \ethxx becoming mainstream, it is possible $r=y$ (especially hedged \ethxx). 
-\item \textit{Settlement risk:} the risk that \ethone will fail to be delivered for \ethxx discounts the price of \ethxx, but we treat this as zero when \ethxx is hedged wth prediction market shares. 
+\item \textit{Interest / Yield ($-r+y$):} both \ethone and \ethxx have the potential to earn interest or yield (compounding over $\Delta t$), while for other tokens, there might be an opportunity to earn new tokens simply by holding the token. Let $r$ be the (risk free) interest (yield) rate for \ethone that cannot be earned by \ethxx, while $y$ is the opposite: yield earned from \ethxx and not \ethone. Initially $y>1$ and $r=0$ however with \ethxx becoming mainstream, it is possible $r=y$ (especially hedged \ethxx). 
+\item \textit{Settlement risk:} the risk that \ethone will fail to be delivered for \ethxx discounts the price of \ethxx, but we treat this as zero when \ethxx is hedged with prediction market shares. 
 
 \end{itemize}
 
@@ -188,6 +235,7 @@ Next, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of
 \end{itemize}
 
 \subsection{Markets}
+\label{sec:uniswap}
 
 \begin{itemize}
 \item Can't use an AMM 
