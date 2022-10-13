@@ -52,11 +52,11 @@ For simplicity, we will describe a fast exit system for ETH but it is designed f
     \headrow{	} & 
     \headrow{	} \\ \hline 
     
-    Normal Exit (baseline)   	& Arbitrum		&\full	&	&	&	&	&	&	&	\\ \hline
+    Normal Exit (baseline)   	& Arbitrum		&\full	&	&	&\full	&\full	&\full	&	&	\\ \hline
     Centralized   			& Coinbase	&	&\full	&\full	&\full	&\full	&\full	&	&	\\
-    HTCL Swap 			& Cellar		&\full	&\prt	&\full	&	&	&	&	&	\\
+    HTLC Swaps 			& Celer		&\full	&\prt	&\full	&	&	&	&	&	\\
     Conditional Transfers	& StarkEx		&\full	&\full	&\full	&	&	&	&	&	\\ % data quality
-    Bridge Token 			& Hop 		&\prt	&\prt	&\full	&\full	&\full	&	&	&	\\ 
+    Bridge Tokens 		& Hop 		&\prt	&\prt	&\full	&	&\full	&	&	&	\\ 
     Tradeable Exits  		& This Work	&\full	& 	&\full	&\full	&\full	&	&	&	\\ 
     Hedged Tradeable Exits  	& This Work	&\full	& 	&\full	&\full	&\full	&\full	&	&	\\ \hline
                                                                                         
@@ -65,7 +65,6 @@ For simplicity, we will describe a fast exit system for ETH but it is designed f
 \caption{Comparing alternatives for faster withdrawals where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied.\label{tab:landscape}}
 
 \end{table}
-
 
 \paragraph{Centralized.} Consider Alice who has 100 \ethtwo and wants 99.95 \ethone for it (or an amount close to that). We describe a set of solutions for Alice. If we admit a centralized trusted party, such as an exchange (\eg \textit{Coinbase}, \textit{Binance}), then a market for \ethtwo/\ethone can be established with liquidity on both sides. Liquidity might come from a decentralized set of providers, but relaying the outcome of a \layertwo action to \layerone requires a trusted entity. This entity can be distributed to an established set of trustees (called proof of authority) but is not decentralized (\ie not a large, \textit{open} set of participants).  
 
