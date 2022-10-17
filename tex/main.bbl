@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
 \providecommand{\doi}[1]{https://doi.org/#1}
@@ -6,18 +6,28 @@
 \bibitem{clark2014decentralizing}
 Clark, J., Bonneau, J., Felten, E.W., Kroll, J.A., Miller, A., Narayanan, A.:
   On decentralizing prediction markets and order books. In: Workshop on the
-  Economics of Information Security, State College, Pennsylvania. vol.~188
-  (2014)
+  Economics of Information Security (WEIS). vol.~188 (2014)
 
 \bibitem{demirag2021absentia}
 Demirag, D., Clark, J.: Absentia: Secure multiparty computation on ethereum.
-  In: International Conference on Financial Cryptography and Data Security. pp.
-  381--396. Springer (2021)
+  In: Workshop on Trusted Smart Contracts (WTSC). pp. 381--396. Springer (2021)
+
+\bibitem{FoBo19}
+Ford, B., B{\"o}hme, R.: Rationality is self-defeating in permissionless
+  systems (2019)
 
 \bibitem{gudgeon2019sok}
-Gudgeon, L., Moreno-Sanchez, P., Roos, S., McCorry, P., Gervais, A.: Sok: Off
-  the chain transactions. IACR Cryptol. ePrint Arch.  \textbf{2019}, ~360
-  (2019)
+Gudgeon, L., Moreno{-}Sanchez, P., Roos, S., McCorry, P., Gervais, A.: Sok:
+  Layer-two blockchain protocols. In: Bonneau, J., Heninger, N. (eds.)
+  Financial Cryptography and Data Security - 24th International Conference,
+  {FC} 2020, Kota Kinabalu, Malaysia, February 10-14, 2020 Revised Selected
+  Papers. Lecture Notes in Computer Science, vol. 12059, pp. 201--226. Springer
+  (2020). \doi{10.1007/978-3-030-51280-4\_12},
+  \url{https://doi.org/10.1007/978-3-030-51280-4\_12}
+
+\bibitem{Har03}
+Harris, L.: Trading and exchanges: market microstructure for practitioners.
+  Oxford (2003)
 
 \bibitem{kalodner2018arbitrum}
 Kalodner, H., Goldfeder, S., Chen, X., Weinberg, S.M., Felten, E.W.: Arbitrum:
@@ -29,8 +39,8 @@ McCorry, P., Buckland, C., Yee, B., Song, D.: Sok: Validating bridges as a
   scaling solution for blockchains. Cryptology ePrint Archive  (2021)
 
 \bibitem{moosavi2021lissy}
-Moosavi, M., Clark, J.: Lissy: Experimenting with on-chain order books. arXiv
-  preprint arXiv:2101.06291  (2021)
+Moosavi, M., Clark, J.: Lissy: Experimenting with on-chain order books. In:
+  Workshop on Trusted Smart Contracts (WTSC) (2021)
 
 \bibitem{sztorc2015truthcoin}
 Sztorc, P.: Truthcoin. peer-to-peer oracle system and prediction marketplace.

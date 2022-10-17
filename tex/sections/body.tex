@@ -48,72 +48,69 @@ For simplicity, we will describe a fast exit system for ETH but it is designed f
     \headrow{Within a \layertwo rollup} &  
     \headrow{No griefing} &
     \headrow{No free option} & 
-    \headrow{No super dealers} & 
-    \headrow{	} & 
+    \headrow{Opt-in anytime} & 
+    \headrow{\layertwo-to-\layertwo} & 
     \headrow{	} \\ \hline 
     
-    Normal Exit (baseline)   	& Arbitrum		&\full	&	&	&\full	&\full	&\full	&	&	\\ \hline
-    Centralized   			& Coinbase	&	&\full	&\full	&\full	&\full	&\full	&	&	\\
-    HTLC Swaps 			& Celer		&\full	&\prt	&\full	&	&	&	&	&	\\
+    Normal Exit (baseline)   	& Arbitrum		&\full	&	&	&\full	&\full	&	&	&	\\ \hline
+    Centralized   			& Coinbase	&	&\full	&\full	&\full	&\full	&	&\full	&	\\
+    HTLC Swaps 			& Celer		&\full	&\prt	&\full	&	&	&	&\full	&	\\
     Conditional Transfers	& StarkEx		&\full	&\full	&\full	&	&	&	&	&	\\ % data quality
-    Bridge Tokens 		& Hop 		&\prt	&\prt	&\full	&	&\full	&	&	&	\\ 
-    Tradeable Exits  		& This Work	&\full	& 	&\full	&\full	&\full	&	&	&	\\ 
+    Bridge Tokens 		& Hop 		&\prt	&\prt	&\full	&	&\full	&	&\full	&	\\ 
+    Tradeable Exits  		& This Work 	&\full	& 	&\full	&\full	&\full	&\full	&	&	\\ 
     Hedged Tradeable Exits  	& This Work	&\full	& 	&\full	&\full	&\full	&\full	&	&	\\ \hline
                                                                                         
     \end{tabular*}
     
-\caption{Comparing alternatives for faster withdrawals where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied.\label{tab:landscape}}
+\caption{Comparing alternatives for fast withdrawals where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied.\label{tab:landscape}}
 
 \end{table}
 
-\paragraph{Centralized.} Consider Alice who has 100 \ethtwo and wants 99.95 \ethone for it (or an amount close to that). We describe a set of solutions for Alice. If we admit a centralized trusted party, such as an exchange (\eg \textit{Coinbase}, \textit{Binance}), then a market for \ethtwo/\ethone can be established with liquidity on both sides. Liquidity might come from a decentralized set of providers, but relaying the outcome of a \layertwo action to \layerone requires a trusted entity. This entity can be distributed to an established set of trustees (called proof of authority) but is not decentralized (\ie not a large, \textit{open} set of participants).  
+\paragraph{Centralized.} Consider Alice who has 100 \ethtwo and wants (something like) 99.95 \ethone for it. We describe a set of solutions for Alice. If we admit a centralized trusted party, such as an exchange (\eg \textit{Coinbase}, \textit{Binance}), then a market for \ethtwo/\ethone can be established with liquidity on both sides. Liquidity might come from a decentralized set of providers, but relaying the outcome of a \layertwo action to \layerone requires a trusted entity. This entity can be distributed to an established set of trustees (called proof of authority) but is not decentralized (\ie not a large, \textit{open} set of participants).  
 
 \paragraph{Atomic Swap.} Assume Bob has 99.95 \ethone and is willing to swap with Alice. An atomic swap binds together (i) an \layertwo transaction moving 100 \ethtwo from Alice to Bob and (ii) a \layerone transaction moving 99.95 \ethone from Bob to Alice. By binding, we mean either both execute or both fail. A hash-timelocked-contract (HTLC) is a standard way of achieving this that works between Ethereum and an EVM-based \layertwo. Its main drawback is that it also has a time window where Alice (assuming she is the first mover in the protocol) must wait on Bob, who might abort causing Alice's \ethtwo to be locked up while waiting (called griefing). Bob also needs to monitor both chains so he cannot be a smart contract. 
 % Example CELR cBridge
 
-\paragraph{Conditional Transfers.} Alice uses a \layerone contract to register a request for payment of 99.95 \ethone (from anyone) with ID number 1337. On \layertwo,  she provides Bob with a signed conditional transaction that withdraws 100 \ethtwo to Bob (in 7 days) \textit{if and only if} a payment has been made on \layerone in the registry (otherwise it becomes invalid after one hour). A more powerful rollup can check the \layerone contract state before deciding to include the \layertwo transaction or not. As in atomic swaps, Bob needs to monitor \layertwo for the conditional transaction before deciding to act on \layerone and submit payment. Also like atomic swaps, Bob can grief Alice.
+\paragraph{Conditional Transfers.} Alice uses a \layerone contract to register a request for payment of 99.95 \ethone (from anyone) with ID number 1337. On \layertwo,  she provides Bob with a signed conditional transaction that withdraws 100 \ethtwo to Bob (in 7 days) \textit{if and only if} a payment has been made on \layerone in the registry for 1337 (otherwise it becomes invalid after one hour). A more powerful rollup can check the \layerone contract state before deciding to include the \layertwo transaction or not. As in atomic swaps, Bob needs to monitor \layertwo for the conditional transaction before deciding to act on \layerone and submit payment. Also like atomic swaps, Bob can grief Alice.
 % Race conditions if Alice can cancel (and if she can't, infinite grief???)
 
 % https://medium.com/starkware/conditional-transfers-the-key-to-interoperability-2e1de044fb65		X
 % https://medium.com/starkware/starkexchange-fast-withdrawals-using-cookie-jars-88eefea6a11a	X
 % https://docs.starkware.co/starkex/conditional-transfer.html								X
 
+\paragraph{Bridge Token.} A third party creates a bridge on \layertwo that converts \ethtwo into a custom ticket that serves as a claim for \ethtwo, and an equivalent bridge on \layerone. Alice burns 100 tickets on \layertwo. Bob notices and generates a claim for \ethone on \layerone (assuming sufficient supply) in the equivalent \layerone bridge. To prevent Bob from maliciously minting tokens on \layerone that were not burned on \layertwo, he must post a fidelity bond of equal or greater value (otherwise Bob is semi-trusted as he can cause insolvency). After the 7 day dispute period, the \layerone bridge can verify Bob's actions are consistent with \layertwo and release his fidelity bond. Note, that when you collapse this functionality, it is equivalent to Bob buying \ethxx from Alice for \ethone and receiving his \ethone back 7 days later. The extra infrastructure is necessary because today native bridges do not support tradeable exits. As in atomic swaps, Bob can fail to act (griefing) which is worst in this case if Alice cannot `unburn' her tokens.
 
-\paragraph{Bridge Token.} Hop
+\paragraph{Comparative Evaluation.} These solution are compared with (hedged) tradeable exits---described next in the paper---in Table~\ref{tab:landscape}.
+ 
 % https://medium.com/onther-tech/cross-rollup-transfer-hop-protocol-2c10ea041e23
 % https://hop.exchange/whitepaper.pdf
+% https://www.youtube.com/watch?v=U9UDblMPMoQ
 
-\paragraph{Tradeable Exits.} If Alice and Bob withdraw 100 \ethtwo on \layertwo, which (like all \layertwo transactions) is recorded in the \layerone inbox. Bob can agree results is eventually included in an \rblock 
+\subsection{Tradeable Exits} 
 
+In this paper, we implement at tradeable exit. An `exit' is the proof submitted by the user after the dispute period to the bridge (which references the outbox) that a token withdrawal has been finalized. Currently in major deployed rollups, an exit can only be redeemed by the account (\ie using \texttt{msg.sender}) that was specified by the user 7 days earlier in the \layertwo withdrawal request. With tradeable exits, the authorized user can transfer the exit to a new address. The outbox tracks transfers and will offer a function to the bridge that answers queries about the current owner of an exit.
 
-\paragraph{Hedged Tradeable Exits.} Our solution ...
+This functionality can be approximated by a third party \layerone contract without changing the bridge. In this scenario, a two-stage withdrawal would occur. The user would specific the contract as the recipient of the exit, and the contract would specify the user as the recipient (initially). The user could then transfer ownership to a new account within the contract. So why modify the bridge/outbox? We have two main arguments: (1) it is more efficient for the user to have the functionality natively in the bridge/outbox, which they have to interact with anyways; and (2) a user who withdraws normally to their own account cannot change their mind and opt-in to a fast withdrawal---it is too late. With tradeable exits, a user can decide at anytime to expedite the withdrawal. This allows flexibility for users who are not initially aware of the 7 day dispute window (antidotally, this is a common concern on support channels for optimistic rollups), whose reasons for needing a fast exit emerge sometime within the 7 days, or they are simply waiting on a lower price to exit fast.
 
- 
+In our protocol so far, Alice wants to fast withdraw 100 \ethtwo. Bob has 100 \ethone that he will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. In this case, Alice will withdraw 100 \ethxx and swap it for Bob's 100 \ethone, while paying a fee to Bob (we compute fees in Section~\ref{sec:pricing}).  
 
-\begin{itemize}
-\item Landscape: atomic swaps
-\item Landscape: Change the bridge instead of using a third party contract (reason: too late once you withdrawal)
-\end{itemize}
+\subsection{Hedged Tradeable Exits}
 
-\subsection{Design Landscape}
+One remaining issue with this method is how specialized Bob is: he must have liquidity in \ethone, be an active trader who knows how to price futures, and be an \layertwo validator. While we can expect blockchain participants with each specialization, it is a lot to assume of a single entity. The goal of this subsection is to split Bob into two distinct participants: one that has \ethone liquidity but does not know about \layertwo (Carol) and one that knows about \layertwo but is not necessarily an active trader on \layerone (David). The main impact of this change is that Carol can be an autonomous \layerone smart contract. Recall that Alice wants \ethone quickly in order to do something on \layerone with it; Carol can be that destination account or contract.
 
+The primary risk to Carol accepting \ethxx as if it were \ethone is that the \rblock containing the \ethxx withdrawal fails and the exit is worthless. If Alice can obtain insurance for the \ethxx that can be verified via \layerone, then Carol's risk is hedged and she could accept \ethxx. The insurance could take different forms but we propose using a prediction market.
 
-\subsection{Fast Bridge} 
+\paragraph{Prediction markets.} A decentralized prediction market is an autonomous (\eg vending machine-esque) third party \layerone contract. We model it based on~\cite{clark2014decentralizing}. A user can request that a new market is created for a given \rblock. The market checks the outbox for the \rblock and its current status (which must be pending). Once opened, any user can submit 1 \ethone (for example, the actual amounts would be smaller but harder to read) and receive two `shares': one that is a bet that the \rblock will finalize, called \final, and one that is a bit that the \rblock will fail called \fail. These shares can be traded on any platform. At any time while the prediction market is open, any user can redeem 1 \final and 1 \fail for 1 \ethone. Once the dispute period is over, any user can request that the market closes. The market checks the rollup's outbox for the status of the \rblock---since both contacts are \layerone, this can be done directly without oracles or governance. If the \rblock finalizes, it offer 1 \ethone for any 1 \final (and conversely if it fails). The market always has enough \ethone to fully settle all outstanding shares.
 
-\begin{itemize}
-\item Allow trading of exits (atomic unit) -> track most recent owner (constant time) in outbox. Authorization (only current owner can transfer) -> on execute, check for current owner. 
-\item Self-insurance (staking a fidelity bond) (you need liquidity) 
-\item Prediction market: someone else will insure it (better than insurance because you can exit quickly, change your mind, make money on over-/under- without necessarily agreeing with the position you are buying
-\end{itemize}
+It is argued in the prediction market literature~\cite{clark2014decentralizing} that (1) the price of one share matches the probability (according to the collective wisdom of the market) that its winning condition will occur, and (2) the prices of 1 \final and 1 \fail will sum up to 1 \ethone. For example, if \fail trades for 0.001 \ethone, then (1) the market believes the \rblock will fail with probability 0.1\% and (2) \final will trade for  0.999 \ethone. These arguements do not assume market friction: if the gas cost for redeeming shares is $D$ (for delivery cost), the share's price will incorporate $D$ as discount in the price. Note that since $D$ is a fixed cost for any number of shares, how much it reduces the price of a single share depends on the scale of the market. We model this in Section~\ref{sec:pricing}. Last, prediction markets are flexible for traders who can enter and exit positions---at a profit, if they correctly identify over- and/or under-valued forecasts. This is in contrast to an insurance-esque arrangement where the insurer is committed to holding their position until completion of the arrangement.
 
-\subsection{Prediction Market}
+\paragraph{Hedging exits.} Given a prediction market, Alice can hedge 100 \ethxx by obtaining 100 \fail as insurance. Any autonomous \layerone contract (`Carol') should be willing to accept a portfolio of 100 \ethxx and 100 \fail as a guaranteed delivery of 1 \ethone after the dispute period, even if Carol cannot validate the state of \layertwo.  Perhaps surprisingly, this result is narrow. At first, it might seem we have successfully separated Carol---the \layerone contract that is \layertwo-agnostic---from the \layertwo validator David. However if Alice is able to obtain 100 \fail, that means someone else is holding 100 \final. 
 
-In our protocol so far, Alice wants to fast withdraw 100 \ethtwo. Bob has 100 \ethone that he will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. In this case, Alice will withdraw 100 \ethxx and swap it for Bob's 100 \ethone, while paying a fee to Bob. 
+Consider Path 1 through the protocol. Alice withdrawals 100 \ethtwo from \layertwo and obtains 100 \ethxx. Bob creates 100 \fail and 100 \final for a cost of 100 \ethone. Alice buys 100 \fail from Bob for a small fee. Alice gives Carol 100 \ethxx and 100 \fail and is credited as if she deposited 100 \ethone. In seven days, Bob gets 100 \ethone for his 100 \final and Carol gets 100 \ethone for her 100 \ethxx. If the \rblock fails, Bob has 0 \ethone and Carol has 100 \ethone from the 100 \fail. In both cases, Alice has a balance of 100 \ethone with Carol. 
 
-One remaining issue with this method is how specialized Bob is: he must have liquidity in \ethone, be an active trader who knows how to price futures, and be an \layertwo validator. While we can expect blockchain participants with each specialization, it is a lot to assume of a single entity. The goal of this subsection is to split Bob into two distinct participants: one that has \ethone liquidity but does not know about \layertwo (Carol) and one that knows about \layertwo but is not necessarily an active trader on \layerone (David). The main impact of this change is that Carol can be an autonomous \layerone smart contract. Carol might be an intermediary that exchanges \ethxx and \ethone. Alternatively, recall that Alice wants \ethone quickly in order to do something on \layerone with it; Carol can be that destination account or contract.
+In path 2, Alice withdrawals 100 \ethtwo from \layertwo and obtains 100 \ethxx. Alice sells 100 \ethxx to Bob for 100 \ethone. Alice gives Carol 100 \ethone and is credited with a balance of 100 \ethone. In seven days, Bob gets 100 \ethone for his 100 \ethxx and Carol has 100 \ethone. If the \rblock fails, Bob has 0 \ethone, Carol has 100 \ethone, and Alice has a balance of 100 \ethone with Carol.
 
-What is the risk if Carol just accepts \ethxx as if it were \ethone? Carol can check, using \layerone only, that Alice owns \ethxx within a disputable assertion that is registered in the \layerone outbox of the rollup. The risk is that the assertion is wrong and is not finalized. 
-
+Modulo differing gas costs and market transaction fees, paths 1 and 2 are equivalent. Path 2 does not use a prediction market at all, it just uses basic tradeable exits. So do prediction markets actually add nothing to tradeable exits? Three of the most common types of traders are utility traders, speculators, and dealers~\cite{Har03}. With a prediction market Alice is a utility trader and Bob is dealer. However there might exist speculators who want to participate in the market because they have forecasts about rollup technology, a given \rblock, the potential for software errors in the rollup or in the validator software, \etc. Executives of rollup companies could receive bonuses in \final. Skeptics of rollups might bet against the technology with \fail. Speculators add liquidity to the prediction market which reduces transactional fees for Alice. However it also brings externalities to the rollup system, which relies on incentives, where the side-bets on an \rblock could exceed the staking requirements for posting an \rblock. However this at least makes the externalities visible---there is no way to prevent them and they exist in any decentralized incentive-based system~\cite{FoBo19}. 
 
 \subsection{Implementation} 
 
@@ -160,30 +157,12 @@ transferSpender in this case costs : gasUsed : 48,798
 
 \section{Discussion}
 
-\subsection{Pricing} 
-
-\paragraph{Pricing \fail.}
-
-Consider how much you would sell 100 \fail for. As an expected value, it is the product of the payout ($P_0$) and the probability that the \rblock fails to finalize. However the trader is informed because they have run verification software and checked that the \rblock validates. Let $D$ be the ``delivery'' cost of \fail---which in our case is the cost of production and transfer in \layerone gas, which on Ethereum is a fixed cost, invariant to the number of shares. The valuation is:
-
-\[ P_0 \cdot \mathbf{Pr}[ \mathrm{\mathsf{rblock}~fails~to~finalize} |  \mathrm{\mathsf{rblock}~passes~software~verification} ] + D. \]
-
-\paragraph{Working Example.} The promise of an optimistic rollup is that it is very costly to post an \rblock that will not finalize. Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem, the price is $(100 \mathrm{~ETH})\cdot10^{-15}$; a near-zero price for 100 \fail. Thus the cost will be dominated by $D$. Assume it is $0.006$ ETH to generate shares and $0.002$ ETH to transfer shares, for a total of $0.008$ ETH. This is an upper-bound for 100 \fail, assuming they are created as a batch. If they are from an even larger batch of shares, the price could be cheaper (\ie economies of scale).
-
-% Final 99%
-%	Valid 99%
-%	Invalid 1%		No one paying attention => 1 in a million
-% Fail 01% 		Pr[fails] => 1 in a billion
-%	Valid 1%		Fuzzing => 1 in a million
-%	Invalid 99% 	
-
-% Fail & Valid: 1 in a billion * 1 in a million		10^-15
-% Final & Valid: (1 - 1 in a billion) (1 - 1 in a milion)	0.999998999000001
-% Fail | Valid: 
+\subsection{Pricing}  
+\label{sec:pricing}
 
 \paragraph{Pricing \ethxx.}
 
-Next consider how much you would pay for 100 \ethxx (finalized in 7 days = 168 hours) in \ethone today. Since \ethxx is less flexible than \ethone, it is likely that you do not prefer it to \ethone, so our intuition is that it should be priced less (\eg 100 \ethxx = 99 \ethone). However our solution works for any pricing and we can even contrive corner cases where \ethxx might be worth more than \ethone by understanding the factors underlying the price. 
+Consider how much you would pay for 100 \ethxx (finalized in 7 days = 168 hours) in \ethone today. Since \ethxx is less flexible than \ethone, it is likely that you do not prefer it to \ethone, so our intuition is that it should be priced less (\eg 100 \ethxx = 99 \ethone). However our solution works for any pricing and we can even contrive corner cases where \ethxx might be worth more than \ethone by understanding the factors underlying the price. 
 
 In traditional finance~\cite{Hull}, forward contracts (and futures, which are standardized, exchange traded forwards) are very similar to \ethxx in that they price today the delivery of an asset or commodity at some future date. One key difference is that with a forward contract, the price is decided today but the actual money is exchanged for the asset at delivery time. When \ethxx is sold for \ethone, both price determination and the exchange happen today, while the delivery of \ethone for \ethxx happens in the future. The consequence is that we can adapt pricing equations for forwards/futures however the signs (positive/negative) of certain terms need to be inverted. 
 
@@ -196,91 +175,56 @@ We review the factors~\cite{Hull} that determine the price of a forward contract
 \item \textit{Delivery cost ($D$):} the cost of delivery of the asset, which in our case will encompass gas costs. Exchanging \ethone for \ethxx requires a transaction fee and also creates a future transaction fee to process the exit (comparable in cost to purchasing a token from an automated market maker). An \ethone seller should be compensated for these costs in the price of \ethxx.
 \item \textit{Exchange rate risk:} a relevant factor when the asset being delivered is different than the asset paying for the forward. In our case, we are determining the price in \ethone for future delivery of \ethone; thus there is no exchange risk at this level of the transaction. However the price of gas (in the term $D$) is subject to ETH/gas exchange rates. For simplicity, we assume this is built into $D$.
 \item \textit{Interest / Yield ($-r+y$):} both \ethone and \ethxx have the potential to earn interest or yield (compounding over $\Delta t$), while for other tokens, there might be an opportunity to earn new tokens simply by holding the token. Let $r$ be the (risk-free) interest (yield) rate for \ethone that cannot be earned by \ethxx, while $y$ is the opposite: yield earned from \ethxx and not \ethone. Initially $y>1$ and $r=0$ however with \ethxx becoming mainstream, it is possible $r=y$ (especially hedged \ethxx). 
-\item \textit{Settlement risk:} the risk that \ethone will fail to be delivered for \ethxx discounts the price of \ethxx, but we treat this as zero when \ethxx is hedged with prediction market shares. 
+\item \textit{Settlement risk (R):} the probability that \ethone will fail to be delivered for \ethxx discounts the price of \ethxx. We will deal with this separately.
 
 \end{itemize}
 
-Put together, the price of \ethxx ($F_0$) is: \[ F_0 = (S_0 + U - D)\cdot e^{(-r+y)\cdot\Delta t} \]
+Put together, the price of \ethxx ($F_0$) is: \[ F_0 = (S_0 + U - D)\cdot e^{(-r+y)\cdot\Delta t} \cdot R \]
 
-\paragraph{Working Example.} Alice starts with 100 \ethxx. She purchases 100 \fail for $0.008$ ETH to hedge the \ethxx. She deposits 100 \ethxx and 100 \fail into a smart contract. How much should her account be credited for (in \ethone)? Smart contracts can hold deposits with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$) (and if the \rblock fails, the cost of redeeming \fail is the same). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
+This value, $F_0$, is an expected value---the product of the value and the probability that the \rblock fails to finalize. However the trader is informed because they have run verification software and checked that the \rblock validates.
 
-Next, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ ETH and \fail still costs $0.008$ ETH. Alice ends up with 0.03386 \ethone which is only 67.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars.
+
+\[ R = (1-\mathbf{Pr}[ \mathrm{\mathsf{rblock}~fails~to~finalize} |  \mathrm{\mathsf{rblock}~passes~software~verification} ]) \]
+
+\paragraph{Working Example.} We start with $R$. The promise of an optimistic rollup is that it is very costly to post an \rblock that will not finalize. Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem, $R=(1-10^{-15})$; a near-certain probability. Next, consider the resulting price of $F_0$. Alice starts with 100 \ethxx and Bob purchases it from her. Bob can hold \ethxx with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
+
+As a second example, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ \ethone which is only 83.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars.
+
+Last, could \ethxx ever be worth more than \ethone? The equation says yes: with a sufficiently high $U$ or $y$. A contrived example would be some time-deferral reason (\eg tax avoidance) to prefer receiving \ethone in 7 days instead of today. However in order to purchase \ethxx at a premium to \ethone, it would have to be cheaper to trade for it than to simply manufacture it. Someone holding \ethone and wanting \ethxx could simply move it \layertwo and then immediately withdraw it to create \ethxx. The gas cost of this path will be one upper bound on how much \ethxx could exceed \ethone in value. 
+
+\paragraph{Pricing \final and \fail.}
+
+It might appear surprising at first, but one of the main results of this paper is that the price of 100 \ethxx and the price 100 \fail are essentially the same. Both are instruments that are redeemable at the same future time for the same amount of \ethone (either 100 if the \rblock finalizes and 0 if the \rblock fails) with the same probability of failure (that the \rblock fails). The carrying costs of both are identical. There may be slight differences in the gas costs of redeeming \ethone once the dispute period is over, however the operation (at a computational level) is largely the same process. 
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-\subsection{Where to Solve Problem? }
-\begin{itemize}
-\item Exit to a third party collateral contract, implements trading
-\end{itemize}
+\subsection{\rblock Failures}
 
-\subsection{Withdrawal Format }
-\begin{itemize}
-\item Divisible exits
-\item ERC20 / ERC721? -> allowances or not? 
-\end{itemize}
+If Alice's exit is contained in a given \rblock and the \rblock is finalized, so is Alice's exit. However if the \rblock fails, should Alice's exit fail along with it? There is first the question of why the \rblock fails? If it is because of a bad transaction that impacts Alice's exit directly (\eg she never asked for a withdrawal) or indirectly (\eg a double spend that eventually flows into Alice's account), then Alice's exit should fail. But if the \rblock fails for no reason relating to Alice's exit, and the successful challenging \rblock causing it to fail includes Alice's exit, should Alice be able to trade her exit specifically, regardless of the \rblock it appears in? The pros of tying an exit to an \rblock are: (i) it is consistent with the current implementation of \arb; (2) a prediction market can be run for an entire \rblock instead of a fragmentation of markets for each specific exit. The cons are: (i) Alice has to validate the entire \rblock (including transactions after her withdrawal request) before establishing her own confidence in her \ethxx. 
 
-\subsection{Non-Substitutable Withdrawals}
+\subsection{Withdrawal Format}
 
-\begin{itemize}
-\item Illiquid tokens 
-\item NFTs (substitute for ETH -> support)
-\item Messages (oracle updates, read calls, any L2-to-L1 message...) (still offer insurance)
-\end{itemize}
-
-\subsection{Assertion Failures}
-
-\begin{itemize}
-\item does exit go away with the assertion or not? Pros/cons
-\end{itemize}
+As implemented, transferable exits can only be transferred in their entirety. If Alice wants to withdrawal 100 \ethtwo and give 50 \ethxx to one person and 50 \ethxx to another, she cannot change this once she has withdrawn (if she anticipates it, she can request two separate withdrawals for the smaller amounts). We could implement divisible exits and for ETH, it there are no forseen challenges since the semantics of \ethone are specified at the protocol-level of Ethereum. However for custom tokens, the bridge would need to know how divisible (if at all) a token is. In fact, a bridge should ensure that the \layertwo behaviour of the tokens is the same as \layerone (or that any inconsistencies are not meaningful). Even if a token implements are standard, such as ERC20, this only ensures it realizes a certain interface (function names and parameters) and does not mean the functions themselves are implemented as expected (parasitic ERC20 contracts are sometimes used to trick automated trading bots~\cite{}). The end result is that bridges today do not allow arbitrary tokens; they are built with allowlists of tokens, human-reviewed and added by an authorized developer. In this case, ensuring divisible exits are not more divisible than the underlying token should be feasible but we have not implemented it.
 
 \subsection{Markets}
 \label{sec:uniswap}
 
-\begin{itemize}
-\item Can't use an AMM 
-\item Can't run out
-\item Simple auction
-\item Divisible exits
-\item Exit pools
-\end{itemize}
+At the time of writing, the most common way of exchanging tokens on-chain is with an automated market maker (AMM) (\eg \textit{Uniswap}). If Alice withdraws \ethxx and Bob is a willing buyer with \ethone, an AMM is not the best market type for them to arrange a trade. AMMs use liquidity providers (LPs) who provide both token types: Alice has \ethxx but no \ethone that she is willing to lock up (hence why she is trying to fast exit). Bob has \ethone but to be an LP, he would also have to have \ethxx from another user. However this just pushes the problem to how Bob got \ethxx from that user. The first user to sell \ethxx cannot use an AMM without locking up \ethone, which is equivalent to selling \ethxx to herself for \ethone. The second challenge of an AMM is the unlikely case that an \rblock fails and \ethxx is worthless---then the LPs have to race to withdrawal their collateral before it is other users extract it with worthless \ethxx. It is better to use a traditional order-based market, however these are expensive to run on \layerone~\cite{moosavi2021lissy}. One could do the match-making on \layertwo and then have the buyer and sell execute of \layerone, but this reintroduces the griefing attacks we have tried to avoid. For now, we implement a very simple one-sided market where Alice can deposit her \ethxx and an offer price, and Bob can later execute the trade against. If Alice is unsure how to price \ethxx, an auction mechanism could be used instead. 
+
+\subsection{Low Liquidity or Non-Fungible Tokens}
+
+For tokens that have low liquidity on \layerone, or in the extreme case, do not exist yet on \layerone, fast exits do not seem feasible. All the fast exit methods we examined do not actually withdrawal the original tokens faster, this more indirectly substitute a functionally equivalent token that is already on \layerone. However we can still help out low-liquidity withdrawals. First, we should consider \textit{why} the user wants a fast exit. If it is to sell the token, they can sell the exit instead of the token to any buyer that is \layertwo-aware. Prediction markets can always provide insurance with the purchase value in \fail. \textblue{Is this a proper use case for a prediction market? The buyer won't buy the exit because they don't want the NFT so \fail and the claim are not substitutable!}
+
+Another reason to fast withdrawal might be to use the token. For example, a user might have bought governance tokens on \layertwo because it was cheaper, but when a snap election over an emergency measure is proposed on \layerone, they realize they cannot get their tokens out of \layertwo fast enough to vote. Because the vote is contentious, other holders to not want to sell their tokens for a tradable exit which would prevent them from voting. \textblue{So what can we do?}
+
+Last, an \layertwo-to-\layerone transfer could be a general message rather than a token transfer. For example, an oracle system might operate on \layertwo because it is cheaper, and then a need arises on \layerone for the oracle's data. \textblue{So what can we do?}
+
+%\subsection{Move PM to layer two???}
+
+\section{Concluding Remarks}
 
 
 
-
-% Pr [finalize | valid]
-% Pr [finalize] high b/c you will get slashed
-% Pr [valid] higher than below (Pr [valid | fin] + Pr [valid | !fin])
-% Pr [valid | finalize] 0.99999999%
-
-
-% Pr [ valid ] - Pr[valid | finalize] -> bigger -> lower probability (false positive)
-% Pr [valid ] - Pr[finalize] -> bigger -> lower probability (false positive) 
-
-% 1 in a million rblocks fail
-% 1 in a thousand failing blocks will validate 
-
-% Pr[fail] = 0.00001 (low b/c you will get slashed) 
-%Pr[validate | fail] =  0.001   (coding mistake; false negative) 
-%Pr[]
-
-
-%Alice needs oil in 60 days. She can buy oil today but she must store it at some, say fixed, cost $U$. Further she must spend the money today and cannot earn interest ($r$) on the money in the meantime (but she could earn yield $y$ on the oil). By buying today, she avoids the risk $k$ that delivery is delayed or breached.
-
-
-% are the factors that impact this price? 
-
-% Net present value = expected value - carrying cost - forgone interest + expected appreciation - risk (exchange) 
-% How much ETH do you pay for 100 ETH in 7 days?  100 ETH - forgone interest - expected appreciation + seven day carrying cost - risk
-% F_0 (forward price = variable) = (S_0  (spot price, 100 ETH) - I (cash flow which is zero) + U (carrying costs) + delivery cost (gas for ticket) ) * e^{(r-q-k)T} (interest rate - yield - risk times expiration time)
-% F_0 <? Expected future price = 100 ETH -> backwardation (pay less for ETH in 7 days than you will pay now) -> storage costs are negligible -> extreme backwardation is negative oil futures (oil has cost today, buy futures is negative)
-% Carol wants 100 ETH_L1 in seven days
-% intuition says sell at a discount 100 ETH_L1 = 99.9 ETH_XX (called normal backwardation) however it doesn't matter -> we don't assume this
-% backwardation -> people are time-sensitive
-% exit in gas, swap in gas: slightly more 
-% risk factor -> hedge it out with PM share
-% carrying costs -> negligible (equivalent) 
-% forgone interest
-% yield 
 
 
 
