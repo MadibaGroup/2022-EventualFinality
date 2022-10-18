@@ -87,6 +87,7 @@ For simplicity, we will describe a fast exit system for ETH but it is designed f
 % https://www.youtube.com/watch?v=U9UDblMPMoQ
 
 \subsection{Tradeable Exits} 
+\label{sec:tradeablexits}
 
 In this paper, we implement at tradeable exit. An `exit' is the proof submitted by the user after the dispute period to the bridge (which references the outbox) that a token withdrawal has been finalized. Currently in major deployed rollups, an exit can only be redeemed by the account (\ie using \texttt{msg.sender}) that was specified by the user 7 days earlier in the \layertwo withdrawal request. With tradeable exits, the authorized user can transfer the exit to a new address. The outbox tracks transfers and will offer a function to the bridge that answers queries about the current owner of an exit.
 
@@ -112,9 +113,29 @@ In path 2, Alice withdrawals 100 \ethtwo from \layertwo and obtains 100 \ethxx. 
 
 Modulo differing gas costs and market transaction fees, paths 1 and 2 are equivalent. Path 2 does not use a prediction market at all, it just uses basic tradeable exits. So do prediction markets actually add nothing to tradeable exits? Three of the most common types of traders are utility traders, speculators, and dealers~\cite{Har03}. With a prediction market Alice is a utility trader and Bob is dealer. However there might exist speculators who want to participate in the market because they have forecasts about rollup technology, a given \rblock, the potential for software errors in the rollup or in the validator software, \etc. Executives of rollup companies could receive bonuses in \final. Skeptics of rollups might bet against the technology with \fail. Speculators add liquidity to the prediction market which reduces transactional fees for Alice. However it also brings externalities to the rollup system, which relies on incentives, where the side-bets on an \rblock could exceed the staking requirements for posting an \rblock. However this at least makes the externalities visible---there is no way to prevent them and they exist in any decentralized incentive-based system~\cite{FoBo19}. 
 
-\subsection{Implementation} 
+\section{Implementation and Performance Measurements} 
 
 The solution is made up of four components: (1) tradeable exits, (2) a prediction market to hedge the exit, and (3) a market to trade hedged (or unhedged) \ethxx. We implement (1) in \arb \nitro. For (2), one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}) however we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed, slashed). For (3), one can again use an existing market \textblue{but we make \ethxx friendly to external markets by realizing an ERC20 interface}. That said, \ethxx does not compose will with automated market makers (\eg \textit{Uniswap}), the predominate DeFi exchange (see Section~\ref{sec:uniswap}), so we also implement a basic offer contract for selling \ethxx.
+
+\subsection{Tradeable Exits}
+
+We implement tradeable exits in \arb \nitro. As mentioned in Section~\ref{sec:tradeablexits}, 
+
+%As presented in Section~\ref{sec:tradeablexits}, 
+\paragraph{Trading the exit directly through the bridge/outbox.} We modify the outbox smart contract to add a native support for the fast exit solution. These changes include:
+\begin{itemize}
+\item Adding the \texttt{transferSpender()} function which allows the exit owner to transfer the exit to any \layerone address even though the dispute period is not passed.
+\item Adding the \texttt{TransferredToAddress} mapping which stores key-value pairs very efficiently. The key of the mapping is the exit number and the value is the current owner of the exit.
+\end{itemize}
+To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in the most recent asserted \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross checked against the current owner of the exit (remember we keep track of exit owners using the \texttt{TransferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{TransferredToAddress} mapping.
+
+
+\paragraph{Trading the exit through an \layerone market.} An optional solution for Alice is to transfer her exit through a market that resides on \layerone (instead of directly through the bridge/outbox). To support this solution, we implement and deploy an \layerone market which allows users to trade their exits on \layerone even though the dispute window in not past. In addition, we add another function to the outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. \textblue{Figure...} illustrates an overview of how participants interact with each other in this protocol. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
+
+\paragraph{Trading the exit through an \layerone market.}
+
+
+
 
 
 \begin{itemize}
