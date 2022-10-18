@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1666131114 "main.aux" "main.bbl" "main" 1666131206
+["bibtex main"] 1666136308 "main.aux" "main.bbl" "main" 1666136446
   "./splncs04.bst" 1663610790 33694 182740d5d784dd29ee55be34dddd4ccc ""
   "bib/L2.bib" 1666119284 4143 82cd588c3bed30913448ef7af52cd598 ""
-  "main.aux" 1666131206 6644 561688d4b0963454965fa332f5cfaaf5 "pdflatex"
+  "main.aux" 1666136446 6934 036902e0bce342a4a1da70115e16435d "pdflatex"
   (generated)
-  "main.bbl"
   "main.blg"
-["pdflatex"] 1666131205 "main.tex" "main.pdf" "main" 1666131206
+  "main.bbl"
+["pdflatex"] 1666136445 "main.tex" "main.pdf" "main" 1666136446
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -161,18 +161,19 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1616695603 5169178 a2ce6e2d73f603b690db6777d06dbccb ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1630716789 2724734 c273bb317535886b798f38fedde2c183 ""
   "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
+  "figures/marketflow.pdf" 1666136418 33971 3ab4a57896b0a631624fa71c0202211c ""
   "llncs.cls" 1663610790 43512 637b96de164501a449212e7b2cf4d19d ""
-  "main.aux" 1666131206 6644 561688d4b0963454965fa332f5cfaaf5 "pdflatex"
-  "main.bbl" 1666131114 2390 4fa95d1e29ee2c0c8cfe2fec6c85a073 "bibtex main"
-  "main.out" 1666131206 321 5318a7b87817b67e2ac05295062738be "pdflatex"
+  "main.aux" 1666136446 6934 036902e0bce342a4a1da70115e16435d "pdflatex"
+  "main.bbl" 1666136308 2390 4fa95d1e29ee2c0c8cfe2fec6c85a073 "bibtex main"
+  "main.out" 1666136446 321 5318a7b87817b67e2ac05295062738be "pdflatex"
   "main.tex" 1666096370 1238 519da7533fcf7e1129f04850b4e4873b ""
   "sections/abstract.tex" 1666096370 1474 c2e3fe402a70e19cacd73cb3b82ce7ad ""
-  "sections/body.tex" 1666131205 47294 d1cd3730b2d81c461973570fb8bcfe54 ""
+  "sections/body.tex" 1666136362 47487 638adc9f77967ed973b330b25cda74c7 ""
   "setup/macros.tex" 1665673168 2363 18b88b76bf723d48aa7b8c6e868d0514 ""
   "setup/packages.tex" 1663610790 662 a29e402c830538183aa856ab5b94c800 ""
   "setup/table.tex" 1665673168 293 fb4e4871804acf48187fc3ed1cdef194 ""
   (generated)
+  "main.log"
   "main.pdf"
   "main.aux"
-  "main.log"
   "main.out"

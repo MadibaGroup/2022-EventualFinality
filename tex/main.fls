@@ -837,6 +837,11 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecrm0500.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecss0500.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecss0900.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecsi1000.tfm
+INPUT ./figures/marketflow.pdf
+INPUT ./figures/marketflow.pdf
+INPUT figures/marketflow.pdf
+INPUT ./figures/marketflow.pdf
+INPUT ./figures/marketflow.pdf
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecti0700.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecsi0700.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecti0500.tfm
