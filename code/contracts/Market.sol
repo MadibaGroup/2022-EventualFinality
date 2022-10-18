@@ -113,4 +113,25 @@ contract Market {
         }
         return true;
     }
+
+    function claimExit(uint256 _exitId) external returns (bool) {
+        require(
+            outbox.checkExitOwner(_exitId) == msg.sender,
+            "You're not the current owner of this exit!"
+        );
+        exitLocked = false;
+        outbox.transferSpender(
+            listedExit.proof,
+            listedExit.index,
+            listedExit.l2Sender,
+            listedExit.to,
+            listedExit.l2Block,
+            listedExit.l1Block,
+            listedExit.l2Timestamp,
+            listedExit.value,
+            listedExit.data,
+            msg.sender
+        );
+        return true;
+    }
 }
