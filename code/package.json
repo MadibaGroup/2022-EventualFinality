@@ -21,15 +21,16 @@
     "do-all": "hardhat run scripts/5-allInOne.js"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-mocha": "^9.0.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.3.2",
-    "prettier-plugin-solidity": "^1.0.0-beta.17",
-    "@nomiclabs/hardhat-ethers": "^2.0.2",
     "ethers": "^5.4.1",
-    "hardhat": "^2.2.0"
+    "hardhat": "^2.2.0",
+    "hardhat-contract-sizer": "^2.6.1",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.17"
   },
   "dependencies": {
     "@arbitrum/sdk": "3.0.0-rc.0",

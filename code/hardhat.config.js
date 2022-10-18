@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-ethers");
+require('hardhat-contract-sizer');
 require("dotenv").config();
 module.exports = {
   solidity: {

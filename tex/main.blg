@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: splncs04.bst
+Database file #1: bib/L2.bib
+Warning--I didn't find a database entry for "Hull"
+Warning--I didn't find a database entry for ""
+You've used 11 entries,
+            2850 wiz_defined-function locations,
+            661 strings with 6513 characters,
+and the built_in function-call counts, 5999 in all, are:
+= -- 479
+> -- 209
+< -- 6
++ -- 85
+- -- 74
+* -- 368
+:= -- 791
+add.period$ -- 19
+call.type$ -- 11
+change.case$ -- 81
+chr.to.int$ -- 0
+cite$ -- 11
+duplicate$ -- 531
+empty$ -- 560
+format.name$ -- 83
+if$ -- 1303
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 110
+newline$ -- 39
+num.names$ -- 24
+pop$ -- 241
+preamble$ -- 1
+purify$ -- 58
+quote$ -- 0
+skip$ -- 141
+stack$ -- 0
+substring$ -- 284
+swap$ -- 257
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 42
+warning$ -- 0
+while$ -- 46
+width$ -- 13
+write$ -- 115
+(There were 2 warnings)

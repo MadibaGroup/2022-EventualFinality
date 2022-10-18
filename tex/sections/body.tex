@@ -96,6 +96,7 @@ This functionality can be approximated by a third party \layerone contract witho
 In our protocol so far, Alice wants to fast withdraw 100 \ethtwo. Bob has 100 \ethone that he will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. In this case, Alice will withdraw 100 \ethxx and swap it for Bob's 100 \ethone, while paying a fee to Bob (we compute fees in Section~\ref{sec:pricing}).  
 
 \subsection{Hedged Tradeable Exits}
+\label{sec:PM}
 
 One remaining issue with this method is how specialized Bob is: he must have liquidity in \ethone, be an active trader who knows how to price futures, and be an \layertwo validator. While we can expect blockchain participants with each specialization, it is a lot to assume of a single entity. The goal of this subsection is to split Bob into two distinct participants: one that has \ethone liquidity but does not know about \layertwo (Carol) and one that knows about \layertwo but is not necessarily an active trader on \layerone (David). The main impact of this change is that Carol can be an autonomous \layerone smart contract. Recall that Alice wants \ethone quickly in order to do something on \layerone with it; Carol can be that destination account or contract.
 
@@ -114,64 +115,80 @@ In path 2, Alice withdrawals 100 \ethtwo from \layertwo and obtains 100 \ethxx. 
 Modulo differing gas costs and market transaction fees, paths 1 and 2 are equivalent. Path 2 does not use a prediction market at all, it just uses basic tradeable exits. So do prediction markets actually add nothing to tradeable exits? Three of the most common types of traders are utility traders, speculators, and dealers~\cite{Har03}. With a prediction market Alice is a utility trader and Bob is dealer. However there might exist speculators who want to participate in the market because they have forecasts about rollup technology, a given \rblock, the potential for software errors in the rollup or in the validator software, \etc. Executives of rollup companies could receive bonuses in \final. Skeptics of rollups might bet against the technology with \fail. Speculators add liquidity to the prediction market which reduces transactional fees for Alice. However it also brings externalities to the rollup system, which relies on incentives, where the side-bets on an \rblock could exceed the staking requirements for posting an \rblock. However this at least makes the externalities visible---there is no way to prevent them and they exist in any decentralized incentive-based system~\cite{FoBo19}. 
 
 \section{Implementation and Performance Measurements} 
+To implement our solutions, we get an \arb \nitro test-net up and running locally and use Hardhat~\cite{hardhatonline} to run our experiments and obtain our performance metrics using TypeScript. 
 
-The solution is made up of four components: (1) tradeable exits, (2) a prediction market to hedge the exit, and (3) a market to trade hedged (or unhedged) \ethxx. We implement (1) in \arb \nitro. For (2), one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}) however we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed, slashed). For (3), one can again use an existing market \textblue{but we make \ethxx friendly to external markets by realizing an ERC20 interface}. That said, \ethxx does not compose will with automated market makers (\eg \textit{Uniswap}), the predominate DeFi exchange (see Section~\ref{sec:uniswap}), so we also implement a basic offer contract for selling \ethxx.
+%The solution is made up of four components: (1) tradeable exits, (2) a prediction market to hedge the exit, and (3) a market to trade hedged (or unhedged) \ethxx. We implement (1) in \arb \nitro. For (2), one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}) however we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed, slashed). For (3), one can again use an existing market \textblue{but we make \ethxx friendly to external markets by realizing an ERC20 interface}. That said, \ethxx does not compose will with automated market makers (\eg \textit{Uniswap}), the predominate DeFi exchange (see Section~\ref{sec:uniswap}), so we also implement a basic offer contract for selling \ethxx.
+%Section~\ref{sec:tradeablexits}
 
 \subsection{Tradeable Exits}
 
-We implement tradeable exits in \arb \nitro. As mentioned in Section~\ref{sec:tradeablexits}, 
+\paragraph{Trading the exit directly through the bridge/outbox.} We modify the \arb \nitro outbox to add a native support for the fast exit solution. The modified outbox is open source, written in 294 lines (SLOC) of Solidity, and a bytecode of 6,212 bytes (increased by 1,197 bytes). The solidity code and Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Our modifications include:
 
-%As presented in Section~\ref{sec:tradeablexits}, 
-\paragraph{Trading the exit directly through the bridge/outbox.} We modify the outbox smart contract to add a native support for the fast exit solution. These changes include:
+%the original outbox bytecode size 5,015 is bytes
 \begin{itemize}
 \item Adding the \texttt{transferSpender()} function which allows the exit owner to transfer the exit to any \layerone address even though the dispute period is not passed.
-\item Adding the \texttt{TransferredToAddress} mapping which stores key-value pairs very efficiently. The key of the mapping is the exit number and the value is the current owner of the exit.
-\end{itemize}
-To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in the most recent asserted \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross checked against the current owner of the exit (remember we keep track of exit owners using the \texttt{TransferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{TransferredToAddress} mapping.
+\item Adding the \texttt{isTransferred()} mapping which stores key-value pairs very efficiently. The key of the mapping is the exit number and the value is a boolean.
+\item Adding the \texttt{transferredToAddress} mapping which stores key-value pairs very efficiently. The key of the mapping is the exit number and the value is the current owner of the exit.
+\item Modifying the \texttt{executeTransactionImpl()} function. Once the dispute period is passed and the withdrawal transaction is confirmed, anyone can before we try to execute out message, anyone can call this function from the outbox and release the funds to the account that was specified by the user 7 days earlier in the \layertwo withdrawal request. With our modifications, this function is now enabled to release the requested funds to the current owner of the exit.
+ \end{itemize}
+To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in the most recent asserted \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross checked against the current owner of the exit (remember we keep track of exit owners using the \texttt{transferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{transferredToAddress} mapping. This costs  85,945 Gwei in \layerone gas. Note that the first transfer always costs more as the user has to pay for initializing the \texttt{transferredToAddress} mapping. \texttt{transferSpender()} costs 48,810 and 48,798 Gwei in \layerone gas for the second and third transfer respectively. The \texttt{gasUed} for executing the new \texttt{executeTransactionImpl()} function is 91,418 Gwei in \layerone gas.
 
 
-\paragraph{Trading the exit through an \layerone market.} An optional solution for Alice is to transfer her exit through a market that resides on \layerone (instead of directly through the bridge/outbox). To support this solution, we implement and deploy an \layerone market which allows users to trade their exits on \layerone even though the dispute window in not past. In addition, we add another function to the outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. \textblue{Figure...} illustrates an overview of how participants interact with each other in this protocol. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
+\paragraph{Trading the exit through an \layerone market.} An optional solution for Alice is to transfer her exit through a market that resides on \layerone (instead of directly through the bridge/outbox). To support this solution, we implement and deploy an \layerone market which allows users to trade their exits on \layerone even though the dispute window in not passed. In addition, we add a new function to the \arb \nitro outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. \textblue{Figure...} illustrates an overview of how participants interact with each other in this protocol. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. The market would be open until a trade occurs or Alice calls the \texttt{closeMarket()} on her exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
 
-\paragraph{Trading the exit through an \layerone market.}
+The market and modified outbox are are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
 
-
-
-
+\subsection{Prediction Market}
+As described in Section~\ref{sec:PM}, a prediction market can be used to hedge the exit. To implement this, we offer one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}) however we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed). More specifically, we modify the \arb \nitro outbox and rollupcore smart contracts, modifications include:
 
 \begin{itemize}
-\item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
-\item Implemented a market, following is the gas cost related to the market:
-gasUsed for opening a market on an exit: 328,029
-gasUsed for transferring the exit to the market:  86,701 (it was the first transfer so a bit more expensive that the 2nd, 3rd,.. see below)
-Gas cost for submitting the Bid for when the Bid is greater than ask -> trade occurs and settles in one single submitBid tx:  105,287
-Gas cost for execution is: 92,148
-\item Modify outbox to allow tradeable exits
-\item Modify the Nitro codebase (arbnode and validator) to shrink the fraud proof window from 7 days to 1 minute: (1) Modify the confirmPeriod variable in the arbnode/node.go file, (2) modify the MakeAssertionInterval variable validator/staker.go
-\item To make the bridge prediction market friendly: 
-Modify the outbox: (1) added a Mapping that maps the proposed arbitrum block number (also known as assertion and node) to the pending state. (2) added a function which accepts a proposed block number and adds it to the pending assertions mapping.
-Modify the rollupcore: The validator acts through the RollupCore.sol contract when making an assertion by calling a createNewNode() function. We modify this function so that every time a node is created by the validator it's also added to the outbox's pending assertions mapping (outbox.addToPendingAssertions(latestNodeCreated()))
-
-\item L1 gas costs: new function (transferSpender) : 
-First Transfer: 
-1) Alice withdraws ETH from L2
-2) She transfers her exit to Bob
-transferSpender in this case costs : gasUsed : 85,945
-Second Transfer: 
-2) Now Bob transfer his exit to Carol
-transferSpender in this case costs : gasUsed : 48,810
-Third Transfer:
-2) Now Carol transfer his exit to Nancy
-transferSpender in this case costs : gasUsed : 48,798
-
- (difference of two mappings)
-
-\item L1 gas costs: execute the exit: 91,418
-
-\item Unit tests: say something
-\item What happens when an assertion fails? (pro: ticket fails with assertion, better for prediction markets (betting on assertion which is a batch of exits); ticket passes even if assertion fails, sounds better (caveat: probably won't happen)
-\item Challenges: SDK, where to change, unit test failed assertions (good assertion, bad assertion where withdrawal is ok, bad assertion where the withdrawal is problematic)
-\item Expose assertion failures/successes to external contract (submit ID for assertion, get back status: pending, finalized, or discarded). Write down the SDK call. (what happens to a failed assertions???)
+\item Adding the \texttt{assertionAtState} mapping to the outbox which stores key-value pairs very efficiently. The key of the mapping is the exit number and the value is the user-defined data type \texttt{state} that restrict the variable to have only one of the \texttt{pending and confirmed} predefined values.
+\item Adding the \texttt{markAsPending} function to the outbox which accepts an \rblock and marks it as pending in the \texttt{assertionAtState} mapping.
+\item Adding the \texttt{markAsConfirmed} function to the outbox which accepts an \rblock and marks it as confirmed in the \texttt{assertionAtState} mapping.
+\item Modifying the \texttt{createNewNode()} function in the rollupcore contract. To propose an \rblock, the validator acts through the rollupcore contract by calling a \texttt{createNewNode()} function. We modify this function to call the \texttt{markAsPending()} from the outbox which marks the \rblock as pending.
+\item Modifying the \texttt{confirmNode()} function in the rollupcore contract. Once an \rblock is confirmed, the validator acts through the rollupcore contract via \texttt{confirmNode} to move the now-confirmed \rblock to the outbox. We modify this function to call the \texttt{markAsConfirmed()} from the outbox which marks the \rblock as confirmed.
 \end{itemize}
+
+The modified outbox and rollupcore are open source and written in 297 and 560  lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Once deployed, the bytecode of the outbox and rollupcore is 6,434 and 3,099 bytes respectively.
+
+
+
+
+%
+%\begin{itemize}
+%\item Arbitrum's Nitro. Bridge: inbox, sequencer, outbox.
+%\item Implemented a market, following is the gas cost related to the market:
+%gasUsed for opening a market on an exit: 328,029
+%gasUsed for transferring the exit to the market:  86,701 (it was the first transfer so a bit more expensive that the 2nd, 3rd,.. see below)
+%Gas cost for submitting the Bid for when the Bid is greater than ask -> trade occurs and settles in one single submitBid tx:  105,287
+%Gas cost for execution is: 92,148
+%\item Modify outbox to allow tradeable exits
+%\item Modify the Nitro codebase (arbnode and validator) to shrink the fraud proof window from 7 days to 1 minute: (1) Modify the confirmPeriod variable in the arbnode/node.go file, (2) modify the MakeAssertionInterval variable validator/staker.go
+%\item To make the bridge prediction market friendly: 
+%Modify the outbox: (1) added a Mapping that maps the proposed arbitrum block number (also known as assertion and node) to the pending state. (2) added a function which accepts a proposed block number and adds it to the pending assertions mapping.
+%Modify the rollupcore: The validator acts through the RollupCore.sol contract when making an assertion by calling a createNewNode() function. We modify this function so that every time a node is created by the validator it's also added to the outbox's pending assertions mapping (outbox.addToPendingAssertions(latestNodeCreated()))
+%
+%\item L1 gas costs: new function (transferSpender) : 
+%First Transfer: 
+%1) Alice withdraws ETH from L2
+%2) She transfers her exit to Bob
+%transferSpender in this case costs : gasUsed : 85,945
+%Second Transfer: 
+%2) Now Bob transfer his exit to Carol
+%transferSpender in this case costs : gasUsed : 48,810
+%Third Transfer:
+%2) Now Carol transfer his exit to Nancy
+%transferSpender in this case costs : gasUsed : 48,798
+%
+% (difference of two mappings)
+%
+%\item L1 gas costs: execute the exit: 91,418
+%
+%\item Unit tests: say something
+%\item What happens when an assertion fails? (pro: ticket fails with assertion, better for prediction markets (betting on assertion which is a batch of exits); ticket passes even if assertion fails, sounds better (caveat: probably won't happen)
+%\item Challenges: SDK, where to change, unit test failed assertions (good assertion, bad assertion where withdrawal is ok, bad assertion where the withdrawal is problematic)
+%\item Expose assertion failures/successes to external contract (submit ID for assertion, get back status: pending, finalized, or discarded). Write down the SDK call. (what happens to a failed assertions???)
+%\end{itemize}
 
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
