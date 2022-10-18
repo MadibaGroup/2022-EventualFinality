@@ -213,17 +213,17 @@ At the time of writing, the most common way of exchanging tokens on-chain is wit
 
 \subsection{Low Liquidity or Non-Fungible Tokens}
 
-For tokens that have low liquidity on \layerone, or in the extreme case, do not exist yet on \layerone, fast exits do not seem feasible. All the fast exit methods we examined do not actually withdrawal the original tokens faster, this more indirectly substitute a functionally equivalent token that is already on \layerone. However we can still help out low-liquidity withdrawals. First, we should consider \textit{why} the user wants a fast exit. If it is to sell the token, they can sell the exit instead of the token to any buyer that is \layertwo-aware. Prediction markets can always provide insurance with the purchase value in \fail. \textblue{Is this a proper use case for a prediction market? The buyer won't buy the exit because they don't want the NFT so \fail and the claim are not substitutable!}
+For tokens that have low liquidity on \layerone, or in the extreme case, do not exist yet on \layerone (\eg NFT), fast exits do not seem feasible. All the fast exit methods we examined do not actually withdrawal the original tokens faster, this more indirectly substitute a functionally equivalent token that is already on \layerone. However we can still help out low-liquidity withdrawals. First, we should consider \textit{why} the user wants a fast exit. If it is to sell the token, they can sell the exit instead of the token to any buyer that is \layertwo-aware. To sell to a \layertwo-agnostic buyer, the seller can insure the claim with enough \fail to cover the purchase price. Note that in this case, a prediction market is necessary: the claim is one kind of token, while the \fail can be redeemed for \ethone, so it is not the case where the seller can just sell to the holder of \final.
 
-Another reason to fast withdrawal might be to use the token. For example, a user might have bought governance tokens on \layertwo because it was cheaper, but when a snap election over an emergency measure is proposed on \layerone, they realize they cannot get their tokens out of \layertwo fast enough to vote. Because the vote is contentious, other holders to not want to sell their tokens for a tradable exit which would prevent them from voting. \textblue{So what can we do?}
+Another reason to fast withdrawal might be to use the token. For example, a user might have bought governance tokens on \layertwo because it was cheaper, but when a snap election over an emergency measure is proposed on \layerone, they realize they cannot get their tokens out of \layertwo fast enough to vote. Because the vote is contentious, other holders to not want to sell their tokens for a tradable exit which would prevent them from voting. There is no way around this without modifying the DAO, however it could require voters to transfer their exit, returnable immediately after the election, and stake \ethone as a fidelity bond, returnable after the dispute period if the \rblock containing the exit finalizes.
 
-Last, an \layertwo-to-\layerone transfer could be a general message rather than a token transfer. For example, an oracle system might operate on \layertwo because it is cheaper, and then a need arises on \layerone for the oracle's data. \textblue{So what can we do?}
+Last, an \layertwo-to-\layerone transfer could be a general message rather than a token transfer. For example, an oracle system might operate on \layertwo because it is cheaper, and then a need arises on \layerone for the oracle's data. Again, a prediction market can provide insurance for the data in an exit being incorrect through \fail.
 
 %\subsection{Move PM to layer two???}
 
 \section{Concluding Remarks}
 
-
+This paper addresses a common `pain point' for users of \layertwo rollups on Ethereum. The 7 day dispute period prevents users from withdrawing ETH, tokens, and data quickly. Tradeable exits provide users with flexibility when they withdrawal. If they decide 7 days is too long, they can seek to trade their exit for \ethone. They can decide anytime after the 
 
 
 
