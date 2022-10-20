@@ -1,59 +1,77 @@
 \begin{thebibliography}{10}
-\providecommand{\url}[1]{\texttt{#1}}
-\providecommand{\urlprefix}{URL }
-\providecommand{\doi}[1]{https://doi.org/#1}
 
 \bibitem{clark2014decentralizing}
-Clark, J., Bonneau, J., Felten, E.W., Kroll, J.A., Miller, A., Narayanan, A.:
-  On decentralizing prediction markets and order books. In: Workshop on the
-  Economics of Information Security (WEIS). vol.~188 (2014)
+J.~Clark, J.~Bonneau, E.~W. Felten, J.~A. Kroll, A.~Miller, and A.~Narayanan.
+\newblock On decentralizing prediction markets and order books.
+\newblock In {\em Workshop on the Economics of Information Security (WEIS)},
+  volume 188, 2014.
 
 \bibitem{demirag2021absentia}
-Demirag, D., Clark, J.: Absentia: Secure multiparty computation on ethereum.
-  In: Workshop on Trusted Smart Contracts (WTSC). pp. 381--396. Springer (2021)
+D.~Demirag and J.~Clark.
+\newblock Absentia: Secure multiparty computation on ethereum.
+\newblock In {\em Workshop on Trusted Smart Contracts (WTSC)}, pages 381--396.
+  Springer, 2021.
 
 \bibitem{FoBo19}
-Ford, B., B{\"o}hme, R.: Rationality is self-defeating in permissionless
-  systems (2019)
+B.~Ford and R.~B{\"o}hme.
+\newblock Rationality is self-defeating in permissionless systems.
+\newblock Technical Report cs.CR 1910.08820, arXiv, 2019.
 
 \bibitem{hardhatonline}
-Foundation, N.: Hardhat. \url{https://hardhat.org} (October 2022), (Accessed on
-  10/18/2022)
+N.~Foundation.
+\newblock Hardhat.
+\newblock \url{https://hardhat.org}, October 2022.
+\newblock (Accessed on 10/18/2022).
 
 \bibitem{gudgeon2019sok}
-Gudgeon, L., Moreno{-}Sanchez, P., Roos, S., McCorry, P., Gervais, A.: Sok:
-  Layer-two blockchain protocols. In: Bonneau, J., Heninger, N. (eds.)
-  Financial Cryptography and Data Security - 24th International Conference,
-  {FC} 2020, Kota Kinabalu, Malaysia, February 10-14, 2020 Revised Selected
-  Papers. Lecture Notes in Computer Science, vol. 12059, pp. 201--226. Springer
-  (2020). \doi{10.1007/978-3-030-51280-4\_12},
-  \url{https://doi.org/10.1007/978-3-030-51280-4\_12}
+L.~Gudgeon, P.~Moreno{-}Sanchez, S.~Roos, P.~McCorry, and A.~Gervais.
+\newblock Sok: Layer-two blockchain protocols.
+\newblock In {\em Financial Cryptography}, 2020.
 
 \bibitem{Har03}
-Harris, L.: Trading and exchanges: market microstructure for practitioners.
-  Oxford (2003)
+L.~Harris.
+\newblock {\em Trading and exchanges: market microstructure for practitioners}.
+\newblock Oxford, 2003.
+
+\bibitem{hull2013fundamentals}
+J.~Hull, S.~Treepongkaruna, D.~Colwell, R.~Heaney, and D.~Pitt.
+\newblock {\em Fundamentals of futures and options markets}.
+\newblock Pearson Higher Education AU, 2013.
 
 \bibitem{kalodner2018arbitrum}
-Kalodner, H., Goldfeder, S., Chen, X., Weinberg, S.M., Felten, E.W.: Arbitrum:
-  Scalable, private smart contracts. In: USENIX Security Symposium. pp.
-  1353--1370 (2018)
+H.~Kalodner, S.~Goldfeder, X.~Chen, S.~M. Weinberg, and E.~W. Felten.
+\newblock Arbitrum: Scalable, private smart contracts.
+\newblock In {\em USENIX Security Symposium}, pages 1353--1370, 2018.
 
 \bibitem{mccorry2021sok}
-McCorry, P., Buckland, C., Yee, B., Song, D.: Sok: Validating bridges as a
-  scaling solution for blockchains. Cryptology ePrint Archive  (2021)
+P.~McCorry, C.~Buckland, B.~Yee, and D.~Song.
+\newblock Sok: Validating bridges as a scaling solution for blockchains.
+\newblock Technical report, Cryptology ePrint Archive, 2021.
+
+\bibitem{Mei21}
+S.~Meiklejohn.
+\newblock An evolution of models for zero-knowledge proofs.
+\newblock In {\em EUROCRYPT (invited talk)}, 2021.
 
 \bibitem{moosavi2021lissy}
-Moosavi, M., Clark, J.: Lissy: Experimenting with on-chain order books. In:
-  Workshop on Trusted Smart Contracts (WTSC) (2021)
+M.~Moosavi and J.~Clark.
+\newblock Lissy: Experimenting with on-chain order books.
+\newblock In {\em Workshop on Trusted Smart Contracts (WTSC)}, 2021.
 
 \bibitem{sztorc2015truthcoin}
-Sztorc, P.: Truthcoin. peer-to-peer oracle system and prediction marketplace.
-  (2015)
+P.~Sztorc.
+\newblock Truthcoin.
+\newblock Technical report, 2015.
+
+\bibitem{Whi21}
+C.~Whinfrey.
+\newblock Hop: Send tokens across rollups.
+\newblock Technical report, 2022.
 
 \bibitem{zamyatin2021sok}
-Zamyatin, A., Al-Bassam, M., Zindros, D., Kokoris-Kogias, E., Moreno-Sanchez,
-  P., Kiayias, A., Knottenbelt, W.J.: Sok: Communication across distributed
-  ledgers. In: International Conference on Financial Cryptography and Data
-  Security. pp. 3--36. Springer (2021)
+A.~Zamyatin, M.~Al-Bassam, D.~Zindros, E.~Kokoris-Kogias, P.~Moreno-Sanchez,
+  A.~Kiayias, and W.~J. Knottenbelt.
+\newblock Sok: Communication across distributed ledgers.
+\newblock In {\em Financial Cryptography}, 2021.
 
 \end{thebibliography}
