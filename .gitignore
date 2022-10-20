@@ -5,10 +5,12 @@
 ./code/build/
 ./code/node_modules/
 ./code/.env
-./LaTeX/main.aux
-./LaTeX/main.log
-./LaTeX/main.out
-./LaTeX/main.synctex.gz
+./tex/main.aux
+./tex/main.log
+./tex/main.out
+./tex/main.blg
+./tex/main.fls
+./tex/main.synctex.gz
 *.gz
 *.log
 *.aux

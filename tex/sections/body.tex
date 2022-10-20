@@ -131,7 +131,7 @@ We run \arb \nitro test-net locally and use Hardhat~\cite{hardhatonline} for our
 
 \subsection{Tradeable Exits}
 
-\paragraph{Trading the exit directly through the bridge/outbox.} We fork the \arb \nitro outbox to add native support for tradeable exits. The modified outbox is open source, written in 294 lines (SLOC) of Solidity, and a bytecode of 6,212 bytes (increased by 1,197 bytes). The solidity code and Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Our modifications include:
+\paragraph{Trading the exit directly through the bridge/outbox.} We fork the \arb \nitro outbox to add native support for tradeable exits. The modified outbox is open source, written in 294 lines (SLOC) of Solidity, and a bytecode of 6,212 bytes (increased by 1,197 bytes). The solidity code and Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub:Nitro: Fast-Withdrawals.}} Our modifications include:
 
 %the original outbox bytecode size 5,015 is bytes
 \begin{itemize}
@@ -146,7 +146,7 @@ To execute the \texttt{transferSpender()} function; Alice (who has initiated a w
 
 \paragraph{Trading the exit through an \layerone market.} We also implement and deploy an \layerone market that allows users to trade their exits on \layerone even though the dispute window is not passed (see Section \ref{sec:uniswap} for why \textit{Uniswap} is not appropriate). In addition, we add a new function to the \arb \nitro outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. Figure~\ref{fig:marketflow} illustrates an overview of participant interactions and related gas costs. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. The market would be open until a trade occurs or Alice calls the \texttt{closeMarket()} on her exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
 
-The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
+The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub: Nitro: Fast-Withdrawals.}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
 
 \begin{figure}[t]
 	\includegraphics[width=1\textwidth]{figures/marketflow.pdf}
@@ -166,7 +166,7 @@ As described in Section~\ref{sec:PM}, a prediction market can be used to hedge t
 \item Modifying the \texttt{confirmNode()} function in the RollupCore contract. Once an \rblock is confirmed, the validator acts through the RollupCore contract via \texttt{confirmNode} to move the now confirmed \rblock to the outbox. We modify this function to call the \texttt{markAsConfirmed()} from the outbox which marks the \rblock as confirmed.
 \end{itemize}
 
-The modified outbox and RollupCore are open source and written in 297 and 560  lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://}{GitHub: link is removed for anonymity.}} Once deployed, the bytecode of the outbox and RollupCore is 6,434 and 3,099 bytes respectively.
+The modified outbox and RollupCore are open source and written in 297 and 560  lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub:Nitro: Fast-Withdrawals.}} Once deployed, the bytecode of the outbox and RollupCore is 6,434 and 3,099 bytes respectively.
 
 
 
