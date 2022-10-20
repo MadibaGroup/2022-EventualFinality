@@ -63,6 +63,11 @@ P.~Sztorc.
 \newblock Truthcoin.
 \newblock Technical report, 2015.
 
+\bibitem{Tre22}
+L.~T. Thibault, T.~Sarry, and A.~S. Hafid.
+\newblock Blockchain scaling using rollups: {A} comprehensive survey.
+\newblock {\em {IEEE} Access}, 10:93039--93054, 2022.
+
 \bibitem{Whi21}
 C.~Whinfrey.
 \newblock Hop: Send tokens across rollups.
