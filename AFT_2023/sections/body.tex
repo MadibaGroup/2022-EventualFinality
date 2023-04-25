@@ -29,8 +29,32 @@ Arbitrum is first described at \textit{USENIX Security}~\cite{kalodner2018arbitr
 
 Other related topics are atomic swaps and prediction markets. Too many papers propose atomic swap protocols to list here but see Zamyatin \etal for an SoK of the area (and a new theoretical result)~\cite{zamyatin2021sok}. Decentralized prediction markets proposals predate Ethereum and include Clark \etal~\cite{clark2014decentralizing} and Truthcoin~\cite{sztorc2015truthcoin}. Early Ethereum projects \textit{Augur} and \textit{Gnosis} began as prediction markets. 
 
-% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = =  Sponsored Withdrawals = = = = = = = = = = = = = = = = =
+\section{Sponsored Withdrawals} 
 
+When the dispute period is over, users can execute their withdrawals on \layerone to receive the ETH they had withdrawn from \layertwo using the Arbitrum bridge. This requires users to have available funds in their \layerone wallet to pay for the gas fees required for the execution transaction. This is particularly an issue where users do not have sufficient funds in their \layerone wallets to cover the gas fees upfront. Here, we investigate the feasibility and effectiveness of a tool, \textit{sponsored withdrawal}, as a means to facilitate seamless and cost-effective ETH withdrawals from \layertwo to \layerone using the Arbitrum bridge.
+
+Before the implementation of EIP-1559, users had the ability to use \textit{Flashbots} to submit an all-or-nothing bundle of transactions. In that case, validators (previously "miners") would decide whether to accept these transactions based on the overall funds sent to the coinbase account via \texttt{block.coinbase.transfer()}. However, this is no longer possible due to the introduction of EIP-1559, which now imposes a discrete \textit{base fee} for transactions to be included in the next block.
+
+To tackle this issue, as part of our proposed tool, users will be able to seek sponsorship from others to facilitate the execution of their withdrawal transactions on \layerone. In exchange for sponsoring the transaction, the sponsors will receive rewards. Here we outline the technical details of the protocol and the steps involved in the sponsorship process:
+
+To participate in the protocol, the sponsor needs to deploy the \texttt{sponsor smart contract} provided by the protocol on the \layerone. Once deployed, users seeking sponsorship for the execution of their withdrawal transactions need to create a raw transaction that calls the  \texttt{payToSponsor()} method of the  \texttt{sponsor contract} and sign it, promising to pay the sponsor once the withdrawal transaction is executed.
+
+After creating the raw transaction, the user, let's say Alice, sends the \layertwo hash of her withdrawal transaction along with the signed transaction hex to the sponsor. The sponsor then runs the \texttt{Flashbots script} provided by the protocol, which creates a Flashbots transaction bundle and submits it to the Flashbots network. The bundle includes:
+
+\begin{enumerate}
+
+\item \texttt{tx1}: A call to the \texttt{execute()} method of the \texttt{Sponsor contract} with the sponsor account being the signer of the transaction. This function executes Alice's withdrawal on \layerone.
+
+\item \texttt {tx2}: The signed transaction hex Alice had initially crafted.
+
+\end{enumerate}
+
+Once the bundle is submitted, it is received by validators, who execute the withdrawal transaction on \layerone along with the \texttt{payToSponsor()} method. As a result, the sponsor receives the promised payment, and the user's withdrawal transaction is executed. 
+
+By sending the two transactions as a single all-or-nothing bundle, there is a strong assurance that the transactions will be confirmed together in the same order as provided, or the entire bundle will fail. This approach prevents a situation where, for example, \texttt(tx1) gets confirmed but \texttt(tx2) does not, which would result in the sponsor losing funds and having to execute the Alice's withdrawal transaction for free.
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 \section{Proposed Solution} 
 
 For simplicity, we will describe a fast exit system for withdrawing ETH from \layertwo, however it works for any \layerone native fungible token (\eg ERC20) that is available for exchange on \layerone. We discuss challenges of fast exits for non-liquid/non-fungible tokens in Section~\ref{sec:nfts}. Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
