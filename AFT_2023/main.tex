@@ -1,13 +1,5 @@
-\documentclass[sigconf]{acmart}
-\bibliographystyle{ACM-Reference-Format}
+\documentclass[a4pape,cleveref, autoref, thm-restate, anonymous]{lipics-v2021}
 
-% Page Numbers
-%\settopmatter{printfolios=true}
-
-% Shrink copyright stuff
-%\settopmatter{printacmref=false}
-%\renewcommand\footnotetextcopyrightpermission[1]{}
-%\usepackage{silence}
 
 
 % = = = = = Packages = = = = = %
@@ -15,28 +7,31 @@
 \input{setup/macros}
 \input{setup/table}
 %\input{setup/draft}
+
 % = = = = = Title = = = = = %
+\ccsdesc[500]{Security and privacy}
+\ccsdesc[500]{Security and privacy~Cryptography}
+
+\bibliographystyle{plainurl}
+
+\title{Fast and Furious Withdrawals from Optimistic Rollups} 
+
+\author{Mahsa {Moosavi}}{Concordia University, Canada \and OffchainLabs, United States \and \url{http://https://mahsamoosavi.com} }{mmoosavi@offchainlabs.com}{}{(Optional) author-specific funding acknowledgements}
+% Add Mehdi, Daniel, and Jeremy
+
+
+\keywords{Ethereum, layer 2, rollups, bridges, prediction markets}
+
 
 \begin{document}
+\maketitle
 
-\title{Fast and Furious Withdrawals from Optimistic Rollups}
 
-
-\author{Mahsa Moosavi}
-\affiliation{\institution{Concordia University} \city{Montreal} \state{QC} \country{Canada}}
-\affiliation{\institution{OffchainLabs} \city{NYC} \state{NY} \country{USA}}
-\author{Mehdi Salehi}
-\affiliation{\institution{OffchainLabs} \city{NYC} \state{NY} \country{USA}}
-\author{Daniel Goldman}
-\affiliation{\institution{OffchainLabs} \city{NYC} \state{NY} \country{USA}}
-\author{Jeremy Clark}
-\affiliation{\institution{Concordia University} \city{Montreal} \state{QC} \country{Canada}}
-\email{j.clark@concordia.ca}
 
 % = = = = = Abstract = = = = = %
 \input{"sections/abstract"}
 
-\maketitle
+
 
 % = = = = = Main Body = = = = = %
 
@@ -44,22 +39,8 @@
 
 % = = = = = Ack = = = = = %
 
-\begin{anonsuppress}
-\begin{acks}
-We thank the reviewers who helped to improve our paper. 
-
-J. Clark acknowledges support for this research project from the \grantsponsor{nserc}{National Sciences and Engineering Research Council of Canada (NSERC)}{https://www.nserc-crsng.gc.ca} through the NSERC, Raymond Chabot Grant Thornton, and Catallaxy Industrial Research Chair in Blockchain Technologies \grantnum[https://www.nserc-crsng.gc.ca/Chairholders-TitulairesDeChaire/Chairholder-Titulaire_eng.asp?pid=1045]{nserc}{ IRCPJ/545498-2018} and a Discovery Grant \grantnum{nserc}{RGPIN/04019-2021}
-
-We also acknowledge partial support from 
-\grantsponsor{amf}{Autorité des Marchés Financiers (AMF)}{https://lautorite.qc.ca} and
-\grantsponsor{chaire}{The Chaire Fintech: AMF -- Finance Montréal}{https://chairefintech.uqam.ca} and
-\grantsponsor{opc}{Office of the Privacy Commissioner of Canada (OPC)}{https://www.priv.gc.ca}.
-
-\end{acks}
-\end{anonsuppress}
-
 % = = = = = Bibliography = = = = = %
-
+\clearpage
 \bibliography{bib/L2}
 \nocite{*}
 
@@ -67,6 +48,7 @@ We also acknowledge partial support from
 
 \clearpage
 \appendix
+
 
 \end{document}
 

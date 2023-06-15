@@ -1,12 +1,11 @@
 % !TEX root = ../main.tex
 \section{Introductory Remarks}
 
-Ethereum-compatible blockchain environments, called Layer 2s (or \layertwos)~\cite{gudgeon2019sok}, have demonstrated an ability to reduce transaction fees by 99--99.9\% while preserving the strong guarantees of integrity and availability in the underlying blockchain. The subject of this paper concerns one subcategory of \layertwo technology called an optimistic rollup. The website \textit{L2 Beat} attempts to capitalize all tokens of known value across the top 25 \layertwo projects. It finds that the top two \layertwos are both optimistic rollups, \arb and \opt, which respectively account for 50\% and 30\% of all \layertwo value---\$4B~USD at the time of writing. \footnote{L2 Beat: \url{https://l2beat.com/scaling/tvl/}, accessed Oct. 2022.}
-%\footnote{\href{https://l2beat.com/scaling/tvl/}{L2 Beat}, accessed Oct. 2022.}
+Ethereum-compatible blockchain environments, called Layer 2s (or \layertwos)~\cite{gudgeon2019sok}, have demonstrated an ability to reduce transaction fees by 99--99.9\% while preserving the strong guarantees of integrity and availability in the underlying blockchain. The subject of this paper concerns one subcategory of \layertwo technology called an optimistic rollup. The website \textit{L2 Beat} attempts to capitalize all tokens of known value across the top 25 \layertwo projects. It finds that the top two \layertwos are both optimistic rollups, \arb and \opt, which respectively account for 50\% and 30\% of all \layertwo value---\$4B~USD at the time of writing.\footnote{\href{https://l2beat.com/scaling/tvl/}{L2 Beat}, accessed Oct. 2022.}
 
 We will describe the working details of optimistic rollups later in this paper but here are the main takeaways: currently, rollups are faster and cheaper than Ethereum itself. However, each \layertwo is essentially an isolated environment that cannot instantly and trustlessly interact with accounts and contracts that are running on either \layerone or other \layertwos. An optimistic rollup project will typically provide a smart contract, called a validating bridge~\cite{mccorry2021sok}, that can trustlessly move ETH (and other tokens and even arbitrary messages) between \layerone and its own \layertwo. It does value transfers by locking ETH in an \layerone contract and minting the equivalent ETH (more precisely, it is a \layertwo claim on \layerone ETH) on \layertwo and assigning it to the user's \layertwo address. Later when the user requests a withdrawal, the ETH will be destroyed on \layertwo and released by the bridge back onto \layerone according to whom its new owner is on \layertwo at the time of the request. This requires the rollup to convince the \layerone bridge contract of whom the current owner of withdrawn ETH is on \layertwo. We provide details later but this process takes time: the bridge has to wait for a period of time called the dispute window. The current default is 7 days in \arb and \opt, however the filing of new disputes can extend the window. The bottom line is that users have to wait at least 7 days to draw down ETH from an optimistic rollup. 
 
-\paragraph{Contributions.} In this paper, we compare several methods---atomic swaps and tradeable exits---for working around this limitation. While we argue workarounds cannot be done generally, some circumstances allow it: namely, when the withdrawn token is liquid, fungible, and available on \layerone and the withdrawer is willing to pay a fee to speed up the withdrawal.  While these techniques work easily between human participants that have off-chain knowledge, such as the valid state of the \layertwo, it is harder to make them compatible with \layerone smart contracts that have no ability to validate the state of \layertwo. We propose a solution using tradeable exits and prediction markets to enable an \layerone smart contract to safely accept withdrawn tokens before the dispute period is over. We fork the current version, \nitro, of the most popular optimistic rollup, \arb, made open source\footnote{GitHub: Nitro \url{https://github.com/OffchainLabs/nitro}} by \offchain. We implement our solution and provide measurements. \arb is a commercial product with academic origins~\cite{kalodner2018arbitrum}. Finally, we provide an analysis of how to price exits and prediction market shares.  
+\paragraph{Contributions.} In this paper, we compare several methods---atomic swaps and tradeable exits---for working around this limitation. While we argue workarounds cannot be done generally, some circumstances allow it: namely, when the withdrawn token is liquid, fungible, and available on \layerone and the withdrawer is willing to pay a fee to speed up the withdrawal.  While these techniques work easily between human participants that have off-chain knowledge, such as the valid state of the \layertwo, it is harder to make them compatible with \layerone smart contracts that have no ability to validate the state of \layertwo. We propose a solution using tradeable exits and prediction markets to enable an \layerone smart contract to safely accept withdrawn tokens before the dispute period is over. We fork the current version, \nitro, of the most popular optimistic rollup, \arb, made open source\footnote{\href{https://github.com/OffchainLabs/nitro}{GitHub: Nitro}} by \offchain. We implement our solution and provide measurements. \arb is a commercial product with academic origins~\cite{kalodner2018arbitrum}. Finally, we provide an analysis of how to price exits and prediction market shares.  
 
 
  
@@ -30,43 +29,19 @@ Arbitrum is first described at \textit{USENIX Security}~\cite{kalodner2018arbitr
 
 Other related topics are atomic swaps and prediction markets. Too many papers propose atomic swap protocols to list here but see Zamyatin \etal for an SoK of the area (and a new theoretical result)~\cite{zamyatin2021sok}. Decentralized prediction markets proposals predate Ethereum and include Clark \etal~\cite{clark2014decentralizing} and Truthcoin~\cite{sztorc2015truthcoin}. Early Ethereum projects \textit{Augur} and \textit{Gnosis} began as prediction markets. 
 
-% = = = = = = = = = = = = = =  Sponsored Withdrawals = = = = = = = = = = = = = = = = =
-%\section{Sponsored Withdrawals} 
-%
-%When the dispute period is over, users can execute their withdrawals on \layerone to receive the ETH they had withdrawn from \layertwo using the Arbitrum bridge. This requires users to have available funds in their \layerone wallet to pay for the gas fees required for the execution transaction. This is particularly an issue where users do not have sufficient funds in their \layerone wallets to cover the gas fees upfront. Here, we investigate the feasibility and effectiveness of a tool, \textit{sponsored withdrawal}, as a means to facilitate seamless and cost-effective ETH withdrawals from \layertwo to \layerone using the Arbitrum bridge.
-%
-%Before the implementation of EIP-1559, users had the ability to use \textit{Flashbots} to submit an all-or-nothing bundle of transactions. In that case, validators (previously "miners") would decide whether to accept these transactions based on the overall funds sent to the coinbase account via \texttt{block.coinbase.transfer()}. However, this is no longer possible due to the introduction of EIP-1559, which now imposes a discrete \textit{base fee} for transactions to be included in the next block.
-%
-%To tackle this issue, as part of our proposed tool, users will be able to seek sponsorship from others to facilitate the execution of their withdrawal transactions on \layerone. In exchange for sponsoring the transaction, the sponsors will receive rewards. Here we outline the technical details of the protocol and the steps involved in the sponsorship process:
-%
-%To participate in the protocol, the sponsor needs to deploy the \texttt{sponsor smart contract} provided by the protocol on the \layerone. Once deployed, users seeking sponsorship for the execution of their withdrawal transactions need to create a raw transaction that calls the  \texttt{payToSponsor()} method of the  \texttt{sponsor contract} and sign it, promising to pay the sponsor once the withdrawal transaction is executed.
-%
-%After creating the raw transaction, the user, let's say Alice, sends the \layertwo hash of her withdrawal transaction along with the signed transaction hex to the sponsor. The sponsor then runs the \texttt{Flashbots script} provided by the protocol, which creates a Flashbots transaction bundle and submits it to the Flashbots network. The bundle includes:
-%
-%\begin{enumerate}
-%
-%\item \texttt{tx1}: A call to the \texttt{execute()} method of the \texttt{Sponsor contract} with the sponsor account being the signer of the transaction. This function executes Alice's withdrawal on \layerone.
-%
-%\item \texttt {tx2}: The signed transaction hex Alice had initially crafted.
-%
-%\end{enumerate}
-%
-%Once the bundle is submitted, it is received by validators, who execute the withdrawal transaction on \layerone along with the \texttt{payToSponsor()} method. As a result, the sponsor receives the promised payment, and the user's withdrawal transaction is executed. 
-%
-%By sending the two transactions as a single all-or-nothing bundle, there is a strong assurance that the transactions will be confirmed together in the same order as provided, or the entire bundle will fail. This approach prevents a situation where, for example, \texttt(tx1) gets confirmed but \texttt(tx2) does not, which would result in the sponsor losing funds and having to execute the Alice's withdrawal transaction for free.
-
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
 \section{Proposed Solution} 
 
 For simplicity, we will describe a fast exit system for withdrawing ETH from \layertwo, however it works for any \layerone native fungible token (\eg ERC20) that is available for exchange on \layerone. We discuss challenges of fast exits for non-liquid/non-fungible tokens in Section~\ref{sec:nfts}. Consider an amount of 100 ETH. When this amount is in the user's account on \layerone, we use the notation 100 \ethone. When it is in the bridge on \layerone and in the user's account on \layertwo, we denote it 100 \ethtwo. When the ETH has been withdrawn on \layertwo and the withdrawal has been asserted in the \layerone outbox, but the dispute window is still open, we refer to it as 100 \ethxx. Other transitionary states are possible but not needed for our purposes.
 
 \subsection{Design Landscape}
 
-\begin{table*}[t!]
+\begin{table}[t]
     \renewcommand{\arraystretch}{1.3}
     \centering
     
-    \begin{tabular}{llccccccccccccc}
+    \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}} llccccccccccccc}
     
     \textit{Type} &
     \textit{Example} & 
@@ -87,11 +62,11 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ 
     Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ \hline
                                                                                         
-    \end{tabular}
+    \end{tabular*}
     
 \caption{Comparing alternatives for fast withdrawals from optimistic rollups for liquid and fungible tokens where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied. For our work, $\sim$ means we propose how to fully achieve the property but do not by default (see caveats in Section~\ref{sec:fidelity}).\label{tab:landscape}}
 
-\end{table*}
+\end{table}
 
 \paragraph{Centralized.} Consider Alice who has 100 \ethtwo and wants (something like) 99.95 \ethone for it. We describe a set of solutions for Alice. A centralized exchange (\eg \textit{Coinbase}, \textit{Binance}) can open a market for \ethtwo/\ethone. Alternatively, a bridge might rely on an established set of trustees to relay \layertwo actions to \layerone. This is called proof of authority; it is distributed but not decentralized (\ie not an \textit{open} set of participants).  
 
@@ -137,7 +112,7 @@ It is argued in the prediction market literature~\cite{clark2014decentralizing} 
 %\textblue{\rblock will finalize eventually vs \rblock will finalize in seven days}
 
 
-\paragraph{Hedging exits.} Given a prediction market, Alice can hedge 100 \ethxx by obtaining 100 \fail as insurance. Any autonomous \layerone contract (Carol) should be willing to accept a portfolio of 100 \ethxx and 100 \fail as a guaranteed delivery of 100 \ethone after the dispute period, even if Carol cannot validate the state of \layertwo.  
+\paragraph{Hedging exits.} Given a prediction market, Alice can hedge 100 \ethxx by obtaining 100 \fail as insurance. Any autonomous \layerone contract (Carol) should be willing to accept a portfolio of 100 \ethxx and 100 \fail as a guaranteed delivery of 1 \ethone after the dispute period, even if Carol cannot validate the state of \layertwo.  
 
 Perhaps surprisingly, this result collapses when withdrawing \ethtwo---consider Path 1 through the protocol. Alice withdraws 100 \ethtwo from \layertwo and obtains 100 \ethxx. Bob creates 100 \fail and 100 \final for a cost of 100 \ethone. Alice buys 100 \fail from Bob for a small fee. Alice gives Carol 100 \ethxx and 100 \fail and is credited as if she deposited 100 \ethone. In seven days, Bob gets 100 \ethone for his 100 \final and Carol gets 100 \ethone for her 100 \ethxx. If the \rblock fails, Bob has 0 \ethone and Carol has 100 \ethone from the 100 \fail. In both cases, Alice has a balance of 100 \ethone with Carol. 
 
@@ -156,7 +131,7 @@ We run \arb \nitro test-net locally and use Hardhat~\cite{hardhatonline} for our
 
 \subsection{Tradeable Exits}
 
-\paragraph{Trading the exit directly through the bridge/outbox.} We fork the \arb \nitro outbox to add native support for tradeable exits. The modified outbox is open source, written in 294 lines (SLOC) of Solidity, and a bytecode of 6,212 bytes (increased by 1,197 bytes). The solidity code and Hardhat scripts are available in a GitHub repository.\footnote{GitHub:Nitro, Fast-Withdrawals: \url{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}} Our modifications include:
+\paragraph{Trading the exit directly through the bridge/outbox.} We fork the \arb \nitro outbox to add native support for tradeable exits. The modified outbox is open source, written in 294 lines (SLOC) of Solidity, and a bytecode of 6,212 bytes (increased by 1,197 bytes). The solidity code and Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub:Nitro: Fast-Withdrawals.}} Our modifications include:
 
 %the original outbox bytecode size 5,015 is bytes
 \begin{itemize}
@@ -171,14 +146,14 @@ To execute the \texttt{transferSpender()} function; Alice (who has initiated a w
 
 \paragraph{Trading the exit through an \layerone market.} We also implement and deploy an \layerone market that allows users to trade their exits on \layerone even though the dispute window is not passed (see Section \ref{sec:uniswap} for why \textit{Uniswap} is not appropriate). In addition, we add a new function to the \arb \nitro outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. Figure~\ref{fig:marketflow} illustrates an overview of participant interactions and related gas costs. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. The market would be open until a trade occurs or Alice calls the \texttt{closeMarket()} on her exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
 
-The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{GitHub:Nitro, Fast-Withdrawals: \url{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
+The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub: Nitro: Fast-Withdrawals.}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
 
-\begin{figure*}[t]
-	\includegraphics[width=0.8\textwidth]{figures/marketflow.pdf}
+\begin{figure}[t]
+	\includegraphics[width=1\textwidth]{figures/marketflow.pdf}
 	\caption{Overview of trading the exit through an \layerone market.}
 	\centering
 	\label{fig:marketflow}
-\end{figure*}
+\end{figure}
 
 \subsection{Prediction Market }
 As described in Section~\ref{sec:PM}, a prediction market can be used to hedge the exit. We do not implement this as one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}). However, we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed). More specifically, we modify the \arb \nitro outbox and RollupCore smart contracts, modifications include:
@@ -191,7 +166,7 @@ As described in Section~\ref{sec:PM}, a prediction market can be used to hedge t
 \item Modifying the \texttt{confirmNode()} function in the RollupCore contract. Once an \rblock is confirmed, the validator acts through the RollupCore contract via \texttt{confirmNode} to move the now confirmed \rblock to the outbox. We modify this function to call the \texttt{markAsConfirmed()} from the outbox which marks the \rblock as confirmed.
 \end{itemize}
 
-The modified outbox and RollupCore are open source and written in 297 and 560  lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{GitHub:Nitro, Fast-Withdrawals: \url{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}} Once deployed, the bytecode of the outbox and RollupCore is 6,434 and 3,099 bytes respectively.
+The modified outbox and RollupCore are open source and written in 297 and 560  lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{\href{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}{GitHub:Nitro: Fast-Withdrawals.}} Once deployed, the bytecode of the outbox and RollupCore is 6,434 and 3,099 bytes respectively.
 
 
 
@@ -317,8 +292,6 @@ For tokens that have low liquidity on \layerone, or in the extreme case, are uni
 \section{Concluding Remarks}
 
 This paper addresses a common `pain point' for users of \layertwo optimistic rollups on Ethereum. The 7-day dispute period prevents users from withdrawing ETH, tokens, and data quickly. Tradeable exits provide users with flexibility after they request a withdrawal. If they decide 7 days is too long, they can seek to trade their exit for \ethone or they can ask a contract to accept their \ethxx by bundling it with insurance against the failure of the \rblock---this way the contract does not have to be \layertwo-aware. While some users might still prefer the features of other withdrawal methods (centralized exchanges or solution like \textit{Hop}), it is useful to make the native rollup functionality as flexible as possible, especially for users who do not realize that a withdrawal induces a 7-day waiting period until it is too late. 
-
-
 
 
 
