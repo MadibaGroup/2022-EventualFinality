@@ -66,7 +66,7 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     \renewcommand{\arraystretch}{1.3}
     \centering
     
-    \begin{tabular}{llccccccccccccc}
+    \begin{tabular}{llcccccccccccccccc}
     
     \textit{Type} &
     \textit{Example} & 
@@ -77,15 +77,18 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     \headrow{No free option} & 
     \headrow{Opt-in anytime} & 
     \headrow{\layertwo-to-\layertwo} & 
+    \headrow{L1 gasUsed} & 
+    \headrow{L2 gasUsed} & 
+     \headrow{Protocol fee} & 
     \headrow{} \\ \hline % Actual net movement from L2 to L1
     
-    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&	&	\\ \hline
-    Centralized   			& Coinbase	&	&\full		&\full	&\full	&\full	&	&\full	&	\\
-    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full	&	\\
-    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&	\\ % data quality
-    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full	&	\\ 
-    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ 
-    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ \hline
+    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&106,771    	&83,805		&0							&\\ \hline
+    Centralized   			& Coinbase	&	&\full		&\full	&\full	&\full	&	&\full		&106,771 	&83,805		&0.001 ETH					&\\
+    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&7,263,96	&219,656	&0.0001 ETH					&\\
+    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&	&&&\\ % data quality
+    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&1,786,331	&269,528	&0.0065 ETH					&\\ 
+    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&193,846	&83,805		&0							&\\ 
+    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&			&			&							&	\\ \hline
                                                                                         
     \end{tabular}
     
@@ -119,7 +122,7 @@ Alice wants to withdraw 100 \ethtwo. Bob has 99.95 \ethone that will not use unt
 
 In our forked bridge, Alice can transfer any of her exits that are in an \rblock (\ie an asserted \layertwo state update registered in the outbox). Technically, Bob can check the validity of the withdrawal as soon as it is in the inbox, and not wait 30-60 minutes for an \rblock. However for implementation reasons, it is easier to track an exit based on its place (\ie Merkle path) in an \rblock, rather than its place in the inbox. When we say a withdrawal is `fast,' we mean 30-60 minutes (\ie one \layertwo rollup). 
 
-Like bridge tokens, tradeable exits can be approximated by a third party \layerone contract that does not modify the rollup. In this scenario, a two-stage withdrawal would occur. The user would specify the contract as the recipient of the exit, and the contract would specify the user as the recipient (initially). The user could then transfer ownership to a new account within the contract. Given this option, why modify the bridge/outbox of the rollup? We have two main arguments: (1) it is more efficient for the user to have the functionality natively in the bridge/outbox, which they have to interact with anyways; and (2) a user who initially request a `normal' withdrawal cannot change their mind and opt-in to a fast withdrawal---it is too late. A tradeable exit can bail out a user who withdrawals without realizing there is a 7-day dispute window (anecdotally, this is a common concern on support channels for optimistic rollups). It also lets a user who is aware decide if and when to expedite a withdrawal.
+Like bridge tokens, tradeable exits can be approximated by a third party \layerone contract that does not modify the rollup. In this scenario, a two-stage withdrawal would occur. The user would specify the contract as the recipient of the exit, and the contract would specify the user as the recipient (initially). The user could then transfer ownership to a new account within the contract. Given this option, why modify the bridge/outbox of the rollup? We have two main arguments: (1) it is more efficient for the user to have the functionality natively in the bridge/outbox, which they have to interact with anyways; and (2) a user who initially request a `normal' withdrawal cannot change their mind and opt-in to a fast withdrawal---it is too late. A tradeable exit can bail out a user who withdraws without realizing there is a 7-day dispute window (anecdotally, this is a common concern on support channels for optimistic rollups). It also lets a user who is aware decide if and when to expedite a withdrawal. \textblue{However, we understand that opting for an optimal default setting is generally more favorable than requiring user-initiated actions. Thus, our intention here is not to advocate for a specific perspective, but rather to address the issue from a technical standpoint. For instance, Arbitrum could incorporate a third-party \layerone contract to facilitate withdrawals without altering the bridge and encourage its users to use it consistently. If this becomes the norm for withdrawals, the associated costs should remain fairly similar. Although users who have already withdrawn using the old method might face some challenges, these issues would likely be temporary if the transferable withdrawal approach becomes the standard. While transitioning to this default option could be challenging due to social and educational factors, moving to a new optimistic rollup that supports tradable exits would present similar challenges.}
 
 \subsection{Hedged Tradeable Exits}
 \label{sec:PM}
@@ -166,7 +169,7 @@ We run \arb \nitro test-net locally and use Hardhat~\cite{hardhatonline} for our
 \item Modifying the \texttt{executeTransactionImpl()} function. Once the dispute period is passed and the withdrawal transaction is confirmed, anyone can call the \texttt{executeTransaction()} function from the outbox (which internally calls the \texttt{executeTransactionImpl()}) and release the funds to the account that was specified by the user 7 days earlier in the \layertwo withdrawal request. With our modifications, this function is now enabled to release the requested funds to the current owner of the exit.
  \end{itemize}
  
-To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in any unconfirmed \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross-checked against the current owner of the exit (recall exit owners are tracked in the \texttt{transferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{transferredToAddress} mapping. This costs  85,945 Gwei in \layerone gas. Note that the first transfer always costs more as the user has to pay for initializing the \texttt{transferredToAddress} mapping. \texttt{transferSpender()} costs 48,810 and 48,798 Gwei in \layerone gas for the second and third transfer respectively. The \texttt{gasUed} for executing the new \texttt{executeTransactionImpl()} function is 91,418 Gwei in \layerone gas.
+To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in any unconfirmed \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross-checked against the current owner of the exit (recall exit owners are tracked in the \texttt{transferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{transferredToAddress} mapping. This costs  85,945 units of \layerone gas. Note that the first transfer always costs more as the user has to pay for initializing the \texttt{transferredToAddress} mapping. \texttt{transferSpender()} costs 48,810 and 48,798 units of \layerone gas for the second and third transfer respectively. The \texttt{gasUed} for executing the new \texttt{executeTransactionImpl()} function is 91,418 units of \layerone gas.
 
 
 \paragraph*{Trading the exit through an \layerone market.} We also implement and deploy an \layerone market that allows users to trade their exits on \layerone even though the dispute window is not passed (see Section \ref{sec:uniswap} for why \textit{Uniswap} is not appropriate). In addition, we add a new function to the \arb \nitro outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. Figure~\ref{fig:marketflow} illustrates an overview of participant interactions and related gas costs. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. The market would be open until a trade occurs or Alice calls the \texttt{closeMarket()} on her exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
