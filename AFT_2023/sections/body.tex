@@ -66,7 +66,7 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     \renewcommand{\arraystretch}{1.3}
     \centering
     
-    \begin{tabular}{llcccccccccccccccc}
+    \begin{tabular}{llcccccccccc}
     
     \textit{Type} &
     \textit{Example} & 
@@ -79,16 +79,16 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     \headrow{\layertwo-to-\layertwo} & 
     \headrow{L1 gasUsed} & 
     \headrow{L2 gasUsed} & 
-     \headrow{Compensation} & 
-    \headrow{} \\ \hline % Actual net movement from L2 to L1
+     \headrow{Compensation}  \\ \hline 
+     % maybe add the ctual net movement from L2 to L1
     
-    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&$\approx$200K    	&$\approx$80K		&						None&\\ \hline
-    Centralized   			& Binance	&	&\full		&\full	&\full	&\full	&	&\full		&$\approx$400K 	&$\approx$21K		& Exchange					&\\
-    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&$\approx$625K	&$\approx$92K	& Protocol 					&\\
-    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&$\perp$	& $\perp$ & None&\\ % data quality
-    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&$\approx$1.8M	&$\approx$300K	& Bonder	&\\ 
-    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&$\approx$200K	&$\approx$80K		&None							&\\ 
-    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&$\approx$265K& $\approx$80K			& None							& test & test & test & test & test 	\\ \hline
+    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&$\approx$200K    	&$\approx$80K		&None \\ \hline
+    Centralized   			& Binance	&	&\full		&\full	&\full	&\full	&	&\full		&$\approx$400K 	&$\approx$21K		& Exchange		\\
+    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&$\approx$625K	&$\approx$92K	& Protocol 		\\
+    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&$\perp$	& $\perp$ & None.   						\\ % data quality
+    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&$\approx$1.8M	&$\approx$300K	& Bonder	\\ 
+    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&$\approx$200K	&$\approx$80K		&None	\\ 
+    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&$\approx$265K& $\approx$80K			& None	\\ \hline
                                                                                         
     \end{tabular}
     
