@@ -79,16 +79,16 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
     \headrow{\layertwo-to-\layertwo} & 
     \headrow{L1 gasUsed} & 
     \headrow{L2 gasUsed} & 
-     \headrow{Protocol fee} & 
+     \headrow{Compensation} & 
     \headrow{} \\ \hline % Actual net movement from L2 to L1
     
-    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&106,771    	&83,805		&0							&\\ \hline
-    Centralized   			& Binance	&	&\full		&\full	&\full	&\full	&	&\full		&106,771 	&83,805		&0.001 ETH					&\\
-    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&7,263,96	&219,656	&0.0001 ETH					&\\
-    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&	&&&\\ % data quality
-    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&1,786,331	&269,528	&0.0065 ETH					&\\ 
-    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&193,846	&83,805		&0							&\\ 
-    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&			&			&							&	\\ \hline
+    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&$\approx$200K    	&$\approx$80K		&						None&\\ \hline
+    Centralized   			& Binance	&	&\full		&\full	&\full	&\full	&	&\full		&$\approx$400K 	&$\approx$21K		& Exchange					&\\
+    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&$\approx$7M	&$\approx$200K	& None 					&\\
+    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&$\perp$	& $\perp$ & None&\\ % data quality
+    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&$\approx$1.8M	&$\approx$300K	& Bonder	&\\ 
+    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&$\approx$200K	&$\approx$80K		&None							&\\ 
+    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&$\approx$265K& $\approx$80K			& None							& test & test & test & test & test 	\\ \hline
                                                                                         
     \end{tabular}
     
@@ -96,7 +96,7 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
 
 \end{table*}
 
-\paragraph*{Centralized.} Consider Alice who has 100 \ethtwo and wants (something like) 99.95 \ethone for it. We describe a set of solutions for Alice. A centralized exchange (\eg \textit{Coinbase}, \textit{Binance}) can open a market for \ethtwo/\ethone. Alternatively, a bridge might rely on an established set of trustees to relay \layertwo actions to \layerone. This is called proof of authority; it is distributed but not decentralized (\ie not an \textit{open} set of participants).  
+\paragraph*{Centralized.} Consider Alice who has 100 \ethtwo and wants (something like) 99.95 \ethone for it. We describe a set of solutions for Alice. A centralized exchange (\eg \textit{Coinbase}, \textit{Binance}) can open a market for \ethtwo/\ethone. Alternatively, a bridge might rely on an established set of trustees to relay \layertwo actions to \layerone. This is called proof of authority; it is distributed but not decentralized (\ie not an \textit{open} set of participants). The gas costs consists of Alice transferring her \ethtwo onto the exchange (withdraw to \layerone is paid for by the exchange). Compensating the exchange for this is mandatory to the primitive. 
 
 \paragraph*{Hash Time Locked Contracts (HTLCs).} Assume Bob has 99.95 \ethone and is willing to swap with Alice. An atomic swap binds together (i) an \layertwo transaction moving 100 \ethtwo from Alice to Bob and (ii) an \layerone transaction moving 99.95 \ethone from Bob to Alice. Either both execute or both fail. HTLC is a blockchain-friendly atomic swap protocol. Its main drawback is that it also has a time window where Alice (assuming she is the first mover in the protocol) must wait on Bob, who might abort causing Alice's \ethtwo to be locked up while waiting (called the griefing problem), or might watch price movements before deciding to act (called free option problem). Bob needs to monitor both chains so he cannot be an autonomous smart contract. HTLCs work between two \layertwos.
 % Example CELR cBridge
