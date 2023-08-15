@@ -1,205 +1,88 @@
-%%% -*-BibTeX-*-
-%%% Do NOT edit. File created by BibTeX with style
-%%% ACM-Reference-Format-Journals [18-Jan-2012].
+\begin{thebibliography}{10}
 
-\begin{thebibliography}{15}
+\bibitem{clark2014decentralizing}
+Jeremy Clark, Joseph Bonneau, Edward~W Felten, Joshua~A Kroll, Andrew Miller,
+  and Arvind Narayanan.
+\newblock On decentralizing prediction markets and order books.
+\newblock In {\em Workshop on the Economics of Information Security (WEIS)},
+  volume 188, 2014.
 
-%%% ====================================================================
-%%% NOTE TO THE USER: you can override these defaults by providing
-%%% customized versions of any of these macros before the \bibliography
-%%% command.  Each of them MUST provide its own final punctuation,
-%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
-%%% do not use final punctuation, in order to avoid confusing it with
-%%% the Web address.
-%%%
-%%% To suppress output of a particular field, define its macro to expand
-%%% to an empty string, or better, \unskip, like this:
-%%%
-%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
-%%%
-%%% \def \showDOI #1{\unskip}           % plain TeX syntax
-%%%
-%%% ====================================================================
+\bibitem{demirag2021absentia}
+Didem Demirag and Jeremy Clark.
+\newblock Absentia: Secure multiparty computation on ethereum.
+\newblock In {\em Workshop on Trusted Smart Contracts (WTSC)}, pages 381--396.
+  Springer, 2021.
 
-\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
-\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
-\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
-\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
-\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
-\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
-\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
-\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
-\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
-% The following commands are used for tagged output and should be
-% invisible to TeX
-\providecommand\bibfield[2]{#2}
-\providecommand\bibinfo[2]{#2}
-\providecommand\natexlab[1]{#1}
-\providecommand\showeprint[2][]{arXiv:#2}
+\bibitem{FoBo19}
+Bryan Ford and Rainer B{\"o}hme.
+\newblock Rationality is self-defeating in permissionless systems.
+\newblock Technical Report cs.CR 1910.08820, arXiv, 2019.
 
-\bibitem[Clark et~al\mbox{.}(2014)]%
-        {clark2014decentralizing}
-\bibfield{author}{\bibinfo{person}{Jeremy Clark}, \bibinfo{person}{Joseph
-  Bonneau}, \bibinfo{person}{Edward~W Felten}, \bibinfo{person}{Joshua~A
-  Kroll}, \bibinfo{person}{Andrew Miller}, {and} \bibinfo{person}{Arvind
-  Narayanan}.} \bibinfo{year}{2014}\natexlab{}.
-\newblock \showarticletitle{On decentralizing prediction markets and order
-  books}. In \bibinfo{booktitle}{\emph{Workshop on the Economics of Information
-  Security (WEIS)}}, Vol.~\bibinfo{volume}{188}.
-\newblock
+\bibitem{hardhatonline}
+Nomic Foundation.
+\newblock Hardhat.
+\newblock \url{https://hardhat.org}, October 2022.
+\newblock (Accessed on 10/18/2022).
 
+\bibitem{gudgeon2019sok}
+Lewis Gudgeon, Pedro Moreno{-}Sanchez, Stefanie Roos, Patrick McCorry, and
+  Arthur Gervais.
+\newblock Sok: Layer-two blockchain protocols.
+\newblock In {\em Financial Cryptography}, 2020.
+\newblock URL: \url{https://doi.org/10.1007/978-3-030-51280-4\_12}.
 
-\bibitem[Demirag and Clark(2021)]%
-        {demirag2021absentia}
-\bibfield{author}{\bibinfo{person}{Didem Demirag} {and} \bibinfo{person}{Jeremy
-  Clark}.} \bibinfo{year}{2021}\natexlab{}.
-\newblock \showarticletitle{Absentia: Secure Multiparty Computation on
-  Ethereum}. In \bibinfo{booktitle}{\emph{Workshop on Trusted Smart Contracts
-  (WTSC)}}. Springer, \bibinfo{pages}{381--396}.
-\newblock
+\bibitem{Har03}
+{Larry} Harris.
+\newblock {\em Trading and exchanges: market microstructure for practitioners}.
+\newblock Oxford, 2003.
 
+\bibitem{hull2013fundamentals}
+John Hull, Sirimon Treepongkaruna, David Colwell, Richard Heaney, and David
+  Pitt.
+\newblock {\em Fundamentals of futures and options markets}.
+\newblock Pearson Higher Education AU, 2013.
 
-\bibitem[Ford and B{\"o}hme(2019)]%
-        {FoBo19}
-\bibfield{author}{\bibinfo{person}{Bryan Ford} {and} \bibinfo{person}{Rainer
-  B{\"o}hme}.} \bibinfo{year}{2019}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Rationality is Self-Defeating in
-  Permissionless Systems}}.
-\newblock \bibinfo{type}{{T}echnical {R}eport} cs.CR 1910.08820.
-  \bibinfo{institution}{arXiv}.
-\newblock
+\bibitem{kalodner2018arbitrum}
+Harry Kalodner, Steven Goldfeder, Xiaoqi Chen, S~Matthew Weinberg, and Edward~W
+  Felten.
+\newblock Arbitrum: Scalable, private smart contracts.
+\newblock In {\em USENIX Security Symposium}, pages 1353--1370, 2018.
 
+\bibitem{mccorry2021sok}
+Patrick McCorry, Chris Buckland, Bennet Yee, and Dawn Song.
+\newblock Sok: Validating bridges as a scaling solution for blockchains.
+\newblock Technical report, Cryptology ePrint Archive, 2021.
 
-\bibitem[Foundation(2022)]%
-        {hardhatonline}
-\bibfield{author}{\bibinfo{person}{Nomic Foundation}.}
-  \bibinfo{year}{2022}\natexlab{}.
-\newblock \bibinfo{title}{Hardhat}.
-\newblock \bibinfo{howpublished}{\url{https://hardhat.org}}.
-\newblock
-\newblock
-\shownote{(Accessed on 10/18/2022)}.
+\bibitem{Mei21}
+Sarah Meiklejohn.
+\newblock An evolution of models for zero-knowledge proofs.
+\newblock In {\em EUROCRYPT (invited talk)}, 2021.
 
+\bibitem{moosavi2021lissy}
+Mahsa Moosavi and Jeremy Clark.
+\newblock Lissy: Experimenting with on-chain order books.
+\newblock In {\em Workshop on Trusted Smart Contracts (WTSC)}, 2021.
 
-\bibitem[Gudgeon et~al\mbox{.}(2020)]%
-        {gudgeon2019sok}
-\bibfield{author}{\bibinfo{person}{Lewis Gudgeon}, \bibinfo{person}{Pedro
-  Moreno{-}Sanchez}, \bibinfo{person}{Stefanie Roos}, \bibinfo{person}{Patrick
-  McCorry}, {and} \bibinfo{person}{Arthur Gervais}.}
-  \bibinfo{year}{2020}\natexlab{}.
-\newblock \showarticletitle{SoK: Layer-Two Blockchain Protocols}. In
-  \bibinfo{booktitle}{\emph{Financial Cryptography}}.
-\newblock
-\urldef\tempurl%
-\url{https://doi.org/10.1007/978-3-030-51280-4\_12}
-\showURL{%
-\tempurl}
+\bibitem{sztorc2015truthcoin}
+Paul Sztorc.
+\newblock Truthcoin.
+\newblock Technical report, 2015.
 
+\bibitem{Tre22}
+Louis~Tremblay Thibault, Tom Sarry, and Abdelhakim~Senhaji Hafid.
+\newblock Blockchain scaling using rollups: {A} comprehensive survey.
+\newblock {\em {IEEE} Access}, 10:93039--93054, 2022.
 
-\bibitem[Harris(2003)]%
-        {Har03}
-\bibfield{author}{\bibinfo{person}{{Larry} Harris}.}
-  \bibinfo{year}{2003}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Trading and exchanges: market
-  microstructure for practitioners}}.
-\newblock \bibinfo{publisher}{Oxford}.
-\newblock
+\bibitem{Whi21}
+Chris Whinfrey.
+\newblock Hop: Send tokens across rollups.
+\newblock Technical report, 2022.
 
-
-\bibitem[Hull et~al\mbox{.}(2013)]%
-        {hull2013fundamentals}
-\bibfield{author}{\bibinfo{person}{John Hull}, \bibinfo{person}{Sirimon
-  Treepongkaruna}, \bibinfo{person}{David Colwell}, \bibinfo{person}{Richard
-  Heaney}, {and} \bibinfo{person}{David Pitt}.}
-  \bibinfo{year}{2013}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Fundamentals of futures and options
-  markets}}.
-\newblock \bibinfo{publisher}{Pearson Higher Education AU}.
-\newblock
-
-
-\bibitem[Kalodner et~al\mbox{.}(2018)]%
-        {kalodner2018arbitrum}
-\bibfield{author}{\bibinfo{person}{Harry Kalodner}, \bibinfo{person}{Steven
-  Goldfeder}, \bibinfo{person}{Xiaoqi Chen}, \bibinfo{person}{S~Matthew
-  Weinberg}, {and} \bibinfo{person}{Edward~W Felten}.}
-  \bibinfo{year}{2018}\natexlab{}.
-\newblock \showarticletitle{Arbitrum: Scalable, private smart contracts}. In
-  \bibinfo{booktitle}{\emph{USENIX Security Symposium}}.
-  \bibinfo{pages}{1353--1370}.
-\newblock
-
-
-\bibitem[McCorry et~al\mbox{.}(2021)]%
-        {mccorry2021sok}
-\bibfield{author}{\bibinfo{person}{Patrick McCorry}, \bibinfo{person}{Chris
-  Buckland}, \bibinfo{person}{Bennet Yee}, {and} \bibinfo{person}{Dawn Song}.}
-  \bibinfo{year}{2021}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Sok: Validating bridges as a scaling
-  solution for blockchains}}.
-\newblock \bibinfo{type}{{T}echnical {R}eport}.
-  \bibinfo{institution}{Cryptology ePrint Archive}.
-\newblock
-
-
-\bibitem[Meiklejohn(2021)]%
-        {Mei21}
-\bibfield{author}{\bibinfo{person}{Sarah Meiklejohn}.}
-  \bibinfo{year}{2021}\natexlab{}.
-\newblock \showarticletitle{An Evolution of Models for Zero-Knowledge Proofs}.
-  In \bibinfo{booktitle}{\emph{EUROCRYPT (invited talk)}}.
-\newblock
-
-
-\bibitem[Moosavi and Clark(2021)]%
-        {moosavi2021lissy}
-\bibfield{author}{\bibinfo{person}{Mahsa Moosavi} {and} \bibinfo{person}{Jeremy
-  Clark}.} \bibinfo{year}{2021}\natexlab{}.
-\newblock \showarticletitle{Lissy: Experimenting with on-chain order books}. In
-  \bibinfo{booktitle}{\emph{Workshop on Trusted Smart Contracts (WTSC)}}.
-\newblock
-
-
-\bibitem[Sztorc(2015)]%
-        {sztorc2015truthcoin}
-\bibfield{author}{\bibinfo{person}{Paul Sztorc}.}
-  \bibinfo{year}{2015}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Truthcoin}}.
-\newblock \bibinfo{type}{{T}echnical {R}eport}.
-\newblock
-
-
-\bibitem[Thibault et~al\mbox{.}(2022)]%
-        {Tre22}
-\bibfield{author}{\bibinfo{person}{Louis~Tremblay Thibault},
-  \bibinfo{person}{Tom Sarry}, {and} \bibinfo{person}{Abdelhakim~Senhaji
-  Hafid}.} \bibinfo{year}{2022}\natexlab{}.
-\newblock \showarticletitle{Blockchain Scaling Using Rollups: {A} Comprehensive
-  Survey}.
-\newblock \bibinfo{journal}{\emph{{IEEE} Access}}  \bibinfo{volume}{10}
-  (\bibinfo{year}{2022}), \bibinfo{pages}{93039--93054}.
-\newblock
-
-
-\bibitem[Whinfrey(2022)]%
-        {Whi21}
-\bibfield{author}{\bibinfo{person}{Chris Whinfrey}.}
-  \bibinfo{year}{2022}\natexlab{}.
-\newblock \bibinfo{booktitle}{\emph{Hop: Send Tokens Across Rollups}}.
-\newblock \bibinfo{type}{{T}echnical {R}eport}.
-\newblock
-
-
-\bibitem[Zamyatin et~al\mbox{.}(2021)]%
-        {zamyatin2021sok}
-\bibfield{author}{\bibinfo{person}{Alexei Zamyatin}, \bibinfo{person}{Mustafa
-  Al-Bassam}, \bibinfo{person}{Dionysis Zindros}, \bibinfo{person}{Eleftherios
-  Kokoris-Kogias}, \bibinfo{person}{Pedro Moreno-Sanchez},
-  \bibinfo{person}{Aggelos Kiayias}, {and} \bibinfo{person}{William~J
-  Knottenbelt}.} \bibinfo{year}{2021}\natexlab{}.
-\newblock \showarticletitle{Sok: Communication across distributed ledgers}. In
-  \bibinfo{booktitle}{\emph{Financial Cryptography}}.
-\newblock
-
+\bibitem{zamyatin2021sok}
+Alexei Zamyatin, Mustafa Al-Bassam, Dionysis Zindros, Eleftherios
+  Kokoris-Kogias, Pedro Moreno-Sanchez, Aggelos Kiayias, and William~J
+  Knottenbelt.
+\newblock Sok: Communication across distributed ledgers.
+\newblock In {\em Financial Cryptography}, 2021.
 
 \end{thebibliography}

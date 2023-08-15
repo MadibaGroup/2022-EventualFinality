@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plainurl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bib/L2.bib
+Warning--empty institution in sztorc2015truthcoin
+Warning--empty institution in Whi21
+You've used 15 entries,
+            2943 wiz_defined-function locations,
+            712 strings with 7247 characters,
+and the built_in function-call counts, 6517 in all, are:
+= -- 637
+> -- 286
+< -- 4
++ -- 108
+- -- 92
+* -- 308
+:= -- 973
+add.period$ -- 48
+call.type$ -- 15
+change.case$ -- 92
+chr.to.int$ -- 0
+cite$ -- 17
+duplicate$ -- 195
+empty$ -- 620
+format.name$ -- 92
+if$ -- 1682
+int.to.chr$ -- 0
+int.to.str$ -- 15
+missing$ -- 12
+newline$ -- 80
+num.names$ -- 30
+pop$ -- 199
+preamble$ -- 1
+purify$ -- 76
+quote$ -- 0
+skip$ -- 430
+stack$ -- 0
+substring$ -- 185
+swap$ -- 40
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 56
+warning$ -- 2
+while$ -- 38
+width$ -- 17
+write$ -- 163
+(There were 2 warnings)

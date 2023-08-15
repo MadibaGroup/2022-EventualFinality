@@ -1,0 +1,629 @@
+diff --git a/AFT_2023/figures/chart1.pdf b/AFT_2023/figures/chart1.pdf
+new file mode 100644
+index 0000000..ee055a8
+Binary files /dev/null and b/AFT_2023/figures/chart1.pdf differ
+diff --git a/AFT_2023/figures/chart2.pdf b/AFT_2023/figures/chart2.pdf
+new file mode 100644
+index 0000000..e1e785e
+Binary files /dev/null and b/AFT_2023/figures/chart2.pdf differ
+diff --git a/AFT_2023/figures/marketflow.pdf b/AFT_2023/figures/marketflow.pdf
+index ad88b49..aa63b69 100644
+Binary files a/AFT_2023/figures/marketflow.pdf and b/AFT_2023/figures/marketflow.pdf differ
+diff --git a/AFT_2023/main.out b/AFT_2023/main.out
+index a09e180..199f8e5 100644
+--- a/AFT_2023/main.out
++++ b/AFT_2023/main.out
+@@ -1,17 +1,23 @@
+ \BOOKMARK [1][-]{section.1}{\376\377\0001\000\040\000I\000n\000t\000r\000o\000d\000u\000c\000t\000o\000r\000y\000\040\000R\000e\000m\000a\000r\000k\000s}{}% 1
+ \BOOKMARK [1][-]{section.2}{\376\377\0002\000\040\000B\000a\000c\000k\000g\000r\000o\000u\000n\000d}{}% 2
+-\BOOKMARK [2][-]{subsection.2.1}{\376\377\0002\000.\0001\000\040\000R\000e\000l\000a\000t\000e\000d\000\040\000W\000o\000r\000k}{section.2}% 3
+-\BOOKMARK [1][-]{section.3}{\376\377\0003\000\040\000P\000r\000o\000p\000o\000s\000e\000d\000\040\000S\000o\000l\000u\000t\000i\000o\000n}{}% 4
+-\BOOKMARK [2][-]{subsection.3.1}{\376\377\0003\000.\0001\000\040\000D\000e\000s\000i\000g\000n\000\040\000L\000a\000n\000d\000s\000c\000a\000p\000e}{section.3}% 5
+-\BOOKMARK [2][-]{subsection.3.2}{\376\377\0003\000.\0002\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.3}% 6
+-\BOOKMARK [2][-]{subsection.3.3}{\376\377\0003\000.\0003\000\040\000H\000e\000d\000g\000e\000d\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.3}% 7
+-\BOOKMARK [1][-]{section.4}{\376\377\0004\000\040\000I\000m\000p\000l\000e\000m\000e\000n\000t\000a\000t\000i\000o\000n\000\040\000a\000n\000d\000\040\000P\000e\000r\000f\000o\000r\000m\000a\000n\000c\000e\000\040\000M\000e\000a\000s\000u\000r\000e\000m\000e\000n\000t\000s}{}% 8
+-\BOOKMARK [2][-]{subsection.4.1}{\376\377\0004\000.\0001\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.4}% 9
+-\BOOKMARK [2][-]{subsection.4.2}{\376\377\0004\000.\0002\000\040\000P\000r\000e\000d\000i\000c\000t\000i\000o\000n\000\040\000M\000a\000r\000k\000e\000t\000\040}{section.4}% 10
+-\BOOKMARK [1][-]{section.5}{\376\377\0005\000\040\000P\000r\000i\000c\000i\000n\000g}{}% 11
+-\BOOKMARK [1][-]{section.6}{\376\377\0006\000\040\000D\000i\000s\000c\000u\000s\000s\000i\000o\000n}{}% 12
+-\BOOKMARK [2][-]{subsection.6.1}{\376\377\0006\000.\0001\000\040\000P\000r\000e\000d\000i\000c\000t\000i\000o\000n\000\040\000M\000a\000r\000k\000e\000t\000\040\000F\000i\000d\000e\000l\000i\000t\000y}{section.6}% 13
+-\BOOKMARK [2][-]{subsection.6.2}{\376\377\0006\000.\0002\000\040\000W\000i\000t\000h\000d\000r\000a\000w\000a\000l\000\040\000F\000o\000r\000m\000a\000t}{section.6}% 14
+-\BOOKMARK [2][-]{subsection.6.3}{\376\377\0006\000.\0003\000\040\000M\000a\000r\000k\000e\000t\000s}{section.6}% 15
+-\BOOKMARK [2][-]{subsection.6.4}{\376\377\0006\000.\0004\000\040\000L\000o\000w\000\040\000L\000i\000q\000u\000i\000d\000i\000t\000y\000\040\000o\000r\000\040\000N\000o\000n\000-\000F\000u\000n\000g\000i\000b\000l\000e\000\040\000T\000o\000k\000e\000n\000s}{section.6}% 16
+-\BOOKMARK [1][-]{section.7}{\376\377\0007\000\040\000C\000o\000n\000c\000l\000u\000d\000i\000n\000g\000\040\000R\000e\000m\000a\000r\000k\000s}{}% 17
++\BOOKMARK [2][-]{subsection.2.1}{\376\377\0002\000.\0001\000\040\000I\000n\000b\000o\000x}{section.2}% 3
++\BOOKMARK [2][-]{subsection.2.2}{\376\377\0002\000.\0002\000\040\000O\000u\000t\000b\000o\000x}{section.2}% 4
++\BOOKMARK [2][-]{subsection.2.3}{\376\377\0002\000.\0003\000\040\000O\000p\000t\000i\000m\000i\000s\000t\000i\000c\000\040\000v\000s\000.\000\040\000z\000k\000-\000r\000o\000l\000l\000u\000p\000s}{section.2}% 5
++\BOOKMARK [2][-]{subsection.2.4}{\376\377\0002\000.\0004\000\040\000B\000r\000i\000d\000g\000e}{section.2}% 6
++\BOOKMARK [2][-]{subsection.2.5}{\376\377\0002\000.\0005\000\040\000R\000e\000l\000a\000t\000e\000d\000\040\000W\000o\000r\000k}{section.2}% 7
++\BOOKMARK [1][-]{section.3}{\376\377\0003\000\040\000P\000r\000o\000p\000o\000s\000e\000d\000\040\000S\000o\000l\000u\000t\000i\000o\000n}{}% 8
++\BOOKMARK [2][-]{subsection.3.1}{\376\377\0003\000.\0001\000\040\000D\000e\000s\000i\000g\000n\000\040\000L\000a\000n\000d\000s\000c\000a\000p\000e}{section.3}% 9
++\BOOKMARK [3][-]{subsubsection.3.1.1}{\376\377\0003\000.\0001\000.\0001\000\040\000P\000r\000o\000p\000e\000r\000t\000i\000e\000s}{subsection.3.1}% 10
++\BOOKMARK [3][-]{subsubsection.3.1.2}{\376\377\0003\000.\0001\000.\0002\000\040\000A\000l\000t\000e\000r\000n\000a\000t\000i\000v\000e\000s}{subsection.3.1}% 11
++\BOOKMARK [2][-]{subsection.3.2}{\376\377\0003\000.\0002\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.3}% 12
++\BOOKMARK [2][-]{subsection.3.3}{\376\377\0003\000.\0003\000\040\000H\000e\000d\000g\000e\000d\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.3}% 13
++\BOOKMARK [1][-]{section.4}{\376\377\0004\000\040\000I\000m\000p\000l\000e\000m\000e\000n\000t\000a\000t\000i\000o\000n\000\040\000a\000n\000d\000\040\000P\000e\000r\000f\000o\000r\000m\000a\000n\000c\000e\000\040\000M\000e\000a\000s\000u\000r\000e\000m\000e\000n\000t\000s}{}% 14
++\BOOKMARK [2][-]{subsection.4.1}{\376\377\0004\000.\0001\000\040\000T\000r\000a\000d\000e\000a\000b\000l\000e\000\040\000E\000x\000i\000t\000s}{section.4}% 15
++\BOOKMARK [2][-]{subsection.4.2}{\376\377\0004\000.\0002\000\040\000P\000r\000e\000d\000i\000c\000t\000i\000o\000n\000\040\000M\000a\000r\000k\000e\000t\000\040}{section.4}% 16
++\BOOKMARK [1][-]{section.5}{\376\377\0005\000\040\000P\000r\000i\000c\000i\000n\000g}{}% 17
++\BOOKMARK [1][-]{section.6}{\376\377\0006\000\040\000D\000i\000s\000c\000u\000s\000s\000i\000o\000n}{}% 18
++\BOOKMARK [2][-]{subsection.6.1}{\376\377\0006\000.\0001\000\040\000P\000r\000e\000d\000i\000c\000t\000i\000o\000n\000\040\000M\000a\000r\000k\000e\000t\000\040\000F\000i\000d\000e\000l\000i\000t\000y}{section.6}% 19
++\BOOKMARK [2][-]{subsection.6.2}{\376\377\0006\000.\0002\000\040\000W\000i\000t\000h\000d\000r\000a\000w\000a\000l\000\040\000F\000o\000r\000m\000a\000t}{section.6}% 20
++\BOOKMARK [2][-]{subsection.6.3}{\376\377\0006\000.\0003\000\040\000M\000a\000r\000k\000e\000t\000s}{section.6}% 21
++\BOOKMARK [2][-]{subsection.6.4}{\376\377\0006\000.\0004\000\040\000L\000o\000w\000\040\000L\000i\000q\000u\000i\000d\000i\000t\000y\000\040\000o\000r\000\040\000N\000o\000n\000-\000F\000u\000n\000g\000i\000b\000l\000e\000\040\000T\000o\000k\000e\000n\000s}{section.6}% 22
++\BOOKMARK [1][-]{section.7}{\376\377\0007\000\040\000C\000o\000n\000c\000l\000u\000d\000i\000n\000g\000\040\000R\000e\000m\000a\000r\000k\000s}{}% 23
+diff --git a/AFT_2023/main.pdf b/AFT_2023/main.pdf
+index a4e53bc..955f0fd 100644
+Binary files a/AFT_2023/main.pdf and b/AFT_2023/main.pdf differ
+diff --git a/AFT_2023/main.tex b/AFT_2023/main.tex
+index 56b4c68..4130912 100644
+--- a/AFT_2023/main.tex
++++ b/AFT_2023/main.tex
+@@ -1,4 +1,4 @@
+-\documentclass[a4pape,cleveref, autoref, thm-restate, anonymous]{lipics-v2021}
++\documentclass[a4pape,cleveref, autoref, thm-restate]{lipics-v2021}
+ 
+ 
+ 
+@@ -16,12 +16,18 @@
+ 
+ \title{Fast and Furious Withdrawals from Optimistic Rollups} 
+ 
+-\author{Mahsa {Moosavi}}{Concordia University, Canada \and OffchainLabs, United States \and \url{http://https://mahsamoosavi.com} }{mmoosavi@offchainlabs.com}{}{(Optional) author-specific funding acknowledgements}
+-% Add Mehdi, Daniel, and Jeremy
++\author{Mahsa {Moosavi}}{Concordia University, Canada \and OffchainLabs, United States \and \url{https://mahsamoosavi.com}}{mmoosavi@offchainlabs.com}{https://orcid.org/0000-0002-1825-0097}{}
++\author{Mehdi {Salehi}}{OffchainLabs, United States}{msalehi@offchainlabs.com}{}{}
++\author{Daniel {Goldman}}{OffchainLabs, United States}{dgoldman@offchainlabs.com}{}{}
++\author{Jeremy {Clark}}{Concordia University, Canada \and \url{https://www.pulpspy.com}}{j.clark@concordia.ca }{https://orcid.org/0000-0002-3533-5965}{}
+ 
++\authorrunning{M. Moosavi \etal}
++
++\Copyright{Mahsa Moosavi, Mehdi Salehi, Daniel Goldman, and Jeremy Clark}
+ 
+ \keywords{Ethereum, layer 2, rollups, bridges, prediction markets}
+ 
++\acknowledgements{This paper includes useful comments from the reviewers, discussions with Ed Felten and Rachel Bousfield, and feedback from presentations at Devcon 6 and a16z crypto research. J. Clark acknowledges support for this research project from (i) the National Sciences and Engineering Research Council (NSERC), Raymond Chabot Grant Thornton, and Catallaxy Industrial Research Chair in Blockchain Technologies (IRCPJ/545498-2018), (ii) the AMF (Autorité des Marchés Financiers), and (iii) NSERC through a Discovery Grant (RGPIN/04019-2021). }
+ 
+ \begin{document}
+ \maketitle
+diff --git a/AFT_2023/main.vtc b/AFT_2023/main.vtc
+index 7257729..192805d 100644
+--- a/AFT_2023/main.vtc
++++ b/AFT_2023/main.vtc
+@@ -1 +1 @@
+-\contitem\title{Fast and Furious Withdrawals from Optimistic Rollups}\author{Mahsa {Moosavi}}\page{:1--:15}
++\contitem\title{Fast and Furious Withdrawals from Optimistic Rollups}\author{Mahsa {Moosavi}, Mehdi {Salehi}, Daniel {Goldman}, and Jeremy {Clark}}\page{:1--:18}
+diff --git a/AFT_2023/sections/body.tex b/AFT_2023/sections/body.tex
+index 1887d3f..574c2c9 100644
+--- a/AFT_2023/sections/body.tex
++++ b/AFT_2023/sections/body.tex
+@@ -1,12 +1,12 @@
+ % !TEX root = ../main.tex
+ \section{Introductory Remarks}
+ 
+-Ethereum-compatible blockchain environments, called Layer 2s (or \layertwos)~\cite{gudgeon2019sok}, have demonstrated an ability to reduce transaction fees by 99--99.9\% while preserving the strong guarantees of integrity and availability in the underlying blockchain. The subject of this paper concerns one subcategory of \layertwo technology called an optimistic rollup. The website \textit{L2 Beat} attempts to capitalize all tokens of known value across the top 25 \layertwo projects. It finds that the top two \layertwos are both optimistic rollups, \arb and \opt, which respectively account for 50\% and 30\% of all \layertwo value---\$4B~USD at the time of writing. \footnote{L2 Beat: \url{https://l2beat.com/scaling/tvl/}, accessed Oct. 2022.}
++Ethereum-compatible blockchain environments, called Layer 2s (or \layertwos)~\cite{gudgeon2019sok}, have demonstrated an ability to reduce transaction fees by 99--99.9\% while preserving the strong guarantees of integrity and availability in the underlying Layer 1 (or \layerone) blockchain. The subject of this paper concerns one subcategory of \layertwo technology called an optimistic rollup. The website \textit{L2 Beat} attempts to capitalize all tokens of known value across the top 25 \layertwo projects. It finds that the top two \layertwos are both optimistic rollups, \arb and \opt, which respectively account for 50\% and 30\% of all \layertwo value---\$4B~USD at the time of writing. \footnote{L2 Beat: \url{https://l2beat.com/scaling/tvl/}, accessed Oct. 2022.}
+ %\footnote{\href{https://l2beat.com/scaling/tvl/}{L2 Beat}, accessed Oct. 2022.}
+ 
+-We will describe the working details of optimistic rollups later in this paper but here are the main takeaways: currently, rollups are faster and cheaper than Ethereum itself. However, each \layertwo is essentially an isolated environment that cannot instantly and trustlessly interact with accounts and contracts that are running on either \layerone or other \layertwos. An optimistic rollup project will typically provide a smart contract, called a validating bridge~\cite{mccorry2021sok}, that can trustlessly move ETH (and other tokens and even arbitrary messages) between \layerone and its own \layertwo. It does value transfers by locking ETH in an \layerone contract and minting the equivalent ETH (more precisely, it is a \layertwo claim on \layerone ETH) on \layertwo and assigning it to the user's \layertwo address. Later when the user requests a withdrawal, the ETH will be destroyed on \layertwo and released by the bridge back onto \layerone according to whom its new owner is on \layertwo at the time of the request. This requires the rollup to convince the \layerone bridge contract of whom the current owner of withdrawn ETH is on \layertwo. We provide details later but this process takes time: the bridge has to wait for a period of time called the dispute window. The current default is 7 days in \arb and \opt, however the filing of new disputes can extend the window. The bottom line is that users have to wait at least 7 days to draw down ETH from an optimistic rollup. 
++We will describe the working details of optimistic rollups later in this paper but here are the main takeaways: currently, rollups are faster and cheaper than Ethereum itself. However, each \layertwo is essentially an isolated environment that cannot instantly and trustlessly interact with accounts and contracts that are running on either \layerone or other \layertwos. An optimistic rollup project will typically provide a smart contract, called a validating bridge~\cite{mccorry2021sok}, that can trustlessly move ETH (and other tokens and even arbitrary messages) between \layerone and its own \layertwo. It implements a transfer by locking the ETH in an \layerone contract and minting the equivalent ETH on \layertwo and assigning it to the user's \layertwo address. More precisely, \layertwo ETH is a transferrable claim for \layerone ETH from the \layerone bridge at the request of the current owner of the \layertwo claim. Later when the user requests a withdrawal, the ETH will be destroyed on \layertwo and released by the bridge back onto \layerone according to whom its new owner is on \layertwo at the time of the request. This requires the rollup to convince the \layerone bridge contract of whom the current owner of withdrawn ETH is on \layertwo. We provide details later but this process takes time: the bridge has to wait for a period of time called the dispute window. The current default is 7 days in \arb and \opt, however the filing of new disputes can extend the window. The bottom line is that users have to wait at least 7 days to draw down ETH from an optimistic rollup. 
+ 
+-\paragraph*{Contributions.} In this paper, we compare several methods---atomic swaps and tradeable exits---for working around this limitation. While we argue workarounds cannot be done generally, some circumstances allow it: namely, when the withdrawn token is liquid, fungible, and available on \layerone and the withdrawer is willing to pay a fee to speed up the withdrawal.  While these techniques work easily between human participants that have off-chain knowledge, such as the valid state of the \layertwo, it is harder to make them compatible with \layerone smart contracts that have no ability to validate the state of \layertwo. We propose a solution using tradeable exits and prediction markets to enable an \layerone smart contract to safely accept withdrawn tokens before the dispute period is over. We fork the current version, \nitro, of the most popular optimistic rollup, \arb, made open source\footnote{GitHub: Nitro \url{https://github.com/OffchainLabs/nitro}} by \offchain. We implement our solution and provide measurements. \arb is a commercial product with academic origins~\cite{kalodner2018arbitrum}. Finally, we provide an analysis of how to price exits and prediction market shares.  
++\paragraph*{Contributions.} In this paper, we compare several methods---atomic swaps and tradeable exits---for working around this limitation. While we argue workarounds cannot be done generally (\eg for NFTs, function outputs, or arbitrary messages), some circumstances allow it: namely, when the withdrawn token is liquid, fungible, and available on \layerone and the withdrawer is willing to pay a fee to speed up the withdrawal.  While these techniques work easily between human participants that have off-chain knowledge, such as the valid state of the \layertwo, it is harder to make them compatible with \layerone smart contracts that have no ability to validate the state of \layertwo. We propose a solution using tradeable exits and prediction markets to enable an \layerone smart contract to safely accept withdrawn tokens before the dispute period is over. We fork the current version, \nitro, of the most used optimistic rollup, \arb, maintained as open source software\footnote{GitHub: Nitro \url{https://github.com/OffchainLabs/nitro}} by \offchain. \arb is a commercial product with academic origins~\cite{kalodner2018arbitrum}.  We implement our solution and provide measurements. We also provide an analysis of how to price exits and prediction market shares.  
+ 
+ 
+  
+@@ -16,13 +16,13 @@ We will describe the working details of optimistic rollups later in this paper b
+ 
+ While we describe optimistic rollups as generally as possible, some details and terms are specific to \arb. 
+ 
+-\paragraph*{Inbox.} Rollups have emerged as a workable approach to reduce fees and latency for Ethereum-based decentralized applications. In a rollup,  transactions to be executed on \layertwo are recorded in an \layerone smart contract called the inbox. Depending on the system, users might submit to the inbox directly, or they might submit to an offchain service, called a sequencer, that will batch together transactions from many users and pay the \layerone fees for posting them into the inbox. Transactions recorded in the inbox (as \texttt{calldata}) are not executed on Ethereum, instead, they are executed in a separate environment off the Ethereum chain, called \layertwo. This external environment is designed to reduce fees, increase throughput, and decrease latency. 
++\subsection{Inbox} Rollups have emerged as a workable approach to reduce fees and latency for Ethereum-based decentralized applications. In a rollup,  transactions to be executed on \layertwo are recorded in an \layerone smart contract called the inbox. Depending on the system, users might submit to the inbox directly, or they might submit to an offchain service, called a sequencer, that will batch together transactions from many users and pay the \layerone fees for posting them into the inbox. Transactions recorded in the inbox (as \texttt{calldata}) are not executed on Ethereum, instead, they are executed in a separate environment off the Ethereum chain, called \layertwo. This external environment is designed to reduce fees, increase throughput, and decrease latency. 
+ 
+-\paragraph*{Outbox.} Occasionally (\eg every 30--60 minutes), validators on \layertwo will produce a checkpoint of the state of all contracts and accounts in the complete \layertwo according to the latest transactions and will place this asserted state (called an \rblock) in a contract on \layerone called the outbox. Note that anyone with a view of \layerone can validate that the sequence of transactions recorded in the inbox produces the asserted \rblock in the outbox. This includes Ethereum itself, but asking it to validate this be equivalent to running the transactions on Ethereum. The key breakthrough is that the assertion will be posted with \textit{evidence} that the \rblock is correct so Ethereum does not have to check completely.
++\subsection{Outbox} Occasionally (\eg every 30--60 minutes), validators on \layertwo will produce a checkpoint of the state of all contracts and accounts in the complete \layertwo according to the latest transactions and will place this asserted state (called an \rblock) in a contract on \layerone called the outbox. Note that anyone with a view of \layerone can validate that the sequence of transactions recorded in the inbox produces the asserted \rblock in the outbox. This includes Ethereum itself, but asking it to validate this be equivalent to running the transactions on Ethereum. The key breakthrough is that the assertion will be posted with \textit{evidence} that the \rblock is correct so Ethereum does not have to check completely.
+ 
+-\paragraph*{Optimistic vs. zk-rollups.} In practice, two main types of evidence are used. In zk-rollups,\footnote{zk stands for zero-knowledge, a slight misnomer: succinct arguments of knowledge that only need to be complete and sound, not zero-knowledge, are used~\cite{Mei21}.} a succinct computational argument that the assertion is correct is posted and can be checked by Ethereum for far less cost than running all of the transactions. However the proof is expensive to produce. In optimistic rollups, the assertions are backed by a large amount of cryptocurrency acting as a fidelity bond. The correctness of an \rblock can be challenged by anyone on Ethereum and Ethereum itself can decide between two (or more) \rblocks for far less cost than running all of the transactions (by having the challengers isolate the exact point in the execution trace where the \rblocks differ). It will then reallocate the fidelity bonds to whoever made the correct \rblock. If an \rblock is undisputed for a window of time (\eg 7 days), it is considered final.
++\subsection{Optimistic vs. zk-rollups} In practice, two main types of evidence are used. In zk-rollups,\footnote{zk stands for zero-knowledge, a slight misnomer: succinct arguments of knowledge that only need to be complete and sound, not zero-knowledge, are used~\cite{Mei21}.} a succinct computational argument that the assertion is correct is posted and can be checked by Ethereum for far less cost than running all of the transactions. However the proof is expensive to produce. In optimistic rollups, the assertions are backed by a large amount of cryptocurrency acting as a fidelity bond. The correctness of an \rblock can be challenged by anyone on Ethereum and Ethereum itself can decide between two (or more) \rblocks for far less cost than running all of the transactions (by having the challengers isolate the exact point in the execution trace where the \rblocks differ). It will then reallocate the fidelity bonds to whoever made the correct \rblock. If an \rblock is undisputed for a window of time (\eg 7 days), it is considered final.
+ 
+-\paragraph*{Bridge.} A final piece of the \layertwo infrastructure is a bridge, which can move ETH, tokens, NFTs, and even arbitrary messages, between \layerone and \layertwo. For now, we limit the discussion to bridging ETH but the ideas extend to other tokens. If Alice has ETH on Ethereum, she can submit her ETH to a bridge smart contract on Ethereum which will lock the ETH inside of it, while generating the same amount of ETH in Alice's account inside the \layertwo environment. The bridge does not need to be trusted because every bridge operation is already fully determined by the contents of the inbox. Say that Alice transfers this ETH to Bob's address on \layertwo. Bob is now entitled to draw down the ETH from \layertwo to \layerone by submitting a withdrawal request using the same process as any other \layertwo transaction---\ie placing the transaction in the inbox on \layerone, having it executed on \layertwo, and seeing it finalized in an \rblock on \layerone. Optimistically, the \rblock is undisputed for 7 days and is finalized. Bob can now ask the bridge on \layerone to release the ETH to his address by demonstrating his withdrawal (called an exit) is included in the finalized \rblock (\eg with a Merkle-proof).
++\subsection{Bridge} A final piece of the \layertwo infrastructure is a bridge, which can move ETH, tokens, NFTs, and even arbitrary messages, between \layerone and \layertwo. Our fast withdrawals is limited to ETH and fungible tokens. If Alice has ETH on Ethereum, she can submit her ETH to a bridge smart contract on Ethereum which will lock the ETH inside of it, while generating the same amount of ETH in Alice's account inside the \layertwo environment. The bridge does not need to be trusted because every bridge operation is already fully determined by the contents of the inbox. Say that Alice transfers this ETH to Bob's address on \layertwo. Bob is now entitled to draw down the ETH from \layertwo to \layerone by submitting a withdrawal request using the same process as any other \layertwo transaction---\ie placing the transaction in the inbox on \layerone, having it executed on \layertwo, and seeing it finalized in an \rblock on \layerone. Optimistically, the \rblock is undisputed for 7 days and is finalized. Bob can now ask the bridge on \layerone to release the ETH to his address by demonstrating his withdrawal (called an exit) is included in the finalized \rblock (\eg with a Merkle-proof).
+ 
+ \subsection{Related Work} 
+ 
+@@ -66,7 +66,7 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
+     \renewcommand{\arraystretch}{1.3}
+     \centering
+     
+-    \begin{tabular}{llccccccccccccc}
++    \begin{tabular}{llcccccccccc}
+     
+     \textit{Type} &
+     \textit{Example} & 
+@@ -76,37 +76,53 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
+     \headrow{No griefing} &
+     \headrow{No free option} & 
+     \headrow{Opt-in anytime} & 
+-    \headrow{\layertwo-to-\layertwo} & 
+-    \headrow{} \\ \hline % Actual net movement from L2 to L1
++    \headrow{Crosschain or \layertwo-to-\layertwo} & 
++    \headrow{L1 gasUsed} & 
++    \headrow{L2 gasUsed} & 
++     \headrow{Other Fees}  \\ \hline 
++     % maybe add the ctual net movement from L2 to L1
+     
+-    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&	&	\\ \hline
+-    Centralized   			& Coinbase	&	&\full		&\full	&\full	&\full	&	&\full	&	\\
+-    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full	&	\\
+-    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&	\\ % data quality
+-    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full	&	\\ 
+-    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ 
+-    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&	\\ \hline
++    Normal Exit (baseline)   	& Arbitrum		&\full	&		&	&\full	&\full	&	&			&200K    	&80K		&--- \\ \hline
++    Centralized   			& Binance	&	&\full		&\full	&\full	&\full	&	&\full		&400K 	&21K		& Operator		\\
++    HTLC Swaps 			& Celer		&\full	&\prt		&\full	&	&	&	&\full 			&625K	&92K	&  		\\
++    Conditional Transfers	& StarkEx		&\full	&\full		&\full	&	&	&	&	&$\perp$	& $\perp$ & Operator   						\\ % data quality
++    Bridge Tokens 		& Hop 		&\prt	&\full		&\full	&	&\full	&	&\full			&1.8M	&300K	& Operator	\\ 
++    Tradeable Exits  		& This Work 	&\full	&$\sim$	&\full	&\full	&\full	&\full	&		&200K	&80K		& Discount	\\ 
++    Hedged Tradeable Exits  	& This Work	&\full	&$\sim$	&\full	&\full	&\full	&\full	&	&265K& 80K			& \fail	\\ \hline
+                                                                                         
+     \end{tabular}
+     
+-\caption{Comparing alternatives for fast withdrawals from optimistic rollups for liquid and fungible tokens where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied. For our work, $\sim$ means we propose how to fully achieve the property but do not by default (see caveats in Section~\ref{sec:fidelity}).\label{tab:landscape}}
++\caption{Comparing alternatives for fast withdrawals from optimistic rollups for liquid and fungible tokens where \full~satisfies the property fully, \prt~partially satisfies the property, and no dot means the property is not satisfied. $\perp$ was not measured. For our work, $\sim$ means we propose how to fully achieve the property but do not by default (see caveats in Section~\ref{sec:fidelity}).\label{tab:landscape}}
+ 
+ \end{table*}
+ 
+-\paragraph*{Centralized.} Consider Alice who has 100 \ethtwo and wants (something like) 99.95 \ethone for it. We describe a set of solutions for Alice. A centralized exchange (\eg \textit{Coinbase}, \textit{Binance}) can open a market for \ethtwo/\ethone. Alternatively, a bridge might rely on an established set of trustees to relay \layertwo actions to \layerone. This is called proof of authority; it is distributed but not decentralized (\ie not an \textit{open} set of participants).  
++In Table~\ref{tab:landscape}, we compare our solution to alternatives in industry and the blockchain (academic and grey) literature that could be used for fast withdrawals.
+ 
+-\paragraph*{Hash Time Locked Contracts (HTLCs).} Assume Bob has 99.95 \ethone and is willing to swap with Alice. An atomic swap binds together (i) an \layertwo transaction moving 100 \ethtwo from Alice to Bob and (ii) an \layerone transaction moving 99.95 \ethone from Bob to Alice. Either both execute or both fail. HTLC is a blockchain-friendly atomic swap protocol. Its main drawback is that it also has a time window where Alice (assuming she is the first mover in the protocol) must wait on Bob, who might abort causing Alice's \ethtwo to be locked up while waiting (called the griefing problem), or might watch price movements before deciding to act (called free option problem). Bob needs to monitor both chains so he cannot be an autonomous smart contract. HTLCs work between two \layertwos.
+-% Example CELR cBridge
++\subsubsection{Properties} 
+ 
+-\paragraph*{Conditional Transfers.} In this contract-based atomic swap, Alice uses an \layerone contract (called a registry) to record a request for payment of 99.95 \ethone (from anyone) with ID number 1337. Off-chain, she provides Bob with a signed \layertwo transaction (called a conditional transfer or CT) that (slow) withdraws 100 \ethtwo to Bob \textit{if and only if} payment 1337 has been received on the \layerone registry at the time the CT is added to the inbox; otherwise the CT reverts. The CT also expires (always reverts) after one hour. CTs have similar properties to an atomic swap except Alice gets paid on \layerone before anything happens on \layertwo. The registry check cannot work quickly between different \layertwos. 
++We are interested in solutions that do not require a trusted third party. If trust is acceptable, a centralized exchange that has custody of its users funds is a fast and user-friendly solution. We consider anything faster than the 7-day dispute period as ``fast'' but take measurements of solutions that can settle within a fully confirmed ``\layerone transaction'' (\eg minutes) and within a unconfirmed \layertwo \rblock (\eg hours). This assumes that all counterparties perform instantly upon request. Settlement is from the perspective of the withdrawer, Alice, only and does not necessarily mean other counterparties will complete within the same timeframe. 
++
++Some solutions require one party to act, followed by an action of the counterparty is a follow-up transaction. This creates the risk that the counterparty aborts the protocol before taking their action. Since it is unknown if the counterparty will act or not, these protocols establish a window of time for the counterparty to act and if the window passes without action, the initial party has to begin the protocol again with a new counterparty. The protocols ensure funds are never at risk of being lost or locked up forever, however they do admit two smaller issues. The first issue is that a malicious counterparty could accept to participate with no intention of completing the protocol just to ``grief'' the party taking the action---wasting their time and possibly gas fees for setting up and tearing down the conditions of the trade. The second issue is that a strategic counterparty can accept to participate and then selectively choose to complete or abort, as well as timing exactly when they choose to complete (within the window), based on price movements or other market information. This is called (somewhat cryptically) a ``free option;'' finance people might recognize it as akin to being given an American call option for free. 
++
++A solution is ``opt-in anytime'' if the user can withdraw normally and then (say upon realizing for the first time that there is a 7 day dispute window) decides to speed up their transaction. It is not a design goal of our paper, but many of these solutions are designed for more general cross-chain transactions (including between \layertwos) where our solution is narrowly scoped to \layertwo-to-\layerone withdrawals on rollups specifically.
++
++Finally we estimate the costs involved for the seller of \ethtwo. For some protocols, the gas cost of the buyer might differ from the seller depending if its actions are symmetric or not---we comment on this but did not find it interesting enough to put in the table. The more interesting aspect is that many alternatives do require a third party to be involved (we generically call them ``operator'') and they must be compensated for their actions. In some alternatives, the operators might be not be inherently necessary (\eg an HTLC swap) but are used in practice (\eg Celer) to ease friction (\eg users finding other users to swap with): in this case, we are charitable and do not mark the fee. So the fees are for things fundamental to the alternative works. We expand more within the discussion of each alternative below. 
++
++\subsubsection{Alternatives} 
++
++
++\paragraph*{Centralized} Consider Alice who has 100 \ethtwo and wants 100 \ethone for it. A centralized exchange (\eg \textit{Coinbase}, \textit{Binance}) can open a market for \ethtwo/\ethone. Alternatively, a bridge might rely on an established set of trustees to relay \layertwo actions to \layerone. This is called proof of authority; it is distributed but not decentralized (\ie not an \textit{open} set of participants). The gas costs consists of Alice transferring her \ethtwo onto the exchange (withdraw to \layerone is paid for by the exchange). An exchange will not be profitable if it offers this for free, therefore it captures a operator fee for the service. 
++
++\paragraph*{Hash Time Locked Contracts (HTLCs)} Assume Bob has 100 \ethone and is willing to swap with Alice. An atomic swap binds together (i) an \layertwo transaction moving 100 \ethtwo from Alice to Bob and (ii) an \layerone transaction moving 100 \ethone from Bob to Alice. Either both execute or both fail. HTLC is a blockchain-friendly atomic swap protocol. Its main drawback is that it also has a time window where Alice (assuming she is the first mover in the protocol) must wait on Bob, who might abort causing Alice's \ethtwo to be locked up while waiting (called the griefing problem), or might watch price movements before deciding to act (called free option problem). Bob needs to monitor both chains so he cannot be an autonomous smart contract. HTLCs work between two \layertwos. The transaction (containing a hashlock and timeout) is slightly more complicated than a standard ETH transfer, requiring smart contract logic on both layers. The measurement based on Celer is not a pure HTLC and uses operators as well for liquidity and staking, but we omit these fees from the table because theoretically Alice and Bob could find each other and perform a pure HTLC with no added infrastructure. % Example CELR cBridge
++
++\paragraph*{Conditional Transfers} The intuition behind a CT is that \layerone-to-\layertwo messaging (or bridging) is fast even if \layertwo-to-\layerone messaging is slow. CT exploits this to build an HTLC-esque swap specifically for withdrawing from rollups (while HTLCs are designed generically for cross-chain swaps). Alice beings by registering her intent to trade 100 \ethtwo for 100 \ethone in a special registry contract on \layerone, and she locks (\eg for an hour) 100 \ethtwo in escrow on \layertwo. If Bob agrees to the swap, Alice provides him (off-chain) with a signed transaction (called the conditional transfer) that transfers the escrowed 100 \ethtwo to Bob, conditioned on Alice having receiving 100 \ethone in the registry contract on \layerone. After Bob transfers the \ethone on \layerone, this fact can be bridged to the \layertwo escrow contract (with customization of the rollup's inbox). The escrow will mark the \layerone transaction as paid by Bob, and Bob can broadcast his signed (by Alice) \layertwo transaction to recover 100 \ethtwo from escrow. We could not adequately isolate the conditional transfer from the rest of the bridge to measure gas costs (denoted in the table using a $\perp$ symbol) however it should be slight more expensive than an HTLC as the logic of the transaction is more complex. Also note that Bob must be a validator on \layertwo to confirm that the state of the escrow and conditional transfer on \layertwo will result in him being paid---this is where the speedup really comes from, if he waits for \layerone to finalize this, then the transfer happens after the dispute period and it is no different than a normal exit. Bob cannot be an autonomous \layerone smart contract unable to validate \layertwo state until it is finalized on \layerone (which is the design goal of our alternative: hedged tradeable exits). 
+ 
+ % https://medium.com/starkware/conditional-transfers-the-key-to-interoperability-2e1de044fb65		X
+ % https://medium.com/starkware/starkexchange-fast-withdrawals-using-cookie-jars-88eefea6a11a	X
+ % https://docs.starkware.co/starkex/conditional-transfer.html								X
+ 
+-\paragraph*{Bridge Token.} A third party creates a bridge on \layertwo that converts \ethtwo into a custom ticket that serves as a claim for \ethtwo~\cite{Whi21}. It creates an equivalent bridge on \layerone. Alice burns 100 tickets on \layertwo. Bob notices and generates a claim for \ethone on \layerone (assuming sufficient supply) in the equivalent \layerone bridge. To prevent Bob from maliciously minting tokens on \layerone that were not burned on \layertwo, he must post a fidelity bond of equal or greater value (otherwise Bob is trusted to not cause insolvency). After the 7-day dispute period, the \layerone bridge can verify Bob's actions are consistent with \layertwo and release his fidelity bond. Note that when you collapse this functionality, it is equivalent to Bob buying \ethxx from Alice for \ethone and receiving his \ethone back 7 days later. The extra infrastructure is necessary because today native bridges do not support tradeable exits. As in atomic swaps, Bob can fail to act (griefing) which is worst in this case if Alice cannot `unburn' her tokens, but there is no free option because Bob is a relay and not a recipient. 
++\paragraph*{Bridge Token} Bridges between \layerone and \layertwo can technically be implemented by anyone. It is natural for the inbox/outbox provider to provide a bridge but it is not necessary. Assume a third party creates a contract on \layerone that accepts \ethone and releases a transferable claim for \ethone; it creates the same contract on \layertwo. Assume enough of these claims come into circulation that a liquid market for them emerges on both layers.  To move \ethtwo to \ethone, Alice starts by trading her \ethtwo for a claim to the same amount on \layertwo. She then asks the \layertwo contract to transfer the claim which it does by burning them and firing an event. An authorized party, called a bonder, notices the event on \layertwo, goes to the \layerone contract and mints the same number of claims on \layerone for \ethone and transfers them to Alice's address. Technically the \layerone contract is insolvent as more claims exist than actual \ethone in the contract, but the \layertwo contract is oversolvent by the same amount. The contracts can be rebalanced (1)  through movements in the opposite direction; (2) through a bulk withdrawal after the normal 7-day dispute period; or (3) by incentivize bonders to purposefully rebalance the contracts by burning claims on \layerone and minting on \layertwo. To prevent the bonder from maliciously minting tokens on \layerone that were not burned on \layertwo, it must post a fidelity bond of equal or greater value (or alternatively, it is simply trusted which makes it similar a centralized exchange in terms of threat model). After the 7-day dispute period, the \layerone contract can verify the bonder's actions are consistent with the burns on \layertwo and release its fidelity bond. Note that when you collapse this functionality, it is equivalent to the bonder buying \ethxx from Alice for \ethone and receiving his \ethone back 7 days later. The extra infrastructure is necessary because today native bridges do not support tradeable exits. As in atomic swaps, the bonder can fail to act (griefing) which is worst in this case if Alice cannot `unburn' her tokens, but there is no free option because Bob is a relay and not a recipient of the tokens. The gas fee measurement is based on Hop and standard token transfers on \layerone and \layertwo. The main cost of bridge tokens is paying the bonder (called a an operator in the table) who are providing a for-profit service. 
+ 
+-\paragraph*{Comparative Evaluation.} These solutions are compared with (hedged) tradeable exits---described next in the paper---in Table~\ref{tab:landscape}.
+  
+ % https://medium.com/onther-tech/cross-rollup-transfer-hop-protocol-2c10ea041e23
+ % https://hop.exchange/whitepaper.pdf
+@@ -115,20 +131,22 @@ For simplicity, we will describe a fast exit system for withdrawing ETH from \la
+ \subsection{Tradeable Exits} 
+ \label{sec:tradeablexits}
+ 
+-Alice wants to withdraw 100 \ethtwo. Bob has 99.95 \ethone that will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. With a tradeable exit, the outbox allows Alice to change the recipient of her withdraw from herself to Bob. Thus Alice swaps her pending exit of 100 \ethone (which we call 100 \ethxx) for Bob's 99.95 \ethone on \layerone (note we discuss the actual difference in price in Section~\ref{sec:pricing}). After 7 days, Bob can ask the bridge to transfer the \ethone to his address, and the bridge checks the outbox to validate that Bob's address is the current owner of the exit.
++Alice wants to withdraw 100 \ethtwo. Unlike the other solutions, Bob takes the risk that the exit never finalized and therefore will offer less than 100 \ethone (say 99.95 \ethone) for it (this is denoted ``discount'' in Table 1). Assume Bob has 99.95 \ethone that will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. With a tradeable exit, the outbox allows Alice to change the recipient of her withdraw from herself to Bob. Thus Alice swaps her pending exit of 100 \ethone (which we call 100 \ethxx) for Bob's 99.95 \ethone on \layerone (note we discuss the actual difference in price in Section~\ref{sec:pricing}). Since \ethone and \ethxx are both on \layerone, Alice can place an ask price for her \ethxx and the first trader willing to swap can do so atomicly, with no ability to grief or capitalize on a free option. After 7 days, Bob can ask the bridge to transfer the \ethone to his address, and the bridge checks the outbox to validate that Bob's address is the current owner of the exit.
+ 
+-In our forked bridge, Alice can transfer any of her exits that are in an \rblock (\ie an asserted \layertwo state update registered in the outbox). Technically, Bob can check the validity of the withdrawal as soon as it is in the inbox, and not wait 30-60 minutes for an \rblock. However for implementation reasons, it is easier to track an exit based on its place (\ie Merkle path) in an \rblock, rather than its place in the inbox. When we say a withdrawal is `fast,' we mean 30-60 minutes (\ie one \layertwo rollup). 
++In our forked bridge, Alice can transfer any of her exits that are in an \rblock (\ie an asserted \layertwo state update registered in the outbox). Technically, Bob can check the validity of the withdrawal as soon as it is in the inbox, and not wait 30-60 minutes for an \rblock. However for implementation reasons, it is easier to track an exit based on its place (\ie Merkle path) in an \rblock, rather than its place in the inbox. When we say a withdrawal is `fast,' we mean 30-60 minutes (\ie one \layertwo rollup).
+ 
+-Like bridge tokens, tradeable exits can be approximated by a third party \layerone contract that does not modify the rollup. In this scenario, a two-stage withdrawal would occur. The user would specify the contract as the recipient of the exit, and the contract would specify the user as the recipient (initially). The user could then transfer ownership to a new account within the contract. Given this option, why modify the bridge/outbox of the rollup? We have two main arguments: (1) it is more efficient for the user to have the functionality natively in the bridge/outbox, which they have to interact with anyways; and (2) a user who initially request a `normal' withdrawal cannot change their mind and opt-in to a fast withdrawal---it is too late. A tradeable exit can bail out a user who withdrawals without realizing there is a 7-day dispute window (anecdotally, this is a common concern on support channels for optimistic rollups). It also lets a user who is aware decide if and when to expedite a withdrawal.
++Tradeable exits can be approximated by a third party \layerone contract that does not modify the rollup. In this scenario, a \layerone contract would act like a proxy for the exit. Alice would specify that she is exiting 100 \ethtwo to the contract address (instead of to her address) and ask the contract to forward it to her (if it comes through after seven days). She can then, with a signed transaction from her address, specify the contract should forward it to Bob instead of to her (giving Bob signing authority over who it goes to). In this way, the exit becomes tradeable. After seven days, the current owner can ask the proxy to fetch the actual transfer from the bridge and forward it to them. If the exit fails, the bridge will refuse the exit. 
++
++Given this option, why modify the bridge/outbox of the rollup? This paper is not intended as a strong endorsement of either approach---the reader can decide between the two approaches, our intention with this research paper is to discuss, design, implement, and measure the actual functionality of what is needed. This will be largely the same whether it is placed inside or outside the bridge/outbox. The main advantage of modifying the bridge/outbox is that is backward compatible with existing web3 bridge interfaces and with current user behaviour---if interfaces/users do a slow withdraw, our solution can ``bail them out'' after the fact. It also ensures our code as directly access to the state in the contract it needs---an outside contract might require public interfaces to data in the bridge/outbox---as one example, a prediction market must be able to query the outbox to know if an \rblock is pending, finalized, or failed. The main advantage of an outside contract is modularity and reducing complexity (and thus risk) within the bridge. We choose to situate all our modification inside the bridge/outbox.
+ 
+ \subsection{Hedged Tradeable Exits}
+ \label{sec:PM}
+ 
+-One remaining issue with tradeable exits is how specialized Bob is: he must have liquidity in \ethone, be an active trader who knows how to price futures, and be an \layertwo validator. While we can expect blockchain participants with each specialization, it is a lot to assume of a single entity. The goal of this subsection is to split Bob into two distinct participants: one that has \ethone liquidity but does not know about \layertwo (Carol) and one that knows about \layertwo but is not necessarily an active trader on \layerone (David). The main impact of this change is that Carol can be an autonomous \layerone smart contract. 
++One remaining issue with tradeable exits is how specialized Bob is: he must have liquidity in \ethone (or worst, every token being withdrawn from \layertwo), be online and active, know how to price derivatives, and be a \layertwo validator. While we can expect blockchain participants with each specialization, it is a lot to assume of a single entity. The goal of this subsection is to split Bob into two distinct participants: Carol and David. Our goal is to allow Carol who does not (or functionally cannot) know anything about \layertwo's current state to safely accept a tradeable exit as if it were equivalent to finalized \ethone (or \layerone tokens). Paying Carol might be for a service or an exchange or a DeFi service. In order to make Carol more agnostic, we need David to be more aware: David is a \layertwo validator who understands the risks of an \rblock failing and is willing to bet against it happening. Therefore David needs to also have some liquidity to bet with however it could be \ethone or a stablecoin, while Alice and Carol can interact with all sorts of tokens that David need not heard of or even ones David would not want to hold himself. 
+ 
+ Recall that Alice wants \ethone quickly in order to do something on \layerone with it; Carol can be that destination contract. The primary risk for Carol accepting \ethxx as if it were \ethone is that the \rblock containing the \ethxx withdrawal fails and the exit is worthless. If Alice can obtain insurance for the \ethxx that can be verified via \layerone, then Carol's risk is hedged and she could accept \ethxx. The insurance could take different forms but we propose using a prediction market.
+ 
+-\paragraph*{Prediction markets.} A decentralized prediction market is an autonomous (\eg vending machine-esque) third party contract. Since we are insuring \layerone \ethxx, we need to run the market on \layerone (despite the fact that it would be cheaper and faster on \layertwo). Consider a simple market structure based on~\cite{clark2014decentralizing}. A user can request that a new market is created for a given \rblock. The market checks the outbox for the \rblock and its current status (which must be pending). Once opened, any user can submit 1 \ethone (for example, the actual amount would be smaller but harder to read) and receive two `shares': one that is a bet that the \rblock will finalize, called \final, and one that is a bet that the \rblock will fail, called \fail. These shares can be traded on any platform. At any time while the prediction market is open, any user can redeem 1 \final and 1 \fail for 1 \ethone. Once the dispute period is over, any user can request that the market close. The market checks the rollup's outbox for the status of the \rblock---since both contacts are on \layerone, this can be done directly without oracles or governance. If the \rblock finalizes, it offers 1 \ethone for any 1 \final (and conversely if it fails). The market always has enough \ethone to fully settle all outstanding shares.
++\paragraph*{Prediction markets} A decentralized prediction market is an autonomous (\eg vending machine-esque) third party contract. Since we are insuring \layerone \ethxx, we need to run the market on \layerone (despite the fact that it would be cheaper and faster on \layertwo). Consider a simple market structure based on~\cite{clark2014decentralizing}. A user can request that a new market is created for a given \rblock. The market checks the outbox for the \rblock and its current status (which must be pending). Once opened, any user can submit 1 \ethone (for example, the actual amount would be smaller but harder to read) and receive two `shares': one that is a bet that the \rblock will finalize, called \final, and one that is a bet that the \rblock will fail, called \fail. These shares can be traded on any platform. At any time while the prediction market is open, any user can redeem 1 \final and 1 \fail for 1 \ethone. Once the dispute period is over, any user can request that the market close. The market checks the rollup's outbox for the status of the \rblock---since both contacts are on \layerone, this can be done directly without oracles or governance. If the \rblock finalizes, it offers 1 \ethone for any 1 \final (and conversely if it fails). The market always has enough \ethone to fully settle all outstanding shares.
+ 
+ It is argued in the prediction market literature~\cite{clark2014decentralizing} that (i) the price of one share matches the probability (according to the collective wisdom of the market) that its winning condition will occur, and (ii) the price of 1 \final and 1 \fail will sum up to 1 \ethone. For example, if \fail trades for 0.001 \ethone, then (i) the market believes the \rblock will fail with probability of 0.1\% and (ii) \final will trade for  0.999 \ethone. These arguments do not assume market friction: if the gas cost for redeeming shares is $D$ (for delivery cost), both share prices will incorporate $D$ (see Section~\ref{sec:pricing}). Lastly, prediction markets are flexible and traders can enter and exit positions at any time---profiting when they correctly identify over- or under-valued forecasts. This is in contrast to an insurance-esque arrangement where the insurer is committed to hold their position until completion of the arrangement.
+ 
+@@ -166,19 +184,19 @@ We run \arb \nitro test-net locally and use Hardhat~\cite{hardhatonline} for our
+ \item Modifying the \texttt{executeTransactionImpl()} function. Once the dispute period is passed and the withdrawal transaction is confirmed, anyone can call the \texttt{executeTransaction()} function from the outbox (which internally calls the \texttt{executeTransactionImpl()}) and release the funds to the account that was specified by the user 7 days earlier in the \layertwo withdrawal request. With our modifications, this function is now enabled to release the requested funds to the current owner of the exit.
+  \end{itemize}
+  
+-To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in any unconfirmed \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross-checked against the current owner of the exit (recall exit owners are tracked in the \texttt{transferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{transferredToAddress} mapping. This costs  85,945 Gwei in \layerone gas. Note that the first transfer always costs more as the user has to pay for initializing the \texttt{transferredToAddress} mapping. \texttt{transferSpender()} costs 48,810 and 48,798 Gwei in \layerone gas for the second and third transfer respectively. The \texttt{gasUed} for executing the new \texttt{executeTransactionImpl()} function is 91,418 Gwei in \layerone gas.
++To execute the \texttt{transferSpender()} function; Alice (who has initiated a withdrawal for 100 \ethtwo) has to provide variables related to her exit (\eg exit number), which she can query using the Arbitrum SDK\footnote{A typescript library for client-side interactions with Arbitrum.}, as well as the \layerone address she wants to transfer her exit to. The \texttt{transferSpender()} function then checks (1) if the exit is already spent, (2) it is already transferred, and (3) the exit is actually a leaf in any unconfirmed \rblock. If the exit has been transferred, the \texttt{msg.sender} is cross-checked against the current owner of the exit (recall exit owners are tracked in the \texttt{transferredToAddress} mapping added to the outbox). Once these tests are successfully passed, the \texttt{transferSpender()} function updates the exit owner by changing the address in the \texttt{transferredToAddress} mapping. This costs  85,945 units of \layerone gas. Note that the first transfer always costs more as the user has to pay for initializing the \texttt{transferredToAddress} mapping. \texttt{transferSpender()} costs 48,810 and 48,798 units of \layerone gas for the second and third transfer respectively. The \texttt{gasUed} for executing the new \texttt{executeTransactionImpl()} function is 91,418 units of \layerone gas.
+ 
+ 
+ \paragraph*{Trading the exit through an \layerone market.} We also implement and deploy an \layerone market that allows users to trade their exits on \layerone even though the dispute window is not passed (see Section \ref{sec:uniswap} for why \textit{Uniswap} is not appropriate). In addition, we add a new function to the \arb \nitro outbox, the \texttt{checkExitOwner()}, which returns the current owner of the exit. Figure~\ref{fig:marketflow} illustrates an overview of participant interactions and related gas costs. To start trading, Alice needs to lock her exit up in the market by calling the \texttt{transferSpender()} function from the outbox. Next, she can open a market on this exit by calling the \texttt{openMarket()} from the market contract and providing the ask price. The market checks if Alice has locked her exit (by calling the \texttt{checkExitOwner()} from the outbox) and only in that case a listing is created on this exit. The market would be open until a trade occurs or Alice calls the \texttt{closeMarket()} on her exit. Bob, who is willing to buy Alice's exit, calls the payable \texttt{submitBid()} function from the market contract. If the \texttt{msg.value} is equal or greater than Alice's ask price, the trade occurs; (1) the market calls the \texttt{transferSpender()} from the outbox providing Bob's address. Note that market can only do that since it is the current owner of the exit being traded, and (2) the \texttt{msg.value} is transferred to Alice.
+ 
+ The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{GitHub:Nitro, Fast-Withdrawals: \url{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
+ 
+-\begin{figure*}[t]
+-	\includegraphics[width=0.8\textwidth]{figures/marketflow.pdf}
++\begin{figure}[t]
++	\includegraphics[width=1\textwidth]{figures/marketflow.pdf}
+ 	\caption{Overview of trading the exit through an \layerone market.}
+ 	\centering
+ 	\label{fig:marketflow}
+-\end{figure*}
++\end{figure}
+ 
+ \subsection{Prediction Market }
+ As described in Section~\ref{sec:PM}, a prediction market can be used to hedge the exit. We do not implement this as one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}). However, we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed). More specifically, we modify the \arb \nitro outbox and RollupCore smart contracts, modifications include:
+@@ -265,15 +283,35 @@ This value, $F_0$, is an expected value---the product of the value and the proba
+ 
+ \[ R = (1-\mathbf{Pr}[ \mathrm{\mathsf{rblock}~fails~to~finalize} |  \mathrm{\mathsf{rblock}~passes~software~verification} ]) \]
+ 
+-\paragraph*{Working Example.} We start with $R$. The promise of an optimistic rollup is that it is very costly to post an \rblock that will not finalize. Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem, $R=(1-10^{-15})$; a near-certain probability. Next, consider the resulting price of $F_0$. Alice starts with 100 \ethxx and Bob purchases it from her. Bob can hold \ethxx with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
+ 
+-As a second example, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ \ethone which is only 83.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars.
++\begin{figure}[t]
++	\centering
++	\includegraphics[width=0.65\textwidth]{figures/chart1.pdf}
++	\caption{Price of 100 \ethxx (in ETH) as the probability an \rblock actually finalizes (given the validator checks it with software validation) varies from 99\%  to 100\%, which is denoted by $R$. Note that 99\% is an extraordinarily low probability for this event (considering an \rblock has never failed at the time of writing). The take-away is that the price is not very sensitive to how precisely we estimate R.\label{fig:risk}}
++\end{figure}
++
++\begin{figure}[t]
++	\centering
++	\includegraphics[width=0.65\textwidth]{figures/chart2.pdf}
++	\caption{This chart shows the percentage of ETH recovered $(F_0/S_0)$ as the amount withdrawn ($S_0$) increases (log scale), demonstrating it is only economical for withdrawing larger amounts of \ethtwo. At low values, the gas costs of a withdrawal dominate. At very low values, the gas costs exceed the price of \ethxx causing the curve to go negative.\label{fig:amount}}
++	
++\end{figure}
++
++\paragraph*{Working Example.} We start with $R$. For an \rblock to be up for consideration, it must be submitted to the outbox as a potential solution and for it to fail, a dispute must be filed with an alternative \rblock that the \layerone outbox deems to be correct. In our case, the buyer of \ethxx actually runs a \layertwo validator and thus performs software validation on the \rblock, and will not accept it if the software does not validate it. For an \rblock to fail given the software validation, it software must have an error that causes a discrepancy between it and the \layerone outbox. Furthermore, at least one other validator would need to have different, correct software, and this validator would need to be paying attention to this specific \rblock and independently check it. This should be a rare event and assume $R=(1-10^{-15})$ for this example. Figure~\ref{fig:risk} shows a range of $R$ values.
++
++
++
++ %Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem,  ; a near-certain probability.
++
++ Next, consider the resulting price of $F_0$. Alice starts with 100 \ethxx and Bob purchases it from her. Bob can hold \ethxx with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
++
++As a second example, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ \ethone which is only 83.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars. Figure~\ref{fig:amount} shows a range of withdraw amounts.
+ 
+ Lastly, could \ethxx ever be worth more than \ethone? The equation says yes: with a sufficiently high $U$ or $y$. A contrived example would be some time-deferral reason (\eg tax avoidance) to prefer receiving \ethone in 7 days instead of today. However, in order to purchase \ethxx at a premium to \ethone, it would have to be cheaper to trade for it than to simply manufacture it. Someone holding \ethone and wanting \ethxx could simply move it to \layertwo and then immediately withdraw it to create \ethxx. The gas cost of this path will be one upper bound on how much \ethxx could exceed \ethone in value. 
+ 
+ \paragraph*{Pricing \final and \fail.}
+ 
+-It might appear surprising at first, but one of the main results of this paper is that the price of 100 \ethxx and the price 100 \fail are essentially the same. Both are instruments that are redeemable at the same future time for the same amount of \ethone (either 100 if the \rblock finalizes and 0 if the \rblock fails) with the same probability of failure (that the \rblock fails). The carrying costs of both are identical. There may be slight differences in the gas costs of redeeming \ethone once the dispute period is over. However, the operation (at a computational level) is largely the same process. 
++It might appear surprising at first, but one of the main results of this paper is that the price of 100 \ethxx and the of price 100 \final are essentially the same. Both are instruments that are redeemable at the same future time for the same amount of \ethone (either 100 if the \rblock finalizes and 0 if the \rblock fails) with the same probability of failure (that the \rblock fails). The carrying costs of both are identical. There may be slight differences in the gas costs of redeeming \ethone once the dispute period is over. However, the operation (at a computational level) is largely the same process. This is actually a natural result: if 100 \fail perfectly hedges (reduces the risk to zero) the failure of 100 \ethxx to finalize, then the compliment to \fail, \final, should be priced the same as \ethxx. 
+ 
+ % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+ \section{Discussion}
+@@ -320,5 +358,3 @@ This paper addresses a common `pain point' for users of \layertwo optimistic rol
+ 
+ 
+ 
+-
+-
+diff --git a/graphs/chart1.pdf b/graphs/chart1.pdf
+new file mode 100644
+index 0000000..ee055a8
+Binary files /dev/null and b/graphs/chart1.pdf differ
+diff --git a/graphs/chart2.pdf b/graphs/chart2.pdf
+new file mode 100644
+index 0000000..e1e785e
+Binary files /dev/null and b/graphs/chart2.pdf differ
+diff --git a/graphs/eth withdraw price.nb b/graphs/eth withdraw price.nb
+new file mode 100644
+index 0000000..9b2e104
+--- /dev/null
++++ b/graphs/eth withdraw price.nb	
+@@ -0,0 +1,306 @@
++(* Content-type: application/vnd.wolfram.mathematica *)
++
++(*** Wolfram Notebook File ***)
++(* http://www.wolfram.com/nb *)
++
++(* CreatedBy='Mathematica 13.1' *)
++
++(*CacheID: 234*)
++(* Internal cache information:
++NotebookFileLineBreakTest
++NotebookFileLineBreakTest
++NotebookDataPosition[       158,          7]
++NotebookDataLength[     12469,        298]
++NotebookOptionsPosition[     11743,        276]
++NotebookOutlinePosition[     12136,        292]
++CellTagsIndexPosition[     12093,        289]
++WindowFrame->Normal*)
++
++(* Beginning of Notebook Content *)
++Notebook[{
++
++Cell[CellGroupData[{
++Cell[BoxData[
++ RowBox[{
++  RowBox[{"(*", " ", 
++   RowBox[{"An", " ", "rblock", " ", "is", " ", 
++    RowBox[{"bad", ":", " ", 
++     RowBox[{"a", " ", "disease"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
++  RowBox[{"(*", " ", 
++   RowBox[{"An", " ", "rblock", " ", "passes", " ", "software", " ", 
++    RowBox[{"verification", ":", " ", 
++     RowBox[{"a", " ", "test"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
++  RowBox[{"(*", " ", 
++   RowBox[{"An", " ", "rblock", " ", "passes", " ", "fraud", " ", 
++    RowBox[{"proof", ":", " ", 
++     RowBox[{"a", " ", "second", " ", "test"}]}]}], " ", "*)"}], 
++  "\[IndentingNewLine]", "\[IndentingNewLine]", 
++  RowBox[{"(*", " ", 
++   RowBox[{
++   "Probability", " ", "an", " ", "rblock", " ", "fails", " ", "given", " ", 
++    "it", " ", "passes", " ", "software", " ", "verification"}], " ", "*)"}], 
++  "\[IndentingNewLine]", 
++  RowBox[{
++   RowBox[{
++    RowBox[{"R", " ", "=", 
++     RowBox[{"1", "-", 
++      RowBox[{"10", "^", 
++       RowBox[{"(", 
++        RowBox[{"-", "15"}], ")"}]}]}]}], ";"}], "\[IndentingNewLine]", 
++   "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"Withdraw", " ", "amount", " ", "ETH"}], " ", "*)"}], 
++   "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"S$0", "=", "100"}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"Carrying", " ", "costs"}], " ", "*)"}], "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"U", "=", "0"}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"Gas", " ", "costs"}], " ", "*)"}], "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"DD", "=", "0.008"}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"APY", " ", "on", " ", "ETH"}], " ", "*)"}], 
++   "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"r", "=", "0.2"}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"APY", " ", "on", " ", "ETHxx"}], " ", "*)"}], 
++   "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"y", "=", "0"}], ";"}], "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", 
++    RowBox[{"Dispute", " ", "period", " ", 
++     RowBox[{"(", 
++      RowBox[{"in", " ", "years"}], ")"}]}], " ", "*)"}], 
++   "\[IndentingNewLine]", 
++   RowBox[{
++    RowBox[{"dt", "=", "0.0164"}], ";"}], "\[IndentingNewLine]", 
++   "\[IndentingNewLine]", 
++   RowBox[{"(*", " ", "Price", " ", "*)"}], "\[IndentingNewLine]", 
++   RowBox[{"F$0", "=", 
++    RowBox[{
++     RowBox[{
++      RowBox[{"(", 
++       RowBox[{"S$0", "+", "U", "-", "DD"}], ")"}], 
++      RowBox[{"Exp", "[", 
++       RowBox[{
++        RowBox[{"(", 
++         RowBox[{"y", "-", "r"}], ")"}], "*", "dt"}], "]"}], "*", "R"}], "//",
++      "N"}]}]}]}]], "Input",
++ InitializationCell->True,
++ CellChangeTimes->{{3.901056079226489*^9, 3.9010560914990664`*^9}, {
++   3.901056285282638*^9, 3.90105631351096*^9}, {3.9010563632133017`*^9, 
++   3.901056395309023*^9}, {3.9010568219129143`*^9, 3.901056869940887*^9}, {
++   3.901057041252397*^9, 3.90105713979432*^9}, {3.901057191821869*^9, 
++   3.901057332603595*^9}, {3.901057363692636*^9, 3.9010575527208843`*^9}, {
++   3.901057611758107*^9, 3.901057616516466*^9}, {3.901057794635767*^9, 
++   3.901057798349071*^9}, {3.901058016787396*^9, 3.901058159149605*^9}, {
++   3.901058189705566*^9, 3.9010581946507473`*^9}, {3.901058231690173*^9, 
++   3.901058315310993*^9}, {3.901058349843223*^9, 3.901058354677939*^9}, 
++   3.90105842770522*^9, {3.901058459258902*^9, 3.901058557828566*^9}, {
++   3.9010585881835537`*^9, 3.9010586114976463`*^9}, {3.901058672812993*^9, 
++   3.9010587524686213`*^9}, {3.901061379462962*^9, 3.9010614052691936`*^9}, {
++   3.901061451318799*^9, 3.901061474901187*^9}},
++ CellLabel->
++  "In[265]:=",ExpressionUUID->"630e253e-7b40-4196-85aa-c19633b9b3fc"],
++
++Cell[BoxData["99.6645635293694`"], "Output",
++ CellChangeTimes->{{3.90105629963875*^9, 3.901056311832138*^9}, {
++   3.901056378014529*^9, 3.9010563935445223`*^9}, 3.9010568507033377`*^9, {
++   3.9010570901731567`*^9, 3.901057143470022*^9}, 3.901057381102298*^9, {
++   3.901057527310121*^9, 3.901057553193829*^9}, 3.901057617057786*^9, {
++   3.901058029072548*^9, 3.9010580481981697`*^9}, 3.901058192860166*^9, {
++   3.901058312695051*^9, 3.901058364254882*^9}, 3.901058428113483*^9, {
++   3.901058608095379*^9, 3.901058611795339*^9}, {3.901061390689679*^9, 
++   3.901061406796414*^9}, {3.901061452234826*^9, 3.901061467797737*^9}, 
++   3.901061560169175*^9, 3.901061780398623*^9},
++ CellLabel->
++  "Out[272]=",ExpressionUUID->"3d947ed1-4d3a-421a-960b-2d1fdccb7057"]
++}, Open  ]],
++
++Cell[CellGroupData[{
++
++Cell[BoxData[{
++ RowBox[{"R", "=."}], "\[IndentingNewLine]", 
++ RowBox[{"Plot", "[", 
++  RowBox[{
++   RowBox[{
++    RowBox[{"(", 
++     RowBox[{"S$0", "+", "U", "-", "DD"}], ")"}], 
++    RowBox[{"Exp", "[", 
++     RowBox[{
++      RowBox[{"(", 
++       RowBox[{"y", "-", "r"}], ")"}], "*", "dt"}], "]"}], "*", "R"}], ",", 
++   RowBox[{"{", 
++    RowBox[{"R", ",", "0.999", ",", "1"}], "}"}]}], 
++  "]"}], "\[IndentingNewLine]"}], "Input",
++ CellChangeTimes->{{3.901061476487681*^9, 3.9010615492526493`*^9}, {
++  3.9010616047054577`*^9, 3.901061704424445*^9}, {3.901061831020586*^9, 
++  3.901061869866839*^9}},ExpressionUUID->"1db25105-aa26-4ae5-95c3-\
++e0f419af3d49"],
++
++Cell[BoxData[
++ GraphicsBox[{{{}, {}, 
++    TagBox[
++     {RGBColor[0.368417, 0.506779, 0.709798], AbsoluteThickness[1.6], Opacity[
++      1.], LineBox[CompressedData["
++1:eJwV0XlM02cYB/BadBNHOdyEiBkEoVwaBgQmDLGdQ3BztqUcllImQzmGUawj
++VGgLAuUQyQ6LBpXRDcpRkCHHnLDoOIRsyF0sFtDhuOXoljBajtJ9f3+8efLJ
++k+ebJ89rF5PEjiWTSKTTeEQ9ErZf3a/V0MwcSAynaQ69RNIuHoBD9nr3EyY3
++f3VwEC4mJTKc4d69rReGYLuXSoYLHD3I3VbCnrermIfg/FMl9mpifjcz+AN4
++7GPbS1PwnaUfQo/AYjeqkQ62/8UvMghOYBWXO+g0tLXPK6wT4VR/LYMBT5Cl
++hQWwe88+FwFsNnAzsgYulN1LLYdJZW0TvbApnfK8F94lvWK+DH/oMlu5DvcU
++sNfMZjh0o8b0Kuq6hjZeHODrCWt3GTUxYMPTVjc2/F3ZipcQntJ+oUqGmXu6
++2+Ww+mSe+y242SJK3Ae//6B9rhl+8mVk/Tpsa+MaPAqviE4sHdzQ0LxrLC9q
++4c7J2zImbOzv4Wc9y6Efm67KFMKHZqPijsJ/NcovyeGzdaYBPNixZ/fwIBwi
++XFamw9L7HPoGzI1nWcrgilEzqtMm7s19vacDjirL9QmBvc5JeNOwn89CuAjm
++FtRG75zDfpZNi9Uw7RHJygmOb0u4MQz77BzLCIIfGr+K2ITFcV0n4uHae62l
++TlsaWubAq8fX4W5d1goLvhMumlfAuaWNzWL48nRQVy+8NPWTQgEX5VMNK/DV
++VZFiGH72Wd6i6TyHrjj9u60BbnvXqsADJl1Z/tFZr6H9ueE6HgzrvcdZwbCt
++jnWdD8uOuwvEsNeWfEEKJ1jzqythno14qwlWfbSfpYQDgrLbVXCiYx1ZDx/7
++huKrheUNpGnqtoaWu6igWC1w6Nk5v/mx4UJmcpEvnO8QUyqEK4c6+iJgT5PL
++gmo4nUtrEcFZUv+MEVi+3rdDButm1r7XwxMPJ7eewO9lWh1wNWhoI2l2Na/h
++8Dn7+hB4kjdrTH6D/13W8EWwT9jjbjv4mZ99bTXMDO3wDoDTw45rhuBU/qkz
++5+F/6DlVw/CjA09nCccc/uOsEtZ1HU2JhQONGIMjsMDa7VYcTGmIaBiFkzvN
++lQlwiQn/65dw0j4V4yLc0inTzsOxLdGBKbBr/d/1C3D5OfVzwiV3qQlv4CkK
++O1YAX+PXvliEY2I+kVyFT9r+2rICR7/j2JEGq9L6haswN2rRP4Pox1l4/Qff
++fft8H+HW4NAlwuqGCd41uNR5jKeFOW/1CzPhWNWM/wYcVv+gJZvIa3deI1wU
++4fKphMiru/DzJqw0KntB+LDkXxs9zOZItTlEXpLXKOGbZJO8XNg8UvDtNjx0
++X2KZB2cFtgYZYIsz+grCqx56A2HWjhTvfPh/Dr2heA==
++       "]]},
++     Annotation[#, "Charting`Private`Tag$25483#1"]& ]}, {{{}, 
++     GraphicsGroupBox[{
++       {GrayLevel[1], AbsoluteThickness[4], Opacity[
++         NCache[
++          Rational[2, 3], 0.6666666666666666]], CapForm["Butt"], JoinForm[
++        "Round"], 
++        BSplineCurveBox[{
++         Offset[{3, 0}, {0.9999999999795919, 99.66456352733553}], 
++          Offset[{2.612839968555037, -1.47413272764745}, {1.0000408333333333`,
++            99.66456352733553}], 
++          Offset[{0, 0}, {1.0000608333333334`, 99.66274390120557}], 
++          Offset[{5., 1.1102230246251565`*^-15}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{10., 2.220446049250313*^-15}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{10., 2.220446049250313*^-15}, {1.0000608333333334`, 
++           99.66274390120557}]}]}, 
++       {RGBColor[0.6666666666666666, 0.6666666666666666, 0.6666666666666666], 
++        AbsoluteThickness[1.25], 
++        BSplineCurveBox[{
++         Offset[{3, 0}, {0.9999999999795919, 99.66456352733553}], 
++          Offset[{2.612839968555037, -1.47413272764745}, {1.0000408333333333`,
++            99.66456352733553}], 
++          Offset[{0, 0}, {1.0000608333333334`, 99.66274390120557}], 
++          Offset[{5., 1.1102230246251565`*^-15}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{10., 2.220446049250313*^-15}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{10., 2.220446049250313*^-15}, {1.0000608333333334`, 
++           99.66274390120557}]}]}, 
++       {EdgeForm[None], FaceForm[{GrayLevel[1], Opacity[
++         NCache[
++          Rational[2, 3], 0.6666666666666666]]}], 
++        PolygonBox[{
++         Offset[{27., 6.500000000000006}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{27., -6.499999999999994}, {1.0000608333333334`, 
++           99.66274390120557}], 
++          Offset[{10.000000000000002`, -6.499999999999997}, {
++           1.0000608333333334`, 99.66274390120557}], 
++          Offset[{9.999999999999998, 6.500000000000003}, {1.0000608333333334`,
++            99.66274390120557}]}]}, 
++       {RGBColor[0.6666666666666666, 0.6666666666666666, 0.6666666666666666], 
++        AbsoluteThickness[1.25], EdgeForm[None]}, {}, InsetBox[
++        StyleBox[
++         RotationBox["\<\"F0\"\>",
++          BoxRotation->0.],
++         StripOnInput->False,
++         LineOpacity->1,
++         FrontFaceOpacity->1,
++         BackFaceOpacity->1,
++         Opacity->1,
++         FontOpacity->1], 
++        Offset[{18.5, 4.107825191113079*^-15}, \
++{1.0000608333333334, 99.66274390120557}], NCache[
++        ImageScaled[{Rational[1, 2], Rational[1, 2]}], 
++         ImageScaled[{0.5, 0.5}]]]}]}, {}}},
++  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
++  Axes->{True, True},
++  AxesLabel->{None, None},
++  AxesOrigin->{0.9990000000000022, 99.56489896787433},
++  DisplayFunction->Identity,
++  Frame->{{False, False}, {False, False}},
++  FrameLabel->{{None, None}, {None, None}},
++  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
++  GridLines->{None, None},
++  GridLinesStyle->Directive[
++    GrayLevel[0.5, 0.4]],
++  ImagePadding->{{All, 45.4}, {All, All}},
++  Method->{
++   "DefaultBoundaryStyle" -> Automatic, 
++    "DefaultGraphicsInteraction" -> {
++     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
++      "Effects" -> {
++       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
++        "Droplines" -> {
++         "freeformCursorMode" -> True, 
++          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
++    AbsolutePointSize[6], "ScalingFunctions" -> None, 
++    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
++        (Identity[#]& )[
++         Part[#, 1]], 
++        (Identity[#]& )[
++         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
++        (Identity[#]& )[
++         Part[#, 1]], 
++        (Identity[#]& )[
++         Part[#, 2]]}& )}},
++  PlotRange->{{0.999, 1}, {99.5648989678741, 99.66456352733553}},
++  PlotRangeClipping->False,
++  PlotRangePadding->{{
++     Scaled[0.02], 
++     Scaled[0.02]}, {
++     Scaled[0.05], 
++     Scaled[0.08090169943749476]}},
++  Ticks->{Automatic, Automatic}]], "Output",
++ CellChangeTimes->{{3.9010615499761267`*^9, 3.901061563441579*^9}, {
++  3.90106160801588*^9, 3.901061625920642*^9}, {3.901061658036168*^9, 
++  3.90106170491341*^9}, {3.901061836826667*^9, 3.901061849742865*^9}},
++ CellLabel->
++  "Out[276]=",ExpressionUUID->"3a9838e5-1660-4f31-a999-682788864ac7"]
++}, Open  ]]
++},
++WindowSize->{Full, Full},
++WindowMargins->{{4, Automatic}, {Automatic, 4}},
++FrontEndVersion->"13.1 for Mac OS X ARM (64-bit) (June 16, 2022)",
++StyleDefinitions->"Default.nb",
++ExpressionUUID->"617e09e8-db22-41e0-90c8-fa1d24f282c9"
++]
++(* End of Notebook Content *)
++
++(* Internal cache information *)
++(*CellTagsOutline
++CellTagsIndex->{}
++*)
++(*CellTagsIndex
++CellTagsIndex->{}
++*)
++(*NotebookFileOutline
++Notebook[{
++Cell[CellGroupData[{
++Cell[580, 22, 3667, 85, 488, "Input",ExpressionUUID->"630e253e-7b40-4196-85aa-c19633b9b3fc",
++ InitializationCell->True],
++Cell[4250, 109, 754, 11, 34, "Output",ExpressionUUID->"3d947ed1-4d3a-421a-960b-2d1fdccb7057"]
++}, Open  ]],
++Cell[CellGroupData[{
++Cell[5041, 125, 649, 17, 73, "Input",ExpressionUUID->"1db25105-aa26-4ae5-95c3-e0f419af3d49"],
++Cell[5693, 144, 6034, 129, 206, "Output",ExpressionUUID->"3a9838e5-1660-4f31-a999-682788864ac7"]
++}, Open  ]]
++}
++]
++*)
++
