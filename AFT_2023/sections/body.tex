@@ -131,9 +131,9 @@ Finally we estimate the costs involved for the seller of \ethtwo. For some proto
 \subsection{Tradeable Exits} 
 \label{sec:tradeablexits}
 
-Alice wants to withdraw 100 \ethtwo. Unlike the other solutions, Bob takes the risk that the exit never finalized and therefore will offer less than 100 \ethone (say 99.95 \ethone) for it. Assume Bob has 99.95 \ethone that will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. With a tradeable exit, the outbox allows Alice to change the recipient of her withdraw from herself to Bob. Thus Alice swaps her pending exit of 100 \ethone (which we call 100 \ethxx) for Bob's 99.95 \ethone on \layerone (note we discuss the actual difference in price in Section~\ref{sec:pricing}). After 7 days, Bob can ask the bridge to transfer the \ethone to his address, and the bridge checks the outbox to validate that Bob's address is the current owner of the exit.
+Alice wants to withdraw 100 \ethtwo. Unlike the other solutions, Bob takes the risk that the exit never finalized and therefore will offer less than 100 \ethone (say 99.95 \ethone) for it (this is denoted ``discount'' in Table 1). Assume Bob has 99.95 \ethone that will not use until after the dispute window. Bob also runs an \layertwo validator so he is assured that if Alice withdraws, it is valid and will eventually finalize. With a tradeable exit, the outbox allows Alice to change the recipient of her withdraw from herself to Bob. Thus Alice swaps her pending exit of 100 \ethone (which we call 100 \ethxx) for Bob's 99.95 \ethone on \layerone (note we discuss the actual difference in price in Section~\ref{sec:pricing}). Since \ethone and \ethxx are both on \layerone, Alice can place an ask price for her \ethxx and the first trader willing to swap can do so atomicly, with no ability to grief or capitalize on a free option. After 7 days, Bob can ask the bridge to transfer the \ethone to his address, and the bridge checks the outbox to validate that Bob's address is the current owner of the exit.
 
-In our forked bridge, Alice can transfer any of her exits that are in an \rblock (\ie an asserted \layertwo state update registered in the outbox). Technically, Bob can check the validity of the withdrawal as soon as it is in the inbox, and not wait 30-60 minutes for an \rblock. However for implementation reasons, it is easier to track an exit based on its place (\ie Merkle path) in an \rblock, rather than its place in the inbox. When we say a withdrawal is `fast,' we mean 30-60 minutes (\ie one \layertwo rollup). 
+In our forked bridge, Alice can transfer any of her exits that are in an \rblock (\ie an asserted \layertwo state update registered in the outbox). Technically, Bob can check the validity of the withdrawal as soon as it is in the inbox, and not wait 30-60 minutes for an \rblock. However for implementation reasons, it is easier to track an exit based on its place (\ie Merkle path) in an \rblock, rather than its place in the inbox. When we say a withdrawal is `fast,' we mean 30-60 minutes (\ie one \layertwo rollup).
 
 Tradeable exits can be approximated by a third party \layerone contract that does not modify the rollup. In this scenario, a \layerone contract would act like a proxy for the exit. Alice would specify that she is exiting 100 \ethtwo to the contract address (instead of to her address) and ask the contract to forward it to her (if it comes through after seven days). She can then, with a signed transaction from her address, specify the contract should forward it to Bob instead of to her (giving Bob signing authority over who it goes to). In this way, the exit becomes tradeable. After seven days, the current owner can ask the proxy to fetch the actual transfer from the bridge and forward it to them. If the exit fails, the bridge will refuse the exit. 
 
@@ -191,12 +191,12 @@ To execute the \texttt{transferSpender()} function; Alice (who has initiated a w
 
 The market and modified outbox are open source and written in 125 and 294 lines (SLOC) of Solidity respectively. The solidity code for these contracts in addition to the Hardhat scripts are available in a GitHub repository.\footnote{GitHub:Nitro, Fast-Withdrawals: \url{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}} Once deployed, the bytecode of the market and outbox is 5,772 and 6,264 bytes respectively.
 
-\begin{figure*}[t]
+\begin{figure}[t]
 	\includegraphics[width=1\textwidth]{figures/marketflow.pdf}
 	\caption{Overview of trading the exit through an \layerone market.}
 	\centering
 	\label{fig:marketflow}
-\end{figure*}
+\end{figure}
 
 \subsection{Prediction Market }
 As described in Section~\ref{sec:PM}, a prediction market can be used to hedge the exit. We do not implement this as one can use an existing decentralized prediction market (\eg \textit{Augur} or \textit{Gnosis}). However, we further modify \arb \nitro to make it friendly to a prediction market that wants to learn the status of an \rblock (pending, confirmed). More specifically, we modify the \arb \nitro outbox and RollupCore smart contracts, modifications include:
@@ -283,9 +283,29 @@ This value, $F_0$, is an expected value---the product of the value and the proba
 
 \[ R = (1-\mathbf{Pr}[ \mathrm{\mathsf{rblock}~fails~to~finalize} |  \mathrm{\mathsf{rblock}~passes~software~verification} ]) \]
 
-\paragraph*{Working Example.} We start with $R$. The promise of an optimistic rollup is that it is very costly to post an \rblock that will not finalize. Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem, $R=(1-10^{-15})$; a near-certain probability. Next, consider the resulting price of $F_0$. Alice starts with 100 \ethxx and Bob purchases it from her. Bob can hold \ethxx with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
 
-As a second example, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ \ethone which is only 83.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.65\textwidth]{figures/chart1.pdf}
+	\caption{Price of 100 \ethxx (in ETH) as the probability an \rblock actually finalizes (given the validator checks it with software validation) varies from 99\%  to 100\%, which is denoted by $R$. Note that 99\% is an extraordinarily low probability for this event (considering an \rblock has never failed at the time of writing). The take-away is that the price is not very sensitive to how precisely we estimate R.\label{fig:risk}}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.65\textwidth]{figures/chart2.pdf}
+	\caption{This chart shows the percentage of ETH recovered $(F_0/S_0)$ as the amount withdrawn ($S_0$) increases (log scale), demonstrating it is only economical for withdrawing larger amounts of \ethtwo. At low values, the gas costs of a withdrawal dominate. At very low values, the gas costs exceed the price of \ethxx causing the curve to go negative.\label{fig:amount}}
+	
+\end{figure}
+
+\paragraph*{Working Example.} We start with $R$. For an \rblock to be up for consideration, it must be submitted to the outbox as a potential solution and for it to fail, a dispute must be filed with an alternative \rblock that the \layerone outbox deems to be correct. In our case, the buyer of \ethxx actually runs a \layertwo validator and thus performs software validation on the \rblock, and will not accept it if the software does not validate it. For an \rblock to fail given the software validation, it software must have an error that causes a discrepancy between it and the \layerone outbox. Furthermore, at least one other validator would need to have different, correct software, and this validator would need to be paying attention to this specific \rblock and independently check it. This should be a rare event and assume $R=(1-10^{-15})$ for this example. Figure~\ref{fig:risk} shows a range of $R$ values.
+
+
+
+ %Assume the probability an \rblock fails for any reason is 1 in a billion. Assume the probability of inattention---that no one challenges a bad \rblock---is 1 in a million. Assume the validation software is wrong (false positive) also with 1 in a million. Using Bayes theorem,  ; a near-certain probability.
+
+ Next, consider the resulting price of $F_0$. Alice starts with 100 \ethxx and Bob purchases it from her. Bob can hold \ethxx with no cost ($U=0$). Alice pays the transaction fee for the deposit, however the cost for the contract for exiting \ethxx into \ethone after the dispute period is expected to be $D=0.008$ ETH ($D$). Assume a safe-ish annual percent yield (APY) on ETH deposits is 0.2\%. Assume \ethxx expires in 6 days (0.0164 years). \ethxx earns no yield ($y=0$). Plugging this into the equation, $F_0=99.665$ ETH.
+
+As a second example, consider a smaller amount like 0.05 \ethxx (less than \$100 USD at time of writing). Now the gas costs are more dominating. $F_0=0.04186$ \ethone which is only 83.7\%. This demonstrates that fast exits are expensive for withdrawals of amounts in the hundreds of dollars. Figure~\ref{fig:amount} shows a range of withdraw amounts.
 
 Lastly, could \ethxx ever be worth more than \ethone? The equation says yes: with a sufficiently high $U$ or $y$. A contrived example would be some time-deferral reason (\eg tax avoidance) to prefer receiving \ethone in 7 days instead of today. However, in order to purchase \ethxx at a premium to \ethone, it would have to be cheaper to trade for it than to simply manufacture it. Someone holding \ethone and wanting \ethxx could simply move it to \layertwo and then immediately withdraw it to create \ethxx. The gas cost of this path will be one upper bound on how much \ethxx could exceed \ethone in value. 
 
