@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2022)
+This is BibTeX, Version 0.99d (TeX Live 2023)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: plainurl.bst
@@ -9,46 +9,45 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: bib/L2.bib
 Warning--empty institution in sztorc2015truthcoin
-Warning--empty institution in Whi21
-You've used 15 entries,
-            2882 wiz_defined-function locations,
-            701 strings with 7211 characters,
-and the built_in function-call counts, 6531 in all, are:
-= -- 637
-> -- 286
+You've used 14 entries,
+            2943 wiz_defined-function locations,
+            708 strings with 7192 characters,
+and the built_in function-call counts, 6220 in all, are:
+= -- 606
+> -- 278
 < -- 4
-+ -- 108
-- -- 92
-* -- 323
-:= -- 972
-add.period$ -- 48
-call.type$ -- 15
-change.case$ -- 92
++ -- 105
+- -- 90
+* -- 299
+:= -- 927
+add.period$ -- 45
+call.type$ -- 14
+change.case$ -- 87
 chr.to.int$ -- 0
-cite$ -- 17
-duplicate$ -- 195
-empty$ -- 620
-format.name$ -- 92
-if$ -- 1682
+cite$ -- 15
+duplicate$ -- 187
+empty$ -- 590
+format.name$ -- 90
+if$ -- 1602
 int.to.chr$ -- 0
-int.to.str$ -- 15
+int.to.str$ -- 14
 missing$ -- 12
-newline$ -- 80
-num.names$ -- 30
-pop$ -- 199
+newline$ -- 75
+num.names$ -- 28
+pop$ -- 190
 preamble$ -- 1
-purify$ -- 76
+purify$ -- 73
 quote$ -- 0
-skip$ -- 430
+skip$ -- 406
 stack$ -- 0
-substring$ -- 185
+substring$ -- 180
 swap$ -- 40
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 56
-warning$ -- 2
-while$ -- 38
-width$ -- 17
-write$ -- 163
-(There were 2 warnings)
+type$ -- 52
+warning$ -- 1
+while$ -- 36
+width$ -- 16
+write$ -- 153
+(There was 1 warning)

@@ -1,6 +1,5 @@
-\documentclass[a4pape,cleveref, autoref, thm-restate]{lipics-v2021}
-
-
+%\documentclass[a4pape,cleveref, autoref, thm-restate]{lipics-v2021}
+\documentclass{lipics-v2021}
 
 % = = = = = Packages = = = = = %
 \input{setup/packages}
@@ -9,6 +8,7 @@
 %\input{setup/draft}
 
 % = = = = = Title = = = = = %
+
 \ccsdesc[500]{Security and privacy}
 \ccsdesc[500]{Security and privacy~Cryptography}
 
@@ -16,10 +16,10 @@
 
 \title{Fast and Furious Withdrawals from Optimistic Rollups} 
 
-\author{Mahsa {Moosavi}}{Concordia University, Canada \and OffchainLabs, United States \and \url{https://mahsamoosavi.com}}{mmoosavi@offchainlabs.com}{https://orcid.org/0000-0002-1825-0097}{}
+\author{Mahsa {Moosavi}}{Concordia University, Montreal, QC, Canada \and OffchainLabs, United States \and \url{https://mahsamoosavi.com}}{mmoosavi@offchainlabs.com}{https://orcid.org/0000-0002-1825-0097}{}
 \author{Mehdi {Salehi}}{OffchainLabs, United States}{msalehi@offchainlabs.com}{}{}
 \author{Daniel {Goldman}}{OffchainLabs, United States}{dgoldman@offchainlabs.com}{}{}
-\author{Jeremy {Clark}}{Concordia University, Canada \and \url{https://www.pulpspy.com}}{j.clark@concordia.ca }{https://orcid.org/0000-0002-3533-5965}{}
+\author{Jeremy {Clark}}{Concordia University, Montreal, QC, Canada \and \url{https://www.pulpspy.com}}{j.clark@concordia.ca }{https://orcid.org/0000-0002-3533-5965}{acknowledges support for this research project from (i) the National Sciences and Engineering Research Council (NSERC), Raymond Chabot Grant Thornton, and Catallaxy Industrial Research Chair in Blockchain Technologies (IRCPJ/545498-2018), (ii) the Autorité des Marchés Financiers, and (iii) a NSERC Discovery Grant (RGPIN/04019-2021). }
 
 \authorrunning{M. Moosavi \etal}
 
@@ -27,17 +27,27 @@
 
 \keywords{Ethereum, layer 2, rollups, bridges, prediction markets}
 
-\acknowledgements{This paper includes useful comments from the reviewers, discussions with Edward W. Felten and Rachel Bousfield, and feedback from presentations at Devcon 6 and a16z crypto research. J. Clark acknowledges support for this research project from (i) the National Sciences and Engineering Research Council (NSERC), Raymond Chabot Grant Thornton, and Catallaxy Industrial Research Chair in Blockchain Technologies (IRCPJ/545498-2018), (ii) the AMF (Autorité des Marchés Financiers), and (iii) NSERC through a Discovery Grant (RGPIN/04019-2021). }
+\acknowledgements{This paper includes useful comments from the reviewers, discussions with Edward W. Felten and Rachel Bousfield, and feedback from presentations at Devcon 6 and a16z crypto research.}
+
+\supplementdetails[subcategory={Source Code}]{Software}{https://github.com/MadibaGroup/nitro/tree/fast-withdrawals}
+
+\EventEditors{Joseph Bonneau and S. Matthew Weinberg}
+\EventNoEds{2}
+\EventLongTitle{5th Conference on Advances in Financial Technologies (AFT 2023)}
+\EventShortTitle{AFT 2023}
+\EventAcronym{AFT}
+\EventYear{2023}
+\EventDate{October 23-25, 2023}
+\EventLocation{Princeton, NJ, USA}
+\EventLogo{}
+\SeriesVolume{282}
+\ArticleNo{22}
 
 \begin{document}
 \maketitle
 
-
-
 % = = = = = Abstract = = = = = %
 \input{"sections/abstract"}
-
-
 
 % = = = = = Main Body = = = = = %
 
@@ -46,13 +56,12 @@
 % = = = = = Ack = = = = = %
 
 % = = = = = Bibliography = = = = = %
-\clearpage
+
 \bibliography{bib/L2}
-\nocite{*}
 
 % = = = = = End Notes = = = = = %
 
-\clearpage
+
 \appendix
 
 
