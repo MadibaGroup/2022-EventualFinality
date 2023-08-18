@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2023)
+This is BibTeX, Version 0.99d (TeX Live 2022)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: plainurl.bst
@@ -11,16 +11,16 @@ Database file #1: bib/L2.bib
 Warning--empty institution in sztorc2015truthcoin
 Warning--empty institution in Whi21
 You've used 15 entries,
-            2943 wiz_defined-function locations,
-            712 strings with 7247 characters,
-and the built_in function-call counts, 6517 in all, are:
+            2882 wiz_defined-function locations,
+            701 strings with 7211 characters,
+and the built_in function-call counts, 6531 in all, are:
 = -- 637
 > -- 286
 < -- 4
 + -- 108
 - -- 92
-* -- 308
-:= -- 973
+* -- 323
+:= -- 972
 add.period$ -- 48
 call.type$ -- 15
 change.case$ -- 92
