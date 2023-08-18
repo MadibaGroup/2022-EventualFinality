@@ -14,3 +14,5 @@
 *.gz
 *.log
 *.aux
+SBC_2023/llncs.cls
+SBC_2023/main.bbl
